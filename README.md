@@ -27,7 +27,7 @@ alias ivy_check="ANACODNA_PATH/envs/py2/bin/ivy_check"
 ```
 
 4. <font style="color:rgb(31, 35, 40);">WiseParaVerifier using NuSMV or Murphi as a Model Checker. In fact, we usually choose NuSMV as our model checker because it includes reachability analysis and BMC, which meet all our requirements. However, WiseParaVerifier use protocols modeled by Murphi as standard input, so it is recommended that you also install Murphi so that you can provide correct Murphi protocols descriptions in your new experiments.</font>
-    1. <font style="color:rgb(31, 35, 40);">install Murphi by</font>
++ <font style="color:rgb(31, 35, 40);">install Murphi by</font>
 
 <font style="color:rgb(31, 35, 40);">Download the cmurphi zip from the following link and unzip it into a local folder: </font>[http://mclab.di.uniroma1.it/site/index.php/software/18-cmurphi](http://mclab.di.uniroma1.it/site/index.php/software/18-cmurphi)<font style="color:rgb(31, 35, 40);">. Then</font>
 
@@ -36,7 +36,7 @@ cd ./src
 make
 ```
 
-    2. <font style="color:rgb(31, 35, 40);">install NuSMV2.60 by:</font>
++ <font style="color:rgb(31, 35, 40);">install NuSMV2.60 by:</font>
 
 <font style="color:rgb(31, 35, 40);">Download the binary version directly from: </font>[https://nusmv.fbk.eu/downloads.html](https://nusmv.fbk.eu/downloads.html)<font style="color:rgb(31, 35, 40);">, and extracting it to obtain four directories - bin, include, lib and share - allows for use without compilation.</font>
 
