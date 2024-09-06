@@ -1,0 +1,352 @@
+MODULE main
+VAR
+table[1][1][1] : boolean;
+table[1][1][2] : boolean;
+table[2][1][1] : boolean;
+table[2][1][2] : boolean;
+owner[1][1] : boolean;
+owner[2][1] : boolean;
+transfer_msg[1][1][1] : boolean;
+transfer_msg[1][1][2] : boolean;
+transfer_msg[2][1][1] : boolean;
+transfer_msg[2][1][2] : boolean;
+
+--------------------
+
+n_reshard__1__1__1__1 : process Proc__n_reshard__1__1__1__1(table[1][1][1], owner[1][1], transfer_msg[1][1][1]);
+
+n_reshard__1__1__1__2 : process Proc__n_reshard__1__1__1__2(table[1][1][1], owner[1][1], transfer_msg[2][1][1]);
+
+n_reshard__1__1__2__1 : process Proc__n_reshard__1__1__2__1(table[2][1][1], owner[2][1], transfer_msg[1][1][1]);
+
+n_reshard__1__1__2__2 : process Proc__n_reshard__1__1__2__2(table[2][1][1], owner[2][1], transfer_msg[2][1][1]);
+
+n_reshard__1__2__1__1 : process Proc__n_reshard__1__2__1__1(table[1][1][2], owner[1][1], transfer_msg[1][1][2]);
+
+n_reshard__1__2__1__2 : process Proc__n_reshard__1__2__1__2(table[1][1][2], owner[1][1], transfer_msg[2][1][2]);
+
+n_reshard__1__2__2__1 : process Proc__n_reshard__1__2__2__1(table[2][1][2], owner[2][1], transfer_msg[1][1][2]);
+
+n_reshard__1__2__2__2 : process Proc__n_reshard__1__2__2__2(table[2][1][2], owner[2][1], transfer_msg[2][1][2]);
+
+n_recv_transfer_msg__1__1__1 : process Proc__n_recv_transfer_msg__1__1__1(transfer_msg[1][1][1], table[1][1][1], owner[1][1]);
+
+n_recv_transfer_msg__1__1__2 : process Proc__n_recv_transfer_msg__1__1__2(transfer_msg[1][1][2], table[1][1][2], owner[1][1]);
+
+n_recv_transfer_msg__2__1__1 : process Proc__n_recv_transfer_msg__2__1__1(transfer_msg[2][1][1], table[2][1][1], owner[2][1]);
+
+n_recv_transfer_msg__2__1__2 : process Proc__n_recv_transfer_msg__2__1__2(transfer_msg[2][1][2], table[2][1][2], owner[2][1]);
+
+n_put__1__1__1 : process Proc__n_put__1__1__1(owner[1][1], table[1][1][1], table[1][1][2]);
+
+n_put__1__1__2 : process Proc__n_put__1__1__2(owner[1][1], table[1][1][1], table[1][1][2]);
+
+n_put__2__1__1 : process Proc__n_put__2__1__1(owner[2][1], table[2][1][1], table[2][1][2]);
+
+n_put__2__1__2 : process Proc__n_put__2__1__2(owner[2][1], table[2][1][1], table[2][1][2]);
+
+--------------------
+
+ASSIGN
+init(table[1][1][1]) := case
+TRUE : FALSE;
+esac;
+init(table[1][1][2]) := case
+TRUE : FALSE;
+esac;
+init(table[2][1][1]) := case
+TRUE : FALSE;
+esac;
+init(table[2][1][2]) := case
+TRUE : FALSE;
+esac;
+init(transfer_msg[1][1][1]) := case
+TRUE : FALSE;
+esac;
+init(transfer_msg[1][1][2]) := case
+TRUE : FALSE;
+esac;
+init(transfer_msg[2][1][1]) := case
+TRUE : FALSE;
+esac;
+init(transfer_msg[2][1][2]) := case
+TRUE : FALSE;
+esac;
+init(owner[1][1]) := case
+TRUE : TRUE;
+esac;
+init(owner[2][1]) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_reshard__1__1__1__1(table__1__1__1, owner__1__1, transfer_msg__1__1__1)
+ASSIGN
+next(table__1__1__1) := case
+(table__1__1__1 = TRUE) : FALSE;
+TRUE : table__1__1__1;
+esac;
+next(owner__1__1) := case
+(table__1__1__1 = TRUE) : FALSE;
+TRUE : owner__1__1;
+esac;
+next(transfer_msg__1__1__1) := case
+(table__1__1__1 = TRUE) : TRUE;
+TRUE : transfer_msg__1__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__1__1__2(table__1__1__1, owner__1__1, transfer_msg__2__1__1)
+ASSIGN
+next(table__1__1__1) := case
+(table__1__1__1 = TRUE) : FALSE;
+TRUE : table__1__1__1;
+esac;
+next(owner__1__1) := case
+(table__1__1__1 = TRUE) : FALSE;
+TRUE : owner__1__1;
+esac;
+next(transfer_msg__2__1__1) := case
+(table__1__1__1 = TRUE) : TRUE;
+TRUE : transfer_msg__2__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__1__2__1(table__2__1__1, owner__2__1, transfer_msg__1__1__1)
+ASSIGN
+next(table__2__1__1) := case
+(table__2__1__1 = TRUE) : FALSE;
+TRUE : table__2__1__1;
+esac;
+next(owner__2__1) := case
+(table__2__1__1 = TRUE) : FALSE;
+TRUE : owner__2__1;
+esac;
+next(transfer_msg__1__1__1) := case
+(table__2__1__1 = TRUE) : TRUE;
+TRUE : transfer_msg__1__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__1__2__2(table__2__1__1, owner__2__1, transfer_msg__2__1__1)
+ASSIGN
+next(table__2__1__1) := case
+(table__2__1__1 = TRUE) : FALSE;
+TRUE : table__2__1__1;
+esac;
+next(owner__2__1) := case
+(table__2__1__1 = TRUE) : FALSE;
+TRUE : owner__2__1;
+esac;
+next(transfer_msg__2__1__1) := case
+(table__2__1__1 = TRUE) : TRUE;
+TRUE : transfer_msg__2__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__2__1__1(table__1__1__2, owner__1__1, transfer_msg__1__1__2)
+ASSIGN
+next(table__1__1__2) := case
+(table__1__1__2 = TRUE) : FALSE;
+TRUE : table__1__1__2;
+esac;
+next(owner__1__1) := case
+(table__1__1__2 = TRUE) : FALSE;
+TRUE : owner__1__1;
+esac;
+next(transfer_msg__1__1__2) := case
+(table__1__1__2 = TRUE) : TRUE;
+TRUE : transfer_msg__1__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__2__1__2(table__1__1__2, owner__1__1, transfer_msg__2__1__2)
+ASSIGN
+next(table__1__1__2) := case
+(table__1__1__2 = TRUE) : FALSE;
+TRUE : table__1__1__2;
+esac;
+next(owner__1__1) := case
+(table__1__1__2 = TRUE) : FALSE;
+TRUE : owner__1__1;
+esac;
+next(transfer_msg__2__1__2) := case
+(table__1__1__2 = TRUE) : TRUE;
+TRUE : transfer_msg__2__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__2__2__1(table__2__1__2, owner__2__1, transfer_msg__1__1__2)
+ASSIGN
+next(table__2__1__2) := case
+(table__2__1__2 = TRUE) : FALSE;
+TRUE : table__2__1__2;
+esac;
+next(owner__2__1) := case
+(table__2__1__2 = TRUE) : FALSE;
+TRUE : owner__2__1;
+esac;
+next(transfer_msg__1__1__2) := case
+(table__2__1__2 = TRUE) : TRUE;
+TRUE : transfer_msg__1__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_reshard__1__2__2__2(table__2__1__2, owner__2__1, transfer_msg__2__1__2)
+ASSIGN
+next(table__2__1__2) := case
+(table__2__1__2 = TRUE) : FALSE;
+TRUE : table__2__1__2;
+esac;
+next(owner__2__1) := case
+(table__2__1__2 = TRUE) : FALSE;
+TRUE : owner__2__1;
+esac;
+next(transfer_msg__2__1__2) := case
+(table__2__1__2 = TRUE) : TRUE;
+TRUE : transfer_msg__2__1__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_recv_transfer_msg__1__1__1(transfer_msg__1__1__1, table__1__1__1, owner__1__1)
+ASSIGN
+next(transfer_msg__1__1__1) := case
+(transfer_msg__1__1__1 = TRUE) : FALSE;
+TRUE : transfer_msg__1__1__1;
+esac;
+next(table__1__1__1) := case
+(transfer_msg__1__1__1 = TRUE) : TRUE;
+TRUE : table__1__1__1;
+esac;
+next(owner__1__1) := case
+(transfer_msg__1__1__1 = TRUE) : TRUE;
+TRUE : owner__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_transfer_msg__1__1__2(transfer_msg__1__1__2, table__1__1__2, owner__1__1)
+ASSIGN
+next(transfer_msg__1__1__2) := case
+(transfer_msg__1__1__2 = TRUE) : FALSE;
+TRUE : transfer_msg__1__1__2;
+esac;
+next(table__1__1__2) := case
+(transfer_msg__1__1__2 = TRUE) : TRUE;
+TRUE : table__1__1__2;
+esac;
+next(owner__1__1) := case
+(transfer_msg__1__1__2 = TRUE) : TRUE;
+TRUE : owner__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_transfer_msg__2__1__1(transfer_msg__2__1__1, table__2__1__1, owner__2__1)
+ASSIGN
+next(transfer_msg__2__1__1) := case
+(transfer_msg__2__1__1 = TRUE) : FALSE;
+TRUE : transfer_msg__2__1__1;
+esac;
+next(table__2__1__1) := case
+(transfer_msg__2__1__1 = TRUE) : TRUE;
+TRUE : table__2__1__1;
+esac;
+next(owner__2__1) := case
+(transfer_msg__2__1__1 = TRUE) : TRUE;
+TRUE : owner__2__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_transfer_msg__2__1__2(transfer_msg__2__1__2, table__2__1__2, owner__2__1)
+ASSIGN
+next(transfer_msg__2__1__2) := case
+(transfer_msg__2__1__2 = TRUE) : FALSE;
+TRUE : transfer_msg__2__1__2;
+esac;
+next(table__2__1__2) := case
+(transfer_msg__2__1__2 = TRUE) : TRUE;
+TRUE : table__2__1__2;
+esac;
+next(owner__2__1) := case
+(transfer_msg__2__1__2 = TRUE) : TRUE;
+TRUE : owner__2__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_put__1__1__1(owner__1__1, table__1__1__1, table__1__1__2)
+ASSIGN
+next(table__1__1__1) := case
+(owner__1__1 = TRUE) : 1 = 1;
+TRUE : table__1__1__1;
+esac;
+next(table__1__1__2) := case
+(owner__1__1 = TRUE) : 2 = 1;
+TRUE : table__1__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_put__1__1__2(owner__1__1, table__1__1__1, table__1__1__2)
+ASSIGN
+next(table__1__1__1) := case
+(owner__1__1 = TRUE) : 1 = 2;
+TRUE : table__1__1__1;
+esac;
+next(table__1__1__2) := case
+(owner__1__1 = TRUE) : 2 = 2;
+TRUE : table__1__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_put__2__1__1(owner__2__1, table__2__1__1, table__2__1__2)
+ASSIGN
+next(table__2__1__1) := case
+(owner__2__1 = TRUE) : 1 = 1;
+TRUE : table__2__1__1;
+esac;
+next(table__2__1__2) := case
+(owner__2__1 = TRUE) : 2 = 1;
+TRUE : table__2__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_put__2__1__2(owner__2__1, table__2__1__1, table__2__1__2)
+ASSIGN
+next(table__2__1__1) := case
+(owner__2__1 = TRUE) : 1 = 2;
+TRUE : table__2__1__1;
+esac;
+next(table__2__1__2) := case
+(owner__2__1 = TRUE) : 2 = 2;
+TRUE : table__2__1__2;
+esac;
+
+---------
+
+
+---------
+

@@ -1,0 +1,585 @@
+MODULE main
+VAR
+message[1][1] : boolean;
+message[1][2] : boolean;
+message[1][3] : boolean;
+message[1][4] : boolean;
+message[2][1] : boolean;
+message[2][2] : boolean;
+message[2][3] : boolean;
+message[2][4] : boolean;
+message[3][1] : boolean;
+message[3][2] : boolean;
+message[3][3] : boolean;
+message[3][4] : boolean;
+message[4][1] : boolean;
+message[4][2] : boolean;
+message[4][3] : boolean;
+message[4][4] : boolean;
+has_lock[1] : boolean;
+has_lock[2] : boolean;
+has_lock[3] : boolean;
+has_lock[4] : boolean;
+start_node : {1, 2, 3, 4};
+
+--------------------
+
+n_send__1__1 : process Proc__n_send__1__1(has_lock[1], message[1][1]);
+
+n_send__1__2 : process Proc__n_send__1__2(has_lock[1], message[1][2]);
+
+n_send__1__3 : process Proc__n_send__1__3(has_lock[1], message[1][3]);
+
+n_send__1__4 : process Proc__n_send__1__4(has_lock[1], message[1][4]);
+
+n_send__2__1 : process Proc__n_send__2__1(has_lock[2], message[2][1]);
+
+n_send__2__2 : process Proc__n_send__2__2(has_lock[2], message[2][2]);
+
+n_send__2__3 : process Proc__n_send__2__3(has_lock[2], message[2][3]);
+
+n_send__2__4 : process Proc__n_send__2__4(has_lock[2], message[2][4]);
+
+n_send__3__1 : process Proc__n_send__3__1(has_lock[3], message[3][1]);
+
+n_send__3__2 : process Proc__n_send__3__2(has_lock[3], message[3][2]);
+
+n_send__3__3 : process Proc__n_send__3__3(has_lock[3], message[3][3]);
+
+n_send__3__4 : process Proc__n_send__3__4(has_lock[3], message[3][4]);
+
+n_send__4__1 : process Proc__n_send__4__1(has_lock[4], message[4][1]);
+
+n_send__4__2 : process Proc__n_send__4__2(has_lock[4], message[4][2]);
+
+n_send__4__3 : process Proc__n_send__4__3(has_lock[4], message[4][3]);
+
+n_send__4__4 : process Proc__n_send__4__4(has_lock[4], message[4][4]);
+
+n_recv__1__1 : process Proc__n_recv__1__1(message[1][1], has_lock[1]);
+
+n_recv__1__2 : process Proc__n_recv__1__2(message[1][2], has_lock[2]);
+
+n_recv__1__3 : process Proc__n_recv__1__3(message[1][3], has_lock[3]);
+
+n_recv__1__4 : process Proc__n_recv__1__4(message[1][4], has_lock[4]);
+
+n_recv__2__1 : process Proc__n_recv__2__1(message[2][1], has_lock[1]);
+
+n_recv__2__2 : process Proc__n_recv__2__2(message[2][2], has_lock[2]);
+
+n_recv__2__3 : process Proc__n_recv__2__3(message[2][3], has_lock[3]);
+
+n_recv__2__4 : process Proc__n_recv__2__4(message[2][4], has_lock[4]);
+
+n_recv__3__1 : process Proc__n_recv__3__1(message[3][1], has_lock[1]);
+
+n_recv__3__2 : process Proc__n_recv__3__2(message[3][2], has_lock[2]);
+
+n_recv__3__3 : process Proc__n_recv__3__3(message[3][3], has_lock[3]);
+
+n_recv__3__4 : process Proc__n_recv__3__4(message[3][4], has_lock[4]);
+
+n_recv__4__1 : process Proc__n_recv__4__1(message[4][1], has_lock[1]);
+
+n_recv__4__2 : process Proc__n_recv__4__2(message[4][2], has_lock[2]);
+
+n_recv__4__3 : process Proc__n_recv__4__3(message[4][3], has_lock[3]);
+
+n_recv__4__4 : process Proc__n_recv__4__4(message[4][4], has_lock[4]);
+
+--------------------
+
+ASSIGN
+init(start_node) := case
+TRUE : 1;
+esac;
+init(message[1][1]) := case
+TRUE : FALSE;
+esac;
+init(message[1][2]) := case
+TRUE : FALSE;
+esac;
+init(message[1][3]) := case
+TRUE : FALSE;
+esac;
+init(message[1][4]) := case
+TRUE : FALSE;
+esac;
+init(message[2][1]) := case
+TRUE : FALSE;
+esac;
+init(message[2][2]) := case
+TRUE : FALSE;
+esac;
+init(message[2][3]) := case
+TRUE : FALSE;
+esac;
+init(message[2][4]) := case
+TRUE : FALSE;
+esac;
+init(message[3][1]) := case
+TRUE : FALSE;
+esac;
+init(message[3][2]) := case
+TRUE : FALSE;
+esac;
+init(message[3][3]) := case
+TRUE : FALSE;
+esac;
+init(message[3][4]) := case
+TRUE : FALSE;
+esac;
+init(message[4][1]) := case
+TRUE : FALSE;
+esac;
+init(message[4][2]) := case
+TRUE : FALSE;
+esac;
+init(message[4][3]) := case
+TRUE : FALSE;
+esac;
+init(message[4][4]) := case
+TRUE : FALSE;
+esac;
+init(has_lock[1]) := case
+TRUE : TRUE;
+esac;
+init(has_lock[2]) := case
+TRUE : FALSE;
+esac;
+init(has_lock[3]) := case
+TRUE : FALSE;
+esac;
+init(has_lock[4]) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_send__1__1(has_lock__1, message__1__1)
+ASSIGN
+next(message__1__1) := case
+(has_lock__1 = TRUE) : TRUE;
+TRUE : message__1__1;
+esac;
+next(has_lock__1) := case
+(has_lock__1 = TRUE) : FALSE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_send__1__2(has_lock__1, message__1__2)
+ASSIGN
+next(message__1__2) := case
+(has_lock__1 = TRUE) : TRUE;
+TRUE : message__1__2;
+esac;
+next(has_lock__1) := case
+(has_lock__1 = TRUE) : FALSE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_send__1__3(has_lock__1, message__1__3)
+ASSIGN
+next(message__1__3) := case
+(has_lock__1 = TRUE) : TRUE;
+TRUE : message__1__3;
+esac;
+next(has_lock__1) := case
+(has_lock__1 = TRUE) : FALSE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_send__1__4(has_lock__1, message__1__4)
+ASSIGN
+next(message__1__4) := case
+(has_lock__1 = TRUE) : TRUE;
+TRUE : message__1__4;
+esac;
+next(has_lock__1) := case
+(has_lock__1 = TRUE) : FALSE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_send__2__1(has_lock__2, message__2__1)
+ASSIGN
+next(message__2__1) := case
+(has_lock__2 = TRUE) : TRUE;
+TRUE : message__2__1;
+esac;
+next(has_lock__2) := case
+(has_lock__2 = TRUE) : FALSE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_send__2__2(has_lock__2, message__2__2)
+ASSIGN
+next(message__2__2) := case
+(has_lock__2 = TRUE) : TRUE;
+TRUE : message__2__2;
+esac;
+next(has_lock__2) := case
+(has_lock__2 = TRUE) : FALSE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_send__2__3(has_lock__2, message__2__3)
+ASSIGN
+next(message__2__3) := case
+(has_lock__2 = TRUE) : TRUE;
+TRUE : message__2__3;
+esac;
+next(has_lock__2) := case
+(has_lock__2 = TRUE) : FALSE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_send__2__4(has_lock__2, message__2__4)
+ASSIGN
+next(message__2__4) := case
+(has_lock__2 = TRUE) : TRUE;
+TRUE : message__2__4;
+esac;
+next(has_lock__2) := case
+(has_lock__2 = TRUE) : FALSE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_send__3__1(has_lock__3, message__3__1)
+ASSIGN
+next(message__3__1) := case
+(has_lock__3 = TRUE) : TRUE;
+TRUE : message__3__1;
+esac;
+next(has_lock__3) := case
+(has_lock__3 = TRUE) : FALSE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_send__3__2(has_lock__3, message__3__2)
+ASSIGN
+next(message__3__2) := case
+(has_lock__3 = TRUE) : TRUE;
+TRUE : message__3__2;
+esac;
+next(has_lock__3) := case
+(has_lock__3 = TRUE) : FALSE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_send__3__3(has_lock__3, message__3__3)
+ASSIGN
+next(message__3__3) := case
+(has_lock__3 = TRUE) : TRUE;
+TRUE : message__3__3;
+esac;
+next(has_lock__3) := case
+(has_lock__3 = TRUE) : FALSE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_send__3__4(has_lock__3, message__3__4)
+ASSIGN
+next(message__3__4) := case
+(has_lock__3 = TRUE) : TRUE;
+TRUE : message__3__4;
+esac;
+next(has_lock__3) := case
+(has_lock__3 = TRUE) : FALSE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_send__4__1(has_lock__4, message__4__1)
+ASSIGN
+next(message__4__1) := case
+(has_lock__4 = TRUE) : TRUE;
+TRUE : message__4__1;
+esac;
+next(has_lock__4) := case
+(has_lock__4 = TRUE) : FALSE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_send__4__2(has_lock__4, message__4__2)
+ASSIGN
+next(message__4__2) := case
+(has_lock__4 = TRUE) : TRUE;
+TRUE : message__4__2;
+esac;
+next(has_lock__4) := case
+(has_lock__4 = TRUE) : FALSE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_send__4__3(has_lock__4, message__4__3)
+ASSIGN
+next(message__4__3) := case
+(has_lock__4 = TRUE) : TRUE;
+TRUE : message__4__3;
+esac;
+next(has_lock__4) := case
+(has_lock__4 = TRUE) : FALSE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_send__4__4(has_lock__4, message__4__4)
+ASSIGN
+next(message__4__4) := case
+(has_lock__4 = TRUE) : TRUE;
+TRUE : message__4__4;
+esac;
+next(has_lock__4) := case
+(has_lock__4 = TRUE) : FALSE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_recv__1__1(message__1__1, has_lock__1)
+ASSIGN
+next(message__1__1) := case
+(message__1__1 = TRUE) : FALSE;
+TRUE : message__1__1;
+esac;
+next(has_lock__1) := case
+(message__1__1 = TRUE) : TRUE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv__1__2(message__1__2, has_lock__2)
+ASSIGN
+next(message__1__2) := case
+(message__1__2 = TRUE) : FALSE;
+TRUE : message__1__2;
+esac;
+next(has_lock__2) := case
+(message__1__2 = TRUE) : TRUE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_recv__1__3(message__1__3, has_lock__3)
+ASSIGN
+next(message__1__3) := case
+(message__1__3 = TRUE) : FALSE;
+TRUE : message__1__3;
+esac;
+next(has_lock__3) := case
+(message__1__3 = TRUE) : TRUE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_recv__1__4(message__1__4, has_lock__4)
+ASSIGN
+next(message__1__4) := case
+(message__1__4 = TRUE) : FALSE;
+TRUE : message__1__4;
+esac;
+next(has_lock__4) := case
+(message__1__4 = TRUE) : TRUE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_recv__2__1(message__2__1, has_lock__1)
+ASSIGN
+next(message__2__1) := case
+(message__2__1 = TRUE) : FALSE;
+TRUE : message__2__1;
+esac;
+next(has_lock__1) := case
+(message__2__1 = TRUE) : TRUE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv__2__2(message__2__2, has_lock__2)
+ASSIGN
+next(message__2__2) := case
+(message__2__2 = TRUE) : FALSE;
+TRUE : message__2__2;
+esac;
+next(has_lock__2) := case
+(message__2__2 = TRUE) : TRUE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_recv__2__3(message__2__3, has_lock__3)
+ASSIGN
+next(message__2__3) := case
+(message__2__3 = TRUE) : FALSE;
+TRUE : message__2__3;
+esac;
+next(has_lock__3) := case
+(message__2__3 = TRUE) : TRUE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_recv__2__4(message__2__4, has_lock__4)
+ASSIGN
+next(message__2__4) := case
+(message__2__4 = TRUE) : FALSE;
+TRUE : message__2__4;
+esac;
+next(has_lock__4) := case
+(message__2__4 = TRUE) : TRUE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_recv__3__1(message__3__1, has_lock__1)
+ASSIGN
+next(message__3__1) := case
+(message__3__1 = TRUE) : FALSE;
+TRUE : message__3__1;
+esac;
+next(has_lock__1) := case
+(message__3__1 = TRUE) : TRUE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv__3__2(message__3__2, has_lock__2)
+ASSIGN
+next(message__3__2) := case
+(message__3__2 = TRUE) : FALSE;
+TRUE : message__3__2;
+esac;
+next(has_lock__2) := case
+(message__3__2 = TRUE) : TRUE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_recv__3__3(message__3__3, has_lock__3)
+ASSIGN
+next(message__3__3) := case
+(message__3__3 = TRUE) : FALSE;
+TRUE : message__3__3;
+esac;
+next(has_lock__3) := case
+(message__3__3 = TRUE) : TRUE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_recv__3__4(message__3__4, has_lock__4)
+ASSIGN
+next(message__3__4) := case
+(message__3__4 = TRUE) : FALSE;
+TRUE : message__3__4;
+esac;
+next(has_lock__4) := case
+(message__3__4 = TRUE) : TRUE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+MODULE Proc__n_recv__4__1(message__4__1, has_lock__1)
+ASSIGN
+next(message__4__1) := case
+(message__4__1 = TRUE) : FALSE;
+TRUE : message__4__1;
+esac;
+next(has_lock__1) := case
+(message__4__1 = TRUE) : TRUE;
+TRUE : has_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv__4__2(message__4__2, has_lock__2)
+ASSIGN
+next(message__4__2) := case
+(message__4__2 = TRUE) : FALSE;
+TRUE : message__4__2;
+esac;
+next(has_lock__2) := case
+(message__4__2 = TRUE) : TRUE;
+TRUE : has_lock__2;
+esac;
+
+---------
+
+MODULE Proc__n_recv__4__3(message__4__3, has_lock__3)
+ASSIGN
+next(message__4__3) := case
+(message__4__3 = TRUE) : FALSE;
+TRUE : message__4__3;
+esac;
+next(has_lock__3) := case
+(message__4__3 = TRUE) : TRUE;
+TRUE : has_lock__3;
+esac;
+
+---------
+
+MODULE Proc__n_recv__4__4(message__4__4, has_lock__4)
+ASSIGN
+next(message__4__4) := case
+(message__4__4 = TRUE) : FALSE;
+TRUE : message__4__4;
+esac;
+next(has_lock__4) := case
+(message__4__4 = TRUE) : TRUE;
+TRUE : has_lock__4;
+esac;
+
+---------
+
+
+---------
+

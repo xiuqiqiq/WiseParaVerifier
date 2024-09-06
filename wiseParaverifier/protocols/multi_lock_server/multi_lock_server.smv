@@ -1,0 +1,216 @@
+MODULE main
+VAR
+lock_msg[1][1] : boolean;
+lock_msg[2][1] : boolean;
+grant_msg[1][1] : boolean;
+grant_msg[2][1] : boolean;
+unlock_msg[1][1] : boolean;
+unlock_msg[2][1] : boolean;
+holds_lock[1][1] : boolean;
+holds_lock[2][1] : boolean;
+server_holds_lock[1] : boolean;
+
+--------------------
+
+n_send_lock__1__1 : process Proc__n_send_lock__1__1(lock_msg[1][1]);
+
+n_send_lock__2__1 : process Proc__n_send_lock__2__1(lock_msg[2][1]);
+
+n_recv_lock__1__1 : process Proc__n_recv_lock__1__1(lock_msg[1][1], server_holds_lock[1], grant_msg[1][1]);
+
+n_recv_lock__2__1 : process Proc__n_recv_lock__2__1(lock_msg[2][1], server_holds_lock[1], grant_msg[2][1]);
+
+n_recv_grant__1__1 : process Proc__n_recv_grant__1__1(grant_msg[1][1], holds_lock[1][1]);
+
+n_recv_grant__2__1 : process Proc__n_recv_grant__2__1(grant_msg[2][1], holds_lock[2][1]);
+
+n_unlock__1__1 : process Proc__n_unlock__1__1(holds_lock[1][1], unlock_msg[1][1]);
+
+n_unlock__2__1 : process Proc__n_unlock__2__1(holds_lock[2][1], unlock_msg[2][1]);
+
+n_recv_unlock__1__1 : process Proc__n_recv_unlock__1__1(unlock_msg[1][1], server_holds_lock[1]);
+
+n_recv_unlock__2__1 : process Proc__n_recv_unlock__2__1(unlock_msg[2][1], server_holds_lock[1]);
+
+--------------------
+
+ASSIGN
+init(lock_msg[1][1]) := case
+TRUE : FALSE;
+esac;
+init(lock_msg[2][1]) := case
+TRUE : FALSE;
+esac;
+init(grant_msg[1][1]) := case
+TRUE : FALSE;
+esac;
+init(grant_msg[2][1]) := case
+TRUE : FALSE;
+esac;
+init(unlock_msg[1][1]) := case
+TRUE : FALSE;
+esac;
+init(unlock_msg[2][1]) := case
+TRUE : FALSE;
+esac;
+init(holds_lock[1][1]) := case
+TRUE : FALSE;
+esac;
+init(holds_lock[2][1]) := case
+TRUE : FALSE;
+esac;
+init(server_holds_lock[1]) := case
+TRUE : TRUE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_send_lock__1__1(lock_msg__1__1)
+ASSIGN
+next(lock_msg__1__1) := case
+(TRUE) : TRUE;
+TRUE : lock_msg__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_send_lock__2__1(lock_msg__2__1)
+ASSIGN
+next(lock_msg__2__1) := case
+(TRUE) : TRUE;
+TRUE : lock_msg__2__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_recv_lock__1__1(lock_msg__1__1, server_holds_lock__1, grant_msg__1__1)
+ASSIGN
+next(server_holds_lock__1) := case
+(lock_msg__1__1 = TRUE & server_holds_lock__1 = TRUE) : FALSE;
+TRUE : server_holds_lock__1;
+esac;
+next(lock_msg__1__1) := case
+(lock_msg__1__1 = TRUE & server_holds_lock__1 = TRUE) : FALSE;
+TRUE : lock_msg__1__1;
+esac;
+next(grant_msg__1__1) := case
+(lock_msg__1__1 = TRUE & server_holds_lock__1 = TRUE) : TRUE;
+TRUE : grant_msg__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_lock__2__1(lock_msg__2__1, server_holds_lock__1, grant_msg__2__1)
+ASSIGN
+next(server_holds_lock__1) := case
+(lock_msg__2__1 = TRUE & server_holds_lock__1 = TRUE) : FALSE;
+TRUE : server_holds_lock__1;
+esac;
+next(lock_msg__2__1) := case
+(lock_msg__2__1 = TRUE & server_holds_lock__1 = TRUE) : FALSE;
+TRUE : lock_msg__2__1;
+esac;
+next(grant_msg__2__1) := case
+(lock_msg__2__1 = TRUE & server_holds_lock__1 = TRUE) : TRUE;
+TRUE : grant_msg__2__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_recv_grant__1__1(grant_msg__1__1, holds_lock__1__1)
+ASSIGN
+next(grant_msg__1__1) := case
+(grant_msg__1__1 = TRUE) : FALSE;
+TRUE : grant_msg__1__1;
+esac;
+next(holds_lock__1__1) := case
+(grant_msg__1__1 = TRUE) : TRUE;
+TRUE : holds_lock__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_grant__2__1(grant_msg__2__1, holds_lock__2__1)
+ASSIGN
+next(grant_msg__2__1) := case
+(grant_msg__2__1 = TRUE) : FALSE;
+TRUE : grant_msg__2__1;
+esac;
+next(holds_lock__2__1) := case
+(grant_msg__2__1 = TRUE) : TRUE;
+TRUE : holds_lock__2__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_unlock__1__1(holds_lock__1__1, unlock_msg__1__1)
+ASSIGN
+next(holds_lock__1__1) := case
+(holds_lock__1__1 = TRUE) : FALSE;
+TRUE : holds_lock__1__1;
+esac;
+next(unlock_msg__1__1) := case
+(holds_lock__1__1 = TRUE) : TRUE;
+TRUE : unlock_msg__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_unlock__2__1(holds_lock__2__1, unlock_msg__2__1)
+ASSIGN
+next(holds_lock__2__1) := case
+(holds_lock__2__1 = TRUE) : FALSE;
+TRUE : holds_lock__2__1;
+esac;
+next(unlock_msg__2__1) := case
+(holds_lock__2__1 = TRUE) : TRUE;
+TRUE : unlock_msg__2__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_recv_unlock__1__1(unlock_msg__1__1, server_holds_lock__1)
+ASSIGN
+next(unlock_msg__1__1) := case
+(unlock_msg__1__1 = TRUE) : FALSE;
+TRUE : unlock_msg__1__1;
+esac;
+next(server_holds_lock__1) := case
+(unlock_msg__1__1 = TRUE) : TRUE;
+TRUE : server_holds_lock__1;
+esac;
+
+---------
+
+MODULE Proc__n_recv_unlock__2__1(unlock_msg__2__1, server_holds_lock__1)
+ASSIGN
+next(unlock_msg__2__1) := case
+(unlock_msg__2__1 = TRUE) : FALSE;
+TRUE : unlock_msg__2__1;
+esac;
+next(server_holds_lock__1) := case
+(unlock_msg__2__1 = TRUE) : TRUE;
+TRUE : server_holds_lock__1;
+esac;
+
+---------
+
+
+---------
+

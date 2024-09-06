@@ -1,0 +1,227 @@
+MODULE main
+VAR
+requested[1][1] : boolean;
+requested[1][2] : boolean;
+requested[2][1] : boolean;
+requested[2][2] : boolean;
+replied[1][1] : boolean;
+replied[1][2] : boolean;
+replied[2][1] : boolean;
+replied[2][2] : boolean;
+holds[1] : boolean;
+holds[2] : boolean;
+
+--------------------
+
+n_request__1__1 : process Proc__n_request__1__1(requested[1][1]);
+
+n_request__1__2 : process Proc__n_request__1__2(requested[1][2]);
+
+n_request__2__1 : process Proc__n_request__2__1(requested[2][1]);
+
+n_request__2__2 : process Proc__n_request__2__2(requested[2][2]);
+
+n_reply__1__1 : process Proc__n_reply__1__1(replied[1][1], holds[1], requested[1][1]);
+
+n_reply__1__2 : process Proc__n_reply__1__2(replied[1][2], holds[2], replied[2][1], requested[1][2]);
+
+n_reply__2__1 : process Proc__n_reply__2__1(replied[2][1], holds[1], replied[1][2], requested[2][1]);
+
+n_reply__2__2 : process Proc__n_reply__2__2(replied[2][2], holds[2], requested[2][2]);
+
+n_enter__1 : process Proc__n_enter__1(replied[1][1], replied[1][2], holds[1]);
+
+n_enter__2 : process Proc__n_enter__2(replied[2][1], replied[2][2], holds[2]);
+
+--------------------
+
+ASSIGN
+init(holds[1]) := case
+TRUE : FALSE;
+esac;
+init(holds[2]) := case
+TRUE : FALSE;
+esac;
+init(requested[1][1]) := case
+TRUE : FALSE;
+esac;
+init(requested[1][2]) := case
+TRUE : FALSE;
+esac;
+init(requested[2][1]) := case
+TRUE : FALSE;
+esac;
+init(requested[2][2]) := case
+TRUE : FALSE;
+esac;
+init(replied[1][1]) := case
+TRUE : FALSE;
+esac;
+init(replied[1][2]) := case
+TRUE : FALSE;
+esac;
+init(replied[2][1]) := case
+TRUE : FALSE;
+esac;
+init(replied[2][2]) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_request__1__1(requested__1__1)
+ASSIGN
+next(requested__1__1) := case
+(1 != 1 & requested__1__1 = FALSE) : TRUE;
+TRUE : requested__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_request__1__2(requested__1__2)
+ASSIGN
+next(requested__1__2) := case
+(1 != 2 & requested__1__2 = FALSE) : TRUE;
+TRUE : requested__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_request__2__1(requested__2__1)
+ASSIGN
+next(requested__2__1) := case
+(2 != 1 & requested__2__1 = FALSE) : TRUE;
+TRUE : requested__2__1;
+esac;
+
+---------
+
+MODULE Proc__n_request__2__2(requested__2__2)
+ASSIGN
+next(requested__2__2) := case
+(2 != 2 & requested__2__2 = FALSE) : TRUE;
+TRUE : requested__2__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_reply__1__1(replied__1__1, holds__1, requested__1__1)
+ASSIGN
+next(requested__1__1) := case
+(1 != 1 & replied__1__1 = FALSE & holds__1 = FALSE & replied__1__1 = FALSE & requested__1__1 = TRUE) : FALSE;
+TRUE : requested__1__1;
+esac;
+next(replied__1__1) := case
+(1 != 1 & replied__1__1 = FALSE & holds__1 = FALSE & replied__1__1 = FALSE & requested__1__1 = TRUE) : TRUE;
+TRUE : replied__1__1;
+esac;
+
+---------
+
+MODULE Proc__n_reply__1__2(replied__1__2, holds__2, replied__2__1, requested__1__2)
+ASSIGN
+next(requested__1__2) := case
+(1 != 2 & replied__1__2 = FALSE & holds__2 = FALSE & replied__2__1 = FALSE & requested__1__2 = TRUE) : FALSE;
+TRUE : requested__1__2;
+esac;
+next(replied__1__2) := case
+(1 != 2 & replied__1__2 = FALSE & holds__2 = FALSE & replied__2__1 = FALSE & requested__1__2 = TRUE) : TRUE;
+TRUE : replied__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_reply__2__1(replied__2__1, holds__1, replied__1__2, requested__2__1)
+ASSIGN
+next(requested__2__1) := case
+(2 != 1 & replied__2__1 = FALSE & holds__1 = FALSE & replied__1__2 = FALSE & requested__2__1 = TRUE) : FALSE;
+TRUE : requested__2__1;
+esac;
+next(replied__2__1) := case
+(2 != 1 & replied__2__1 = FALSE & holds__1 = FALSE & replied__1__2 = FALSE & requested__2__1 = TRUE) : TRUE;
+TRUE : replied__2__1;
+esac;
+
+---------
+
+MODULE Proc__n_reply__2__2(replied__2__2, holds__2, requested__2__2)
+ASSIGN
+next(requested__2__2) := case
+(2 != 2 & replied__2__2 = FALSE & holds__2 = FALSE & replied__2__2 = FALSE & requested__2__2 = TRUE) : FALSE;
+TRUE : requested__2__2;
+esac;
+next(replied__2__2) := case
+(2 != 2 & replied__2__2 = FALSE & holds__2 = FALSE & replied__2__2 = FALSE & requested__2__2 = TRUE) : TRUE;
+TRUE : replied__2__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_enter__1(replied__1__1, replied__1__2, holds__1)
+ASSIGN
+next(holds__1) := case
+(((1 != 1) ->   replied__1__1 = TRUE) & ((1 != 2) ->   replied__1__2 = TRUE)) : TRUE;
+TRUE : holds__1;
+esac;
+
+---------
+
+MODULE Proc__n_enter__2(replied__2__1, replied__2__2, holds__2)
+ASSIGN
+next(holds__2) := case
+(((2 != 1) ->   replied__2__1 = TRUE) & ((2 != 2) ->   replied__2__2 = TRUE)) : TRUE;
+TRUE : holds__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_leave__1(holds__1, replied__1__1, replied__1__2)
+ASSIGN
+next(holds__1) := case
+(holds__1 = TRUE) : FALSE;
+TRUE : holds__1;
+esac;
+next(replied__1__1) := case
+(holds__1 = TRUE) : FALSE;
+TRUE : replied__1__1;
+esac;
+next(replied__1__2) := case
+(holds__1 = TRUE) : FALSE;
+TRUE : replied__1__2;
+esac;
+
+---------
+
+MODULE Proc__n_leave__2(holds__2, replied__2__1, replied__2__2)
+ASSIGN
+next(holds__2) := case
+(holds__2 = TRUE) : FALSE;
+TRUE : holds__2;
+esac;
+next(replied__2__1) := case
+(holds__2 = TRUE) : FALSE;
+TRUE : replied__2__1;
+esac;
+next(replied__2__2) := case
+(holds__2 = TRUE) : FALSE;
+TRUE : replied__2__2;
+esac;
+
+---------
+
+
+---------
+

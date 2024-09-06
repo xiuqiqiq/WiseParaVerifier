@@ -1,0 +1,20 @@
+invariant "commit_abort_commit1_1"
+  !(decide_abort[2] = true & go_commit[1] = true);
+invariant "commit_abort_abort2_1"
+  !(decide_commit[1] = true & go_abort[2] = true);
+invariant "commit_vote_yes_commit1_1"
+  !(vote_yes[2] = false & go_commit[1] = true);
+invariant "abort_abort1_1"
+  !(abort_flag = false & go_abort[1] = true);
+invariant "commit_abort_commit1_1_go11_1"
+  !(decide_abort[2] = true & vote_yes[2] = true & go_abort[2] = false);
+invariant "commit_abort_commit1_1_abort2_1"
+  !(go_commit[1] = true & go_abort[2] = true);
+invariant "commit_abort_abort2_1_go21_1"
+  !(decide_commit[1] = true & go_commit[2] = false);
+invariant "abort_abort1_1_go21_1"
+  !(abort_flag = false & alive[2] = false);
+invariant "abort_abort1_1_go21_2"
+  !(abort_flag = false & vote_no[1] = true);
+invariant "commit_abort_abort2_1_go21_1_commit1_1"
+  !(go_commit[2] = false & go_commit[1] = true);

@@ -1,0 +1,2 @@
+invariant "Onelink_connect1_1"
+  !(link[2][1] = true & semaphore[1] = true);

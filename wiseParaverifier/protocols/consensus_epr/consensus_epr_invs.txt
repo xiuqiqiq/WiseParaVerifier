@@ -1,0 +1,106 @@
+invariant "consensusepr1_decide1_1"
+  !(decided[2][2] = true & leader[1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_1"
+  !(member[1][1] = false & member[2][1] = false & member[3][1] = false);
+invariant "consensusepr1_decide1_1_become_leader1_2"
+  !(decided[2][2] = true & member[1][1] = false & member[2][1] = false & votes[1][3] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3"
+  !(decided[2][2] = true & votes[1][1] = true & member[2][1] = false & votes[1][3] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4"
+  !(decided[2][2] = true & votes[1][1] = true & votes[1][2] = true & votes[1][3] = true);
+invariant "consensusepr1_decide1_1_decide4_1"
+  !(leader[1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1"
+  !(member[2][1] = false & member[1][1] = false & decided[2][2] = true & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_decide4_1"
+  !(votes[1][3] = true & member[2][1] = false & member[1][1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1"
+  !(votes[1][3] = true & member[2][1] = false & decided[2][2] = true & vote_msg[1][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_decide4_1"
+  !(votes[1][3] = true & member[2][1] = false & votes[1][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1"
+  !(votes[1][3] = true & votes[1][2] = true & decided[2][2] = true & vote_msg[1][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_decide4_1"
+  !(votes[1][3] = true & votes[1][2] = true & votes[1][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_send_vote7_1"
+  !(decided[2][2] = true & member[1][1] = false & member[2][1] = false & voted[3] = false);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & member[1][1] = false & member[2][1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_decide4_1_become_leader3_1"
+  !(votes[1][3] = true & votes[2][3] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_decide4_1_become_leader4_1"
+  !(member[1][1] = false & member[2][1] = false & member[3][2] = false);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1"
+  !(decided[2][2] = true & member[2][1] = false & votes[1][3] = true & voted[1] = false);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_recv_vote3_1"
+  !(vote_msg[1][1] = true & decided[2][2] = true & member[2][1] = false & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_decide4_1"
+  !(vote_msg[1][1] = true & member[2][1] = false & votes[1][3] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_decide4_1_become_leader3_1"
+  !(votes[1][1] = true & votes[2][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1"
+  !(decided[2][2] = true & votes[1][2] = true & votes[1][3] = true & voted[1] = false);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_recv_vote2_1"
+  !(vote_msg[1][1] = true & decided[2][2] = true & votes[1][3] = true & vote_msg[2][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_decide4_1"
+  !(vote_msg[1][1] = true & votes[1][2] = true & votes[1][3] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_send_vote7_1_decide4_1"
+  !(voted[3] = false & member[2][1] = false & member[1][1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_decide4_1_become_leader3_1"
+  !(vote_msg[3][1] = true & votes[2][3] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1_recv_vote3_1"
+  !(voted[1] = false & member[2][1] = false & decided[2][2] = true & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1_decide4_1"
+  !(voted[1] = false & votes[1][3] = true & member[2][1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & member[2][1] = false & vote_msg[1][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_decide4_1_become_leader3_1"
+  !(vote_msg[1][1] = true & votes[2][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_decide4_1_become_leader3_1_recv_vote4_1"
+  !(votes[1][1] = true & vote_msg[1][2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1"
+  !(voted[1] = false & votes[1][3] = true & decided[2][2] = true & vote_msg[2][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_decide4_1"
+  !(voted[1] = false & votes[1][3] = true & votes[1][2] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_recv_vote2_1_recv_vote3_1"
+  !(vote_msg[2][1] = true & decided[2][2] = true & vote_msg[1][1] = true & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_recv_vote2_1_decide4_1"
+  !(vote_msg[2][1] = true & votes[1][3] = true & vote_msg[1][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_send_vote7_1_decide4_1_become_leader3_1"
+  !(voted[3] = false & votes[2][3] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_decide4_1_become_leader3_1_recv_vote6_1"
+  !(vote_msg[3][1] = true & vote_msg[3][2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1_recv_vote3_1_send_vote7_1"
+  !(decided[2][2] = true & member[2][1] = false & voted[1] = false & voted[3] = false);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & member[2][1] = false & voted[1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_decide4_1_become_leader3_1_recv_vote4_1"
+  !(vote_msg[1][1] = true & vote_msg[1][2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_decide4_1_become_leader3_1_recv_vote4_1_send_vote2_1"
+  !(votes[1][1] = true & voted[1] = false);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1"
+  !(decided[2][2] = true & votes[1][3] = true & voted[1] = false & voted[2] = false);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_recv_vote3_1"
+  !(vote_msg[2][1] = true & decided[2][2] = true & voted[1] = false & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_decide4_1"
+  !(vote_msg[2][1] = true & votes[1][3] = true & voted[1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_recv_vote2_1_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & vote_msg[1][1] = true & vote_msg[2][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_2_recv_vote3_1_send_vote7_1_decide4_1_become_leader3_1_recv_vote6_1"
+  !(voted[3] = false & vote_msg[3][2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_send_vote1_1_recv_vote3_1_send_vote7_1_decide4_1"
+  !(voted[3] = false & voted[1] = false & member[2][1] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_3_recv_vote1_1_decide4_1_become_leader3_1_recv_vote4_1_send_vote2_1"
+  !(vote_msg[1][1] = true & voted[1] = false);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1_recv_vote3_1"
+  !(voted[2] = false & voted[1] = false & decided[2][2] = true & vote_msg[3][1] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1_decide4_1"
+  !(voted[2] = false & voted[1] = false & votes[1][3] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & voted[1] = false & vote_msg[2][1] = true & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1_recv_vote3_1_send_vote7_1"
+  !(decided[2][2] = true & voted[1] = false & voted[2] = false & voted[3] = false);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1_recv_vote3_1_decide4_1"
+  !(vote_msg[3][1] = true & voted[1] = false & voted[2] = false & leader[2] = true);
+invariant "consensusepr1_decide1_1_become_leader1_4_recv_vote1_1_send_vote1_1_recv_vote2_1_send_vote4_1_recv_vote3_1_send_vote7_1_decide4_1"
+  !(voted[3] = false & voted[2] = false & voted[1] = false & leader[2] = true);

@@ -1,0 +1,22 @@
+invariant "Onelink_recv_grant1_1"
+  !(holds_lock[2][1] = true & grant_msg[1][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1"
+  !(holds_lock[2][1] = true & server_holds_lock[1] = true);
+invariant "Onelink_recv_grant1_1_recv_grant2_1"
+  !(grant_msg[1][1] = true & grant_msg[2][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1"
+  !(server_holds_lock[1] = true & grant_msg[2][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_unlock1_1"
+  !(holds_lock[2][1] = true & unlock_msg[1][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_unlock2_1"
+  !(holds_lock[2][1] = true & unlock_msg[2][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1_recv_unlock1_1"
+  !(grant_msg[2][1] = true & unlock_msg[1][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1_recv_unlock2_1"
+  !(grant_msg[2][1] = true & unlock_msg[2][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1_recv_unlock1_1_recv_lock2_1"
+  !(unlock_msg[1][1] = true & server_holds_lock[1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1_recv_unlock2_1_unlock2_1"
+  !(grant_msg[2][1] = true & holds_lock[2][1] = true);
+invariant "Onelink_recv_grant1_1_recv_lock1_1_recv_grant2_1_recv_unlock1_1_recv_lock2_1_recv_unlock2_1"
+  !(unlock_msg[1][1] = true & unlock_msg[2][1] = true);

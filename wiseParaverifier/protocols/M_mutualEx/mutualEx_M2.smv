@@ -1,0 +1,1366 @@
+MODULE main
+VAR
+n[1][1].state : {i_em, t_em, c_em, e_em};
+n[1][1].mark : {1, 2, 3, 4};
+n[1][1].data : {1, 2};
+n[1][2].state : {i_em, t_em, c_em, e_em};
+n[1][2].mark : {1, 2, 3, 4};
+n[1][2].data : {1, 2};
+n[2][1].state : {i_em, t_em, c_em, e_em};
+n[2][1].mark : {1, 2, 3, 4};
+n[2][1].data : {1, 2};
+n[2][2].state : {i_em, t_em, c_em, e_em};
+n[2][2].mark : {1, 2, 3, 4};
+n[2][2].data : {1, 2};
+x[1] : boolean;
+x[2] : boolean;
+x[3] : boolean;
+x[4] : boolean;
+memData[1] : {1, 2};
+memData[2] : {1, 2};
+memData[3] : {1, 2};
+memData[4] : {1, 2};
+auxData[1] : {1, 2};
+auxData[2] : {1, 2};
+auxData[3] : {1, 2};
+auxData[4] : {1, 2};
+
+--------------------
+
+n_Store__1__1__1__1 : process Proc__n_Store__1__1__1__1(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[1]);
+
+n_Store__1__1__1__2 : process Proc__n_Store__1__1__1__2(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[2]);
+
+n_Store__1__1__1__3 : process Proc__n_Store__1__1__1__3(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[3]);
+
+n_Store__1__1__1__4 : process Proc__n_Store__1__1__1__4(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[4]);
+
+n_Store__1__1__2__1 : process Proc__n_Store__1__1__2__1(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[1]);
+
+n_Store__1__1__2__2 : process Proc__n_Store__1__1__2__2(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[2]);
+
+n_Store__1__1__2__3 : process Proc__n_Store__1__1__2__3(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[3]);
+
+n_Store__1__1__2__4 : process Proc__n_Store__1__1__2__4(n[1][1].state, n[1][1].mark, n[1][1].data, auxData[4]);
+
+n_Store__1__2__1__1 : process Proc__n_Store__1__2__1__1(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[1]);
+
+n_Store__1__2__1__2 : process Proc__n_Store__1__2__1__2(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[2]);
+
+n_Store__1__2__1__3 : process Proc__n_Store__1__2__1__3(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[3]);
+
+n_Store__1__2__1__4 : process Proc__n_Store__1__2__1__4(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[4]);
+
+n_Store__1__2__2__1 : process Proc__n_Store__1__2__2__1(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[1]);
+
+n_Store__1__2__2__2 : process Proc__n_Store__1__2__2__2(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[2]);
+
+n_Store__1__2__2__3 : process Proc__n_Store__1__2__2__3(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[3]);
+
+n_Store__1__2__2__4 : process Proc__n_Store__1__2__2__4(n[1][2].state, n[1][2].mark, n[1][2].data, auxData[4]);
+
+n_Store__2__1__1__1 : process Proc__n_Store__2__1__1__1(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[1]);
+
+n_Store__2__1__1__2 : process Proc__n_Store__2__1__1__2(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[2]);
+
+n_Store__2__1__1__3 : process Proc__n_Store__2__1__1__3(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[3]);
+
+n_Store__2__1__1__4 : process Proc__n_Store__2__1__1__4(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[4]);
+
+n_Store__2__1__2__1 : process Proc__n_Store__2__1__2__1(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[1]);
+
+n_Store__2__1__2__2 : process Proc__n_Store__2__1__2__2(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[2]);
+
+n_Store__2__1__2__3 : process Proc__n_Store__2__1__2__3(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[3]);
+
+n_Store__2__1__2__4 : process Proc__n_Store__2__1__2__4(n[2][1].state, n[2][1].mark, n[2][1].data, auxData[4]);
+
+n_Store__2__2__1__1 : process Proc__n_Store__2__2__1__1(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[1]);
+
+n_Store__2__2__1__2 : process Proc__n_Store__2__2__1__2(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[2]);
+
+n_Store__2__2__1__3 : process Proc__n_Store__2__2__1__3(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[3]);
+
+n_Store__2__2__1__4 : process Proc__n_Store__2__2__1__4(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[4]);
+
+n_Store__2__2__2__1 : process Proc__n_Store__2__2__2__1(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[1]);
+
+n_Store__2__2__2__2 : process Proc__n_Store__2__2__2__2(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[2]);
+
+n_Store__2__2__2__3 : process Proc__n_Store__2__2__2__3(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[3]);
+
+n_Store__2__2__2__4 : process Proc__n_Store__2__2__2__4(n[2][2].state, n[2][2].mark, n[2][2].data, auxData[4]);
+
+n_Try__1__1 : process Proc__n_Try__1__1(n[1][1].state);
+
+n_Try__1__2 : process Proc__n_Try__1__2(n[1][2].state);
+
+n_Try__2__1 : process Proc__n_Try__2__1(n[2][1].state);
+
+n_Try__2__2 : process Proc__n_Try__2__2(n[2][2].state);
+
+n_Crit__1__1__1 : process Proc__n_Crit__1__1__1(n[1][1].state, x[1], n[1][1].mark, memData[1], n[1][1].data);
+
+n_Crit__1__1__2 : process Proc__n_Crit__1__1__2(n[1][1].state, x[2], n[1][1].mark, memData[2], n[1][1].data);
+
+n_Crit__1__1__3 : process Proc__n_Crit__1__1__3(n[1][1].state, x[3], n[1][1].mark, memData[3], n[1][1].data);
+
+n_Crit__1__1__4 : process Proc__n_Crit__1__1__4(n[1][1].state, x[4], n[1][1].mark, memData[4], n[1][1].data);
+
+n_Crit__1__2__1 : process Proc__n_Crit__1__2__1(n[1][2].state, x[1], n[1][2].mark, memData[1], n[1][2].data);
+
+n_Crit__1__2__2 : process Proc__n_Crit__1__2__2(n[1][2].state, x[2], n[1][2].mark, memData[2], n[1][2].data);
+
+n_Crit__1__2__3 : process Proc__n_Crit__1__2__3(n[1][2].state, x[3], n[1][2].mark, memData[3], n[1][2].data);
+
+n_Crit__1__2__4 : process Proc__n_Crit__1__2__4(n[1][2].state, x[4], n[1][2].mark, memData[4], n[1][2].data);
+
+n_Crit__2__1__1 : process Proc__n_Crit__2__1__1(n[2][1].state, x[1], n[2][1].mark, memData[1], n[2][1].data);
+
+n_Crit__2__1__2 : process Proc__n_Crit__2__1__2(n[2][1].state, x[2], n[2][1].mark, memData[2], n[2][1].data);
+
+n_Crit__2__1__3 : process Proc__n_Crit__2__1__3(n[2][1].state, x[3], n[2][1].mark, memData[3], n[2][1].data);
+
+n_Crit__2__1__4 : process Proc__n_Crit__2__1__4(n[2][1].state, x[4], n[2][1].mark, memData[4], n[2][1].data);
+
+n_Crit__2__2__1 : process Proc__n_Crit__2__2__1(n[2][2].state, x[1], n[2][2].mark, memData[1], n[2][2].data);
+
+n_Crit__2__2__2 : process Proc__n_Crit__2__2__2(n[2][2].state, x[2], n[2][2].mark, memData[2], n[2][2].data);
+
+n_Crit__2__2__3 : process Proc__n_Crit__2__2__3(n[2][2].state, x[3], n[2][2].mark, memData[3], n[2][2].data);
+
+n_Crit__2__2__4 : process Proc__n_Crit__2__2__4(n[2][2].state, x[4], n[2][2].mark, memData[4], n[2][2].data);
+
+n_Exit__1__1 : process Proc__n_Exit__1__1(n[1][1].state);
+
+n_Exit__1__2 : process Proc__n_Exit__1__2(n[1][2].state);
+
+n_Exit__2__1 : process Proc__n_Exit__2__1(n[2][1].state);
+
+n_Exit__2__2 : process Proc__n_Exit__2__2(n[2][2].state);
+
+n_Idle__1__1__1 : process Proc__n_Idle__1__1__1(n[1][1].state, n[1][1].mark, x[1], n[1][1].data, memData[1]);
+
+n_Idle__1__1__2 : process Proc__n_Idle__1__1__2(n[1][1].state, n[1][1].mark, x[2], n[1][1].data, memData[2]);
+
+n_Idle__1__1__3 : process Proc__n_Idle__1__1__3(n[1][1].state, n[1][1].mark, x[3], n[1][1].data, memData[3]);
+
+n_Idle__1__1__4 : process Proc__n_Idle__1__1__4(n[1][1].state, n[1][1].mark, x[4], n[1][1].data, memData[4]);
+
+n_Idle__1__2__1 : process Proc__n_Idle__1__2__1(n[1][2].state, n[1][2].mark, x[1], n[1][2].data, memData[1]);
+
+n_Idle__1__2__2 : process Proc__n_Idle__1__2__2(n[1][2].state, n[1][2].mark, x[2], n[1][2].data, memData[2]);
+
+n_Idle__1__2__3 : process Proc__n_Idle__1__2__3(n[1][2].state, n[1][2].mark, x[3], n[1][2].data, memData[3]);
+
+n_Idle__1__2__4 : process Proc__n_Idle__1__2__4(n[1][2].state, n[1][2].mark, x[4], n[1][2].data, memData[4]);
+
+n_Idle__2__1__1 : process Proc__n_Idle__2__1__1(n[2][1].state, n[2][1].mark, x[1], n[2][1].data, memData[1]);
+
+n_Idle__2__1__2 : process Proc__n_Idle__2__1__2(n[2][1].state, n[2][1].mark, x[2], n[2][1].data, memData[2]);
+
+n_Idle__2__1__3 : process Proc__n_Idle__2__1__3(n[2][1].state, n[2][1].mark, x[3], n[2][1].data, memData[3]);
+
+n_Idle__2__1__4 : process Proc__n_Idle__2__1__4(n[2][1].state, n[2][1].mark, x[4], n[2][1].data, memData[4]);
+
+n_Idle__2__2__1 : process Proc__n_Idle__2__2__1(n[2][2].state, n[2][2].mark, x[1], n[2][2].data, memData[1]);
+
+n_Idle__2__2__2 : process Proc__n_Idle__2__2__2(n[2][2].state, n[2][2].mark, x[2], n[2][2].data, memData[2]);
+
+n_Idle__2__2__3 : process Proc__n_Idle__2__2__3(n[2][2].state, n[2][2].mark, x[3], n[2][2].data, memData[3]);
+
+n_Idle__2__2__4 : process Proc__n_Idle__2__2__4(n[2][2].state, n[2][2].mark, x[4], n[2][2].data, memData[4]);
+
+--------------------
+
+ASSIGN
+init(n[1][1].state) := case
+TRUE : i_em;
+esac;
+init(n[1][2].state) := case
+TRUE : i_em;
+esac;
+init(n[2][1].state) := case
+TRUE : i_em;
+esac;
+init(n[2][2].state) := case
+TRUE : i_em;
+esac;
+init(n[1][1].mark) := case
+TRUE : 1;
+esac;
+init(n[1][2].mark) := case
+TRUE : 1;
+esac;
+init(n[2][1].mark) := case
+TRUE : 1;
+esac;
+init(n[2][2].mark) := case
+TRUE : 1;
+esac;
+init(n[1][1].data) := case
+TRUE : 1;
+esac;
+init(n[1][2].data) := case
+TRUE : 1;
+esac;
+init(n[2][1].data) := case
+TRUE : 1;
+esac;
+init(n[2][2].data) := case
+TRUE : 1;
+esac;
+init(x[1]) := case
+TRUE : TRUE;
+esac;
+init(x[2]) := case
+TRUE : TRUE;
+esac;
+init(x[3]) := case
+TRUE : TRUE;
+esac;
+init(x[4]) := case
+TRUE : TRUE;
+esac;
+init(memData[1]) := case
+TRUE : 1;
+esac;
+init(memData[2]) := case
+TRUE : 1;
+esac;
+init(memData[3]) := case
+TRUE : 1;
+esac;
+init(memData[4]) := case
+TRUE : 1;
+esac;
+init(auxData[1]) := case
+TRUE : 1;
+esac;
+init(auxData[2]) := case
+TRUE : 1;
+esac;
+init(auxData[3]) := case
+TRUE : 1;
+esac;
+init(auxData[4]) := case
+TRUE : 1;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_Store__1__1__1__1(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__1)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 1) : 1;
+TRUE : n__1__1__data;
+esac;
+next(auxData__1) := case
+(n__1__1__state = c_em & n__1__1__mark = 1) : 1;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__1__2(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__2)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 2) : 1;
+TRUE : n__1__1__data;
+esac;
+next(auxData__2) := case
+(n__1__1__state = c_em & n__1__1__mark = 2) : 1;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__1__3(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__3)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 3) : 1;
+TRUE : n__1__1__data;
+esac;
+next(auxData__3) := case
+(n__1__1__state = c_em & n__1__1__mark = 3) : 1;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__1__4(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__4)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 4) : 1;
+TRUE : n__1__1__data;
+esac;
+next(auxData__4) := case
+(n__1__1__state = c_em & n__1__1__mark = 4) : 1;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__2__1(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__1)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 1) : 2;
+TRUE : n__1__1__data;
+esac;
+next(auxData__1) := case
+(n__1__1__state = c_em & n__1__1__mark = 1) : 2;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__2__2(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__2)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 2) : 2;
+TRUE : n__1__1__data;
+esac;
+next(auxData__2) := case
+(n__1__1__state = c_em & n__1__1__mark = 2) : 2;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__2__3(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__3)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 3) : 2;
+TRUE : n__1__1__data;
+esac;
+next(auxData__3) := case
+(n__1__1__state = c_em & n__1__1__mark = 3) : 2;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__1__2__4(n__1__1__state, n__1__1__mark, n__1__1__data, auxData__4)
+ASSIGN
+next(n__1__1__data) := case
+(n__1__1__state = c_em & n__1__1__mark = 4) : 2;
+TRUE : n__1__1__data;
+esac;
+next(auxData__4) := case
+(n__1__1__state = c_em & n__1__1__mark = 4) : 2;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__1__1(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__1)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 1) : 1;
+TRUE : n__1__2__data;
+esac;
+next(auxData__1) := case
+(n__1__2__state = c_em & n__1__2__mark = 1) : 1;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__1__2(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__2)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 2) : 1;
+TRUE : n__1__2__data;
+esac;
+next(auxData__2) := case
+(n__1__2__state = c_em & n__1__2__mark = 2) : 1;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__1__3(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__3)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 3) : 1;
+TRUE : n__1__2__data;
+esac;
+next(auxData__3) := case
+(n__1__2__state = c_em & n__1__2__mark = 3) : 1;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__1__4(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__4)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 4) : 1;
+TRUE : n__1__2__data;
+esac;
+next(auxData__4) := case
+(n__1__2__state = c_em & n__1__2__mark = 4) : 1;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__2__1(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__1)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 1) : 2;
+TRUE : n__1__2__data;
+esac;
+next(auxData__1) := case
+(n__1__2__state = c_em & n__1__2__mark = 1) : 2;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__2__2(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__2)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 2) : 2;
+TRUE : n__1__2__data;
+esac;
+next(auxData__2) := case
+(n__1__2__state = c_em & n__1__2__mark = 2) : 2;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__2__3(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__3)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 3) : 2;
+TRUE : n__1__2__data;
+esac;
+next(auxData__3) := case
+(n__1__2__state = c_em & n__1__2__mark = 3) : 2;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2__2__4(n__1__2__state, n__1__2__mark, n__1__2__data, auxData__4)
+ASSIGN
+next(n__1__2__data) := case
+(n__1__2__state = c_em & n__1__2__mark = 4) : 2;
+TRUE : n__1__2__data;
+esac;
+next(auxData__4) := case
+(n__1__2__state = c_em & n__1__2__mark = 4) : 2;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__1__1(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__1)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 1) : 1;
+TRUE : n__2__1__data;
+esac;
+next(auxData__1) := case
+(n__2__1__state = c_em & n__2__1__mark = 1) : 1;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__1__2(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__2)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 2) : 1;
+TRUE : n__2__1__data;
+esac;
+next(auxData__2) := case
+(n__2__1__state = c_em & n__2__1__mark = 2) : 1;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__1__3(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__3)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 3) : 1;
+TRUE : n__2__1__data;
+esac;
+next(auxData__3) := case
+(n__2__1__state = c_em & n__2__1__mark = 3) : 1;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__1__4(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__4)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 4) : 1;
+TRUE : n__2__1__data;
+esac;
+next(auxData__4) := case
+(n__2__1__state = c_em & n__2__1__mark = 4) : 1;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__2__1(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__1)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 1) : 2;
+TRUE : n__2__1__data;
+esac;
+next(auxData__1) := case
+(n__2__1__state = c_em & n__2__1__mark = 1) : 2;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__2__2(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__2)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 2) : 2;
+TRUE : n__2__1__data;
+esac;
+next(auxData__2) := case
+(n__2__1__state = c_em & n__2__1__mark = 2) : 2;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__2__3(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__3)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 3) : 2;
+TRUE : n__2__1__data;
+esac;
+next(auxData__3) := case
+(n__2__1__state = c_em & n__2__1__mark = 3) : 2;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1__2__4(n__2__1__state, n__2__1__mark, n__2__1__data, auxData__4)
+ASSIGN
+next(n__2__1__data) := case
+(n__2__1__state = c_em & n__2__1__mark = 4) : 2;
+TRUE : n__2__1__data;
+esac;
+next(auxData__4) := case
+(n__2__1__state = c_em & n__2__1__mark = 4) : 2;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__1__1(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__1)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 1) : 1;
+TRUE : n__2__2__data;
+esac;
+next(auxData__1) := case
+(n__2__2__state = c_em & n__2__2__mark = 1) : 1;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__1__2(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__2)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 2) : 1;
+TRUE : n__2__2__data;
+esac;
+next(auxData__2) := case
+(n__2__2__state = c_em & n__2__2__mark = 2) : 1;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__1__3(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__3)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 3) : 1;
+TRUE : n__2__2__data;
+esac;
+next(auxData__3) := case
+(n__2__2__state = c_em & n__2__2__mark = 3) : 1;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__1__4(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__4)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 4) : 1;
+TRUE : n__2__2__data;
+esac;
+next(auxData__4) := case
+(n__2__2__state = c_em & n__2__2__mark = 4) : 1;
+TRUE : auxData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__2__1(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__1)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 1) : 2;
+TRUE : n__2__2__data;
+esac;
+next(auxData__1) := case
+(n__2__2__state = c_em & n__2__2__mark = 1) : 2;
+TRUE : auxData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__2__2(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__2)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 2) : 2;
+TRUE : n__2__2__data;
+esac;
+next(auxData__2) := case
+(n__2__2__state = c_em & n__2__2__mark = 2) : 2;
+TRUE : auxData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__2__3(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__3)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 3) : 2;
+TRUE : n__2__2__data;
+esac;
+next(auxData__3) := case
+(n__2__2__state = c_em & n__2__2__mark = 3) : 2;
+TRUE : auxData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2__2__4(n__2__2__state, n__2__2__mark, n__2__2__data, auxData__4)
+ASSIGN
+next(n__2__2__data) := case
+(n__2__2__state = c_em & n__2__2__mark = 4) : 2;
+TRUE : n__2__2__data;
+esac;
+next(auxData__4) := case
+(n__2__2__state = c_em & n__2__2__mark = 4) : 2;
+TRUE : auxData__4;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Try__1__1(n__1__1__state)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = i_em) : t_em;
+TRUE : n__1__1__state;
+esac;
+
+---------
+
+MODULE Proc__n_Try__1__2(n__1__2__state)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = i_em) : t_em;
+TRUE : n__1__2__state;
+esac;
+
+---------
+
+MODULE Proc__n_Try__2__1(n__2__1__state)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = i_em) : t_em;
+TRUE : n__2__1__state;
+esac;
+
+---------
+
+MODULE Proc__n_Try__2__2(n__2__2__state)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = i_em) : t_em;
+TRUE : n__2__2__state;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Crit__1__1__1(n__1__1__state, x__1, n__1__1__mark, memData__1, n__1__1__data)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = t_em & x__1 = TRUE) : c_em;
+TRUE : n__1__1__state;
+esac;
+next(n__1__1__mark) := case
+(n__1__1__state = t_em & x__1 = TRUE) : 1;
+TRUE : n__1__1__mark;
+esac;
+next(n__1__1__data) := case
+(n__1__1__state = t_em & x__1 = TRUE) : memData__1;
+TRUE : n__1__1__data;
+esac;
+next(x__1) := case
+(n__1__1__state = t_em & x__1 = TRUE) : FALSE;
+TRUE : x__1;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__1__2(n__1__1__state, x__2, n__1__1__mark, memData__2, n__1__1__data)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = t_em & x__2 = TRUE) : c_em;
+TRUE : n__1__1__state;
+esac;
+next(n__1__1__mark) := case
+(n__1__1__state = t_em & x__2 = TRUE) : 2;
+TRUE : n__1__1__mark;
+esac;
+next(n__1__1__data) := case
+(n__1__1__state = t_em & x__2 = TRUE) : memData__2;
+TRUE : n__1__1__data;
+esac;
+next(x__2) := case
+(n__1__1__state = t_em & x__2 = TRUE) : FALSE;
+TRUE : x__2;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__1__3(n__1__1__state, x__3, n__1__1__mark, memData__3, n__1__1__data)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = t_em & x__3 = TRUE) : c_em;
+TRUE : n__1__1__state;
+esac;
+next(n__1__1__mark) := case
+(n__1__1__state = t_em & x__3 = TRUE) : 3;
+TRUE : n__1__1__mark;
+esac;
+next(n__1__1__data) := case
+(n__1__1__state = t_em & x__3 = TRUE) : memData__3;
+TRUE : n__1__1__data;
+esac;
+next(x__3) := case
+(n__1__1__state = t_em & x__3 = TRUE) : FALSE;
+TRUE : x__3;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__1__4(n__1__1__state, x__4, n__1__1__mark, memData__4, n__1__1__data)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = t_em & x__4 = TRUE) : c_em;
+TRUE : n__1__1__state;
+esac;
+next(n__1__1__mark) := case
+(n__1__1__state = t_em & x__4 = TRUE) : 4;
+TRUE : n__1__1__mark;
+esac;
+next(n__1__1__data) := case
+(n__1__1__state = t_em & x__4 = TRUE) : memData__4;
+TRUE : n__1__1__data;
+esac;
+next(x__4) := case
+(n__1__1__state = t_em & x__4 = TRUE) : FALSE;
+TRUE : x__4;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__2__1(n__1__2__state, x__1, n__1__2__mark, memData__1, n__1__2__data)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = t_em & x__1 = TRUE) : c_em;
+TRUE : n__1__2__state;
+esac;
+next(n__1__2__mark) := case
+(n__1__2__state = t_em & x__1 = TRUE) : 1;
+TRUE : n__1__2__mark;
+esac;
+next(n__1__2__data) := case
+(n__1__2__state = t_em & x__1 = TRUE) : memData__1;
+TRUE : n__1__2__data;
+esac;
+next(x__1) := case
+(n__1__2__state = t_em & x__1 = TRUE) : FALSE;
+TRUE : x__1;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__2__2(n__1__2__state, x__2, n__1__2__mark, memData__2, n__1__2__data)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = t_em & x__2 = TRUE) : c_em;
+TRUE : n__1__2__state;
+esac;
+next(n__1__2__mark) := case
+(n__1__2__state = t_em & x__2 = TRUE) : 2;
+TRUE : n__1__2__mark;
+esac;
+next(n__1__2__data) := case
+(n__1__2__state = t_em & x__2 = TRUE) : memData__2;
+TRUE : n__1__2__data;
+esac;
+next(x__2) := case
+(n__1__2__state = t_em & x__2 = TRUE) : FALSE;
+TRUE : x__2;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__2__3(n__1__2__state, x__3, n__1__2__mark, memData__3, n__1__2__data)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = t_em & x__3 = TRUE) : c_em;
+TRUE : n__1__2__state;
+esac;
+next(n__1__2__mark) := case
+(n__1__2__state = t_em & x__3 = TRUE) : 3;
+TRUE : n__1__2__mark;
+esac;
+next(n__1__2__data) := case
+(n__1__2__state = t_em & x__3 = TRUE) : memData__3;
+TRUE : n__1__2__data;
+esac;
+next(x__3) := case
+(n__1__2__state = t_em & x__3 = TRUE) : FALSE;
+TRUE : x__3;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__1__2__4(n__1__2__state, x__4, n__1__2__mark, memData__4, n__1__2__data)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = t_em & x__4 = TRUE) : c_em;
+TRUE : n__1__2__state;
+esac;
+next(n__1__2__mark) := case
+(n__1__2__state = t_em & x__4 = TRUE) : 4;
+TRUE : n__1__2__mark;
+esac;
+next(n__1__2__data) := case
+(n__1__2__state = t_em & x__4 = TRUE) : memData__4;
+TRUE : n__1__2__data;
+esac;
+next(x__4) := case
+(n__1__2__state = t_em & x__4 = TRUE) : FALSE;
+TRUE : x__4;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__1__1(n__2__1__state, x__1, n__2__1__mark, memData__1, n__2__1__data)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = t_em & x__1 = TRUE) : c_em;
+TRUE : n__2__1__state;
+esac;
+next(n__2__1__mark) := case
+(n__2__1__state = t_em & x__1 = TRUE) : 1;
+TRUE : n__2__1__mark;
+esac;
+next(n__2__1__data) := case
+(n__2__1__state = t_em & x__1 = TRUE) : memData__1;
+TRUE : n__2__1__data;
+esac;
+next(x__1) := case
+(n__2__1__state = t_em & x__1 = TRUE) : FALSE;
+TRUE : x__1;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__1__2(n__2__1__state, x__2, n__2__1__mark, memData__2, n__2__1__data)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = t_em & x__2 = TRUE) : c_em;
+TRUE : n__2__1__state;
+esac;
+next(n__2__1__mark) := case
+(n__2__1__state = t_em & x__2 = TRUE) : 2;
+TRUE : n__2__1__mark;
+esac;
+next(n__2__1__data) := case
+(n__2__1__state = t_em & x__2 = TRUE) : memData__2;
+TRUE : n__2__1__data;
+esac;
+next(x__2) := case
+(n__2__1__state = t_em & x__2 = TRUE) : FALSE;
+TRUE : x__2;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__1__3(n__2__1__state, x__3, n__2__1__mark, memData__3, n__2__1__data)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = t_em & x__3 = TRUE) : c_em;
+TRUE : n__2__1__state;
+esac;
+next(n__2__1__mark) := case
+(n__2__1__state = t_em & x__3 = TRUE) : 3;
+TRUE : n__2__1__mark;
+esac;
+next(n__2__1__data) := case
+(n__2__1__state = t_em & x__3 = TRUE) : memData__3;
+TRUE : n__2__1__data;
+esac;
+next(x__3) := case
+(n__2__1__state = t_em & x__3 = TRUE) : FALSE;
+TRUE : x__3;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__1__4(n__2__1__state, x__4, n__2__1__mark, memData__4, n__2__1__data)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = t_em & x__4 = TRUE) : c_em;
+TRUE : n__2__1__state;
+esac;
+next(n__2__1__mark) := case
+(n__2__1__state = t_em & x__4 = TRUE) : 4;
+TRUE : n__2__1__mark;
+esac;
+next(n__2__1__data) := case
+(n__2__1__state = t_em & x__4 = TRUE) : memData__4;
+TRUE : n__2__1__data;
+esac;
+next(x__4) := case
+(n__2__1__state = t_em & x__4 = TRUE) : FALSE;
+TRUE : x__4;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__2__1(n__2__2__state, x__1, n__2__2__mark, memData__1, n__2__2__data)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = t_em & x__1 = TRUE) : c_em;
+TRUE : n__2__2__state;
+esac;
+next(n__2__2__mark) := case
+(n__2__2__state = t_em & x__1 = TRUE) : 1;
+TRUE : n__2__2__mark;
+esac;
+next(n__2__2__data) := case
+(n__2__2__state = t_em & x__1 = TRUE) : memData__1;
+TRUE : n__2__2__data;
+esac;
+next(x__1) := case
+(n__2__2__state = t_em & x__1 = TRUE) : FALSE;
+TRUE : x__1;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__2__2(n__2__2__state, x__2, n__2__2__mark, memData__2, n__2__2__data)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = t_em & x__2 = TRUE) : c_em;
+TRUE : n__2__2__state;
+esac;
+next(n__2__2__mark) := case
+(n__2__2__state = t_em & x__2 = TRUE) : 2;
+TRUE : n__2__2__mark;
+esac;
+next(n__2__2__data) := case
+(n__2__2__state = t_em & x__2 = TRUE) : memData__2;
+TRUE : n__2__2__data;
+esac;
+next(x__2) := case
+(n__2__2__state = t_em & x__2 = TRUE) : FALSE;
+TRUE : x__2;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__2__3(n__2__2__state, x__3, n__2__2__mark, memData__3, n__2__2__data)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = t_em & x__3 = TRUE) : c_em;
+TRUE : n__2__2__state;
+esac;
+next(n__2__2__mark) := case
+(n__2__2__state = t_em & x__3 = TRUE) : 3;
+TRUE : n__2__2__mark;
+esac;
+next(n__2__2__data) := case
+(n__2__2__state = t_em & x__3 = TRUE) : memData__3;
+TRUE : n__2__2__data;
+esac;
+next(x__3) := case
+(n__2__2__state = t_em & x__3 = TRUE) : FALSE;
+TRUE : x__3;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2__2__4(n__2__2__state, x__4, n__2__2__mark, memData__4, n__2__2__data)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = t_em & x__4 = TRUE) : c_em;
+TRUE : n__2__2__state;
+esac;
+next(n__2__2__mark) := case
+(n__2__2__state = t_em & x__4 = TRUE) : 4;
+TRUE : n__2__2__mark;
+esac;
+next(n__2__2__data) := case
+(n__2__2__state = t_em & x__4 = TRUE) : memData__4;
+TRUE : n__2__2__data;
+esac;
+next(x__4) := case
+(n__2__2__state = t_em & x__4 = TRUE) : FALSE;
+TRUE : x__4;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Exit__1__1(n__1__1__state)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = c_em) : e_em;
+TRUE : n__1__1__state;
+esac;
+
+---------
+
+MODULE Proc__n_Exit__1__2(n__1__2__state)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = c_em) : e_em;
+TRUE : n__1__2__state;
+esac;
+
+---------
+
+MODULE Proc__n_Exit__2__1(n__2__1__state)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = c_em) : e_em;
+TRUE : n__2__1__state;
+esac;
+
+---------
+
+MODULE Proc__n_Exit__2__2(n__2__2__state)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = c_em) : e_em;
+TRUE : n__2__2__state;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Idle__1__1__1(n__1__1__state, n__1__1__mark, x__1, n__1__1__data, memData__1)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = e_em & n__1__1__mark = 1) : i_em;
+TRUE : n__1__1__state;
+esac;
+next(x__1) := case
+(n__1__1__state = e_em & n__1__1__mark = 1) : TRUE;
+TRUE : x__1;
+esac;
+next(memData__1) := case
+(n__1__1__state = e_em & n__1__1__mark = 1) : n__1__1__data;
+TRUE : memData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__1__2(n__1__1__state, n__1__1__mark, x__2, n__1__1__data, memData__2)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = e_em & n__1__1__mark = 2) : i_em;
+TRUE : n__1__1__state;
+esac;
+next(x__2) := case
+(n__1__1__state = e_em & n__1__1__mark = 2) : TRUE;
+TRUE : x__2;
+esac;
+next(memData__2) := case
+(n__1__1__state = e_em & n__1__1__mark = 2) : n__1__1__data;
+TRUE : memData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__1__3(n__1__1__state, n__1__1__mark, x__3, n__1__1__data, memData__3)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = e_em & n__1__1__mark = 3) : i_em;
+TRUE : n__1__1__state;
+esac;
+next(x__3) := case
+(n__1__1__state = e_em & n__1__1__mark = 3) : TRUE;
+TRUE : x__3;
+esac;
+next(memData__3) := case
+(n__1__1__state = e_em & n__1__1__mark = 3) : n__1__1__data;
+TRUE : memData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__1__4(n__1__1__state, n__1__1__mark, x__4, n__1__1__data, memData__4)
+ASSIGN
+next(n__1__1__state) := case
+(n__1__1__state = e_em & n__1__1__mark = 4) : i_em;
+TRUE : n__1__1__state;
+esac;
+next(x__4) := case
+(n__1__1__state = e_em & n__1__1__mark = 4) : TRUE;
+TRUE : x__4;
+esac;
+next(memData__4) := case
+(n__1__1__state = e_em & n__1__1__mark = 4) : n__1__1__data;
+TRUE : memData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__2__1(n__1__2__state, n__1__2__mark, x__1, n__1__2__data, memData__1)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = e_em & n__1__2__mark = 1) : i_em;
+TRUE : n__1__2__state;
+esac;
+next(x__1) := case
+(n__1__2__state = e_em & n__1__2__mark = 1) : TRUE;
+TRUE : x__1;
+esac;
+next(memData__1) := case
+(n__1__2__state = e_em & n__1__2__mark = 1) : n__1__2__data;
+TRUE : memData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__2__2(n__1__2__state, n__1__2__mark, x__2, n__1__2__data, memData__2)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = e_em & n__1__2__mark = 2) : i_em;
+TRUE : n__1__2__state;
+esac;
+next(x__2) := case
+(n__1__2__state = e_em & n__1__2__mark = 2) : TRUE;
+TRUE : x__2;
+esac;
+next(memData__2) := case
+(n__1__2__state = e_em & n__1__2__mark = 2) : n__1__2__data;
+TRUE : memData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__2__3(n__1__2__state, n__1__2__mark, x__3, n__1__2__data, memData__3)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = e_em & n__1__2__mark = 3) : i_em;
+TRUE : n__1__2__state;
+esac;
+next(x__3) := case
+(n__1__2__state = e_em & n__1__2__mark = 3) : TRUE;
+TRUE : x__3;
+esac;
+next(memData__3) := case
+(n__1__2__state = e_em & n__1__2__mark = 3) : n__1__2__data;
+TRUE : memData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__1__2__4(n__1__2__state, n__1__2__mark, x__4, n__1__2__data, memData__4)
+ASSIGN
+next(n__1__2__state) := case
+(n__1__2__state = e_em & n__1__2__mark = 4) : i_em;
+TRUE : n__1__2__state;
+esac;
+next(x__4) := case
+(n__1__2__state = e_em & n__1__2__mark = 4) : TRUE;
+TRUE : x__4;
+esac;
+next(memData__4) := case
+(n__1__2__state = e_em & n__1__2__mark = 4) : n__1__2__data;
+TRUE : memData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__1__1(n__2__1__state, n__2__1__mark, x__1, n__2__1__data, memData__1)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = e_em & n__2__1__mark = 1) : i_em;
+TRUE : n__2__1__state;
+esac;
+next(x__1) := case
+(n__2__1__state = e_em & n__2__1__mark = 1) : TRUE;
+TRUE : x__1;
+esac;
+next(memData__1) := case
+(n__2__1__state = e_em & n__2__1__mark = 1) : n__2__1__data;
+TRUE : memData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__1__2(n__2__1__state, n__2__1__mark, x__2, n__2__1__data, memData__2)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = e_em & n__2__1__mark = 2) : i_em;
+TRUE : n__2__1__state;
+esac;
+next(x__2) := case
+(n__2__1__state = e_em & n__2__1__mark = 2) : TRUE;
+TRUE : x__2;
+esac;
+next(memData__2) := case
+(n__2__1__state = e_em & n__2__1__mark = 2) : n__2__1__data;
+TRUE : memData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__1__3(n__2__1__state, n__2__1__mark, x__3, n__2__1__data, memData__3)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = e_em & n__2__1__mark = 3) : i_em;
+TRUE : n__2__1__state;
+esac;
+next(x__3) := case
+(n__2__1__state = e_em & n__2__1__mark = 3) : TRUE;
+TRUE : x__3;
+esac;
+next(memData__3) := case
+(n__2__1__state = e_em & n__2__1__mark = 3) : n__2__1__data;
+TRUE : memData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__1__4(n__2__1__state, n__2__1__mark, x__4, n__2__1__data, memData__4)
+ASSIGN
+next(n__2__1__state) := case
+(n__2__1__state = e_em & n__2__1__mark = 4) : i_em;
+TRUE : n__2__1__state;
+esac;
+next(x__4) := case
+(n__2__1__state = e_em & n__2__1__mark = 4) : TRUE;
+TRUE : x__4;
+esac;
+next(memData__4) := case
+(n__2__1__state = e_em & n__2__1__mark = 4) : n__2__1__data;
+TRUE : memData__4;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__2__1(n__2__2__state, n__2__2__mark, x__1, n__2__2__data, memData__1)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = e_em & n__2__2__mark = 1) : i_em;
+TRUE : n__2__2__state;
+esac;
+next(x__1) := case
+(n__2__2__state = e_em & n__2__2__mark = 1) : TRUE;
+TRUE : x__1;
+esac;
+next(memData__1) := case
+(n__2__2__state = e_em & n__2__2__mark = 1) : n__2__2__data;
+TRUE : memData__1;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__2__2(n__2__2__state, n__2__2__mark, x__2, n__2__2__data, memData__2)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = e_em & n__2__2__mark = 2) : i_em;
+TRUE : n__2__2__state;
+esac;
+next(x__2) := case
+(n__2__2__state = e_em & n__2__2__mark = 2) : TRUE;
+TRUE : x__2;
+esac;
+next(memData__2) := case
+(n__2__2__state = e_em & n__2__2__mark = 2) : n__2__2__data;
+TRUE : memData__2;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__2__3(n__2__2__state, n__2__2__mark, x__3, n__2__2__data, memData__3)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = e_em & n__2__2__mark = 3) : i_em;
+TRUE : n__2__2__state;
+esac;
+next(x__3) := case
+(n__2__2__state = e_em & n__2__2__mark = 3) : TRUE;
+TRUE : x__3;
+esac;
+next(memData__3) := case
+(n__2__2__state = e_em & n__2__2__mark = 3) : n__2__2__data;
+TRUE : memData__3;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2__2__4(n__2__2__state, n__2__2__mark, x__4, n__2__2__data, memData__4)
+ASSIGN
+next(n__2__2__state) := case
+(n__2__2__state = e_em & n__2__2__mark = 4) : i_em;
+TRUE : n__2__2__state;
+esac;
+next(x__4) := case
+(n__2__2__state = e_em & n__2__2__mark = 4) : TRUE;
+TRUE : x__4;
+esac;
+next(memData__4) := case
+(n__2__2__state = e_em & n__2__2__mark = 4) : n__2__2__data;
+TRUE : memData__4;
+esac;
+
+---------
+
+
+---------
+

@@ -1,0 +1,190 @@
+MODULE main
+
+FROZENVAR
+member[1][1] : boolean;
+member[1][2] : boolean;
+member[1][3] : boolean;
+member[2][1] : boolean;
+member[2][2] : boolean;
+member[2][3] : boolean;
+
+
+VAR
+voted[1] : boolean;
+voted[2] : boolean;
+vote[1][1] : boolean;
+vote[1][2] : boolean;
+vote[2][1] : boolean;
+vote[2][2] : boolean;
+decided[1] : boolean;
+decided[2] : boolean;
+
+--------------------
+
+n_cast_vote__1__1 : process Proc__n_cast_vote__1__1(voted[1], vote[1][1]);
+
+n_cast_vote__1__2 : process Proc__n_cast_vote__1__2(voted[1], vote[1][2]);
+
+n_cast_vote__2__1 : process Proc__n_cast_vote__2__1(voted[2], vote[2][1]);
+
+n_cast_vote__2__2 : process Proc__n_cast_vote__2__2(voted[2], vote[2][2]);
+
+n_decide__1__1 : process Proc__n_decide__1__1(member[1][1], vote[1][1], member[2][1], vote[2][1], decided[1]);
+
+n_decide__1__2 : process Proc__n_decide__1__2(member[1][2], vote[1][1], member[2][2], vote[2][1], decided[1]);
+
+n_decide__1__3 : process Proc__n_decide__1__3(member[1][3], vote[1][1], member[2][3], vote[2][1], decided[1]);
+
+n_decide__2__1 : process Proc__n_decide__2__1(member[1][1], vote[1][2], member[2][1], vote[2][2], decided[2]);
+
+n_decide__2__2 : process Proc__n_decide__2__2(member[1][2], vote[1][2], member[2][2], vote[2][2], decided[2]);
+
+n_decide__2__3 : process Proc__n_decide__2__3(member[1][3], vote[1][2], member[2][3], vote[2][2], decided[2]);
+
+--------------------
+INVAR ((member[1][1] = TRUE & member[1][2] = TRUE) | (member[2][1] = TRUE & member[2][2] = TRUE)) & ((member[1][1] = TRUE & member[1][3] = TRUE) | (member[2][1] = TRUE & member[2][3] = TRUE)) & ((member[1][2] = TRUE & member[1][3] = TRUE) | (member[2][2] = TRUE & member[2][3] = TRUE));
+
+ASSIGN
+init(voted[1]) := case
+TRUE : FALSE;
+esac;
+init(voted[2]) := case
+TRUE : FALSE;
+esac;
+init(vote[1][1]) := case
+TRUE : FALSE;
+esac;
+init(vote[1][2]) := case
+TRUE : FALSE;
+esac;
+init(vote[2][1]) := case
+TRUE : FALSE;
+esac;
+init(vote[2][2]) := case
+TRUE : FALSE;
+esac;
+init(decided[1]) := case
+TRUE : FALSE;
+esac;
+init(decided[2]) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_cast_vote__1__1(voted__1, vote__1__1)
+ASSIGN
+next(vote__1__1) := case
+(voted__1 = FALSE) : TRUE;
+TRUE : vote__1__1;
+esac;
+next(voted__1) := case
+(voted__1 = FALSE) : TRUE;
+TRUE : voted__1;
+esac;
+
+---------
+
+MODULE Proc__n_cast_vote__1__2(voted__1, vote__1__2)
+ASSIGN
+next(vote__1__2) := case
+(voted__1 = FALSE) : TRUE;
+TRUE : vote__1__2;
+esac;
+next(voted__1) := case
+(voted__1 = FALSE) : TRUE;
+TRUE : voted__1;
+esac;
+
+---------
+
+MODULE Proc__n_cast_vote__2__1(voted__2, vote__2__1)
+ASSIGN
+next(vote__2__1) := case
+(voted__2 = FALSE) : TRUE;
+TRUE : vote__2__1;
+esac;
+next(voted__2) := case
+(voted__2 = FALSE) : TRUE;
+TRUE : voted__2;
+esac;
+
+---------
+
+MODULE Proc__n_cast_vote__2__2(voted__2, vote__2__2)
+ASSIGN
+next(vote__2__2) := case
+(voted__2 = FALSE) : TRUE;
+TRUE : vote__2__2;
+esac;
+next(voted__2) := case
+(voted__2 = FALSE) : TRUE;
+TRUE : voted__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_decide__1__1(member__1__1, vote__1__1, member__2__1, vote__2__1, decided__1)
+ASSIGN
+next(decided__1) := case
+(((member__2__1 = TRUE) ->   vote__2__1 = TRUE) & ((member__1__1 = TRUE) ->   vote__1__1 = TRUE)) : TRUE;
+TRUE : decided__1;
+esac;
+
+---------
+
+MODULE Proc__n_decide__1__2(member__1__2, vote__1__1, member__2__2, vote__2__1, decided__1)
+ASSIGN
+next(decided__1) := case
+(((member__2__2 = TRUE) ->   vote__2__1 = TRUE) & ((member__1__2 = TRUE) ->   vote__1__1 = TRUE)) : TRUE;
+TRUE : decided__1;
+esac;
+
+---------
+
+MODULE Proc__n_decide__1__3(member__1__3, vote__1__1, member__2__3, vote__2__1, decided__1)
+ASSIGN
+next(decided__1) := case
+(((member__2__3 = TRUE) ->   vote__2__1 = TRUE) & ((member__1__3 = TRUE) ->   vote__1__1 = TRUE)) : TRUE;
+TRUE : decided__1;
+esac;
+
+---------
+
+MODULE Proc__n_decide__2__1(member__1__1, vote__1__2, member__2__1, vote__2__2, decided__2)
+ASSIGN
+next(decided__2) := case
+(((member__2__1 = TRUE) ->   vote__2__2 = TRUE) & ((member__1__1 = TRUE) ->   vote__1__2 = TRUE)) : TRUE;
+TRUE : decided__2;
+esac;
+
+---------
+
+MODULE Proc__n_decide__2__2(member__1__2, vote__1__2, member__2__2, vote__2__2, decided__2)
+ASSIGN
+next(decided__2) := case
+(((member__2__2 = TRUE) ->   vote__2__2 = TRUE) & ((member__1__2 = TRUE) ->   vote__1__2 = TRUE)) : TRUE;
+TRUE : decided__2;
+esac;
+
+---------
+
+MODULE Proc__n_decide__2__3(member__1__3, vote__1__2, member__2__3, vote__2__2, decided__2)
+ASSIGN
+next(decided__2) := case
+(((member__2__3 = TRUE) ->   vote__2__2 = TRUE) & ((member__1__3 = TRUE) ->   vote__1__2 = TRUE)) : TRUE;
+TRUE : decided__2;
+esac;
+
+---------
+
+
+---------
+

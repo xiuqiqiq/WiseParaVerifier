@@ -1,0 +1,260 @@
+MODULE main
+VAR
+vote_yes[1] : boolean;
+vote_yes[2] : boolean;
+vote_no[1] : boolean;
+vote_no[2] : boolean;
+alive[1] : boolean;
+alive[2] : boolean;
+go_commit[1] : boolean;
+go_commit[2] : boolean;
+go_abort[1] : boolean;
+go_abort[2] : boolean;
+decide_commit[1] : boolean;
+decide_commit[2] : boolean;
+decide_abort[1] : boolean;
+decide_abort[2] : boolean;
+abort_flag : boolean;
+
+--------------------
+
+n_vote1__1 : process Proc__n_vote1__1(alive[1], vote_no[1], decide_commit[1], decide_abort[1], vote_yes[1]);
+
+n_vote1__2 : process Proc__n_vote1__2(alive[2], vote_no[2], decide_commit[2], decide_abort[2], vote_yes[2]);
+
+n_vote2__1 : process Proc__n_vote2__1(alive[1], vote_yes[1], decide_commit[1], decide_abort[1], vote_no[1], abort_flag);
+
+n_vote2__2 : process Proc__n_vote2__2(alive[2], vote_yes[2], decide_commit[2], decide_abort[2], vote_no[2], abort_flag);
+
+n_fail__1 : process Proc__n_fail__1(alive[1], abort_flag);
+
+n_fail__2 : process Proc__n_fail__2(alive[2], abort_flag);
+
+n_go1 : process Proc__n_go1(go_commit[1], go_abort[1], vote_yes[1], go_commit[2], go_abort[2], vote_yes[2]);
+
+n_go2 : process Proc__n_go2(go_commit[1], go_abort[1], go_commit[2], go_abort[2], vote_no[1], alive[1], vote_no[2], alive[2]);
+
+n_commit__1 : process Proc__n_commit__1(alive[1], go_commit[1], decide_commit[1]);
+
+n_commit__2 : process Proc__n_commit__2(alive[2], go_commit[2], decide_commit[2]);
+
+n_abort__1 : process Proc__n_abort__1(alive[1], go_abort[1], decide_abort[1]);
+
+n_abort__2 : process Proc__n_abort__2(alive[2], go_abort[2], decide_abort[2]);
+
+--------------------
+
+ASSIGN
+init(vote_yes[1]) := case
+TRUE : FALSE;
+esac;
+init(vote_yes[2]) := case
+TRUE : FALSE;
+esac;
+init(vote_no[1]) := case
+TRUE : FALSE;
+esac;
+init(vote_no[2]) := case
+TRUE : FALSE;
+esac;
+init(alive[1]) := case
+TRUE : TRUE;
+esac;
+init(alive[2]) := case
+TRUE : TRUE;
+esac;
+init(go_commit[1]) := case
+TRUE : FALSE;
+esac;
+init(go_commit[2]) := case
+TRUE : FALSE;
+esac;
+init(go_abort[1]) := case
+TRUE : FALSE;
+esac;
+init(go_abort[2]) := case
+TRUE : FALSE;
+esac;
+init(decide_commit[1]) := case
+TRUE : FALSE;
+esac;
+init(decide_commit[2]) := case
+TRUE : FALSE;
+esac;
+init(decide_abort[1]) := case
+TRUE : FALSE;
+esac;
+init(decide_abort[2]) := case
+TRUE : FALSE;
+esac;
+init(abort_flag) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_vote1__1(alive__1, vote_no__1, decide_commit__1, decide_abort__1, vote_yes__1)
+ASSIGN
+next(vote_yes__1) := case
+(alive__1 = TRUE & vote_no__1 = FALSE & decide_commit__1 = FALSE & decide_abort__1 = FALSE) : TRUE;
+TRUE : vote_yes__1;
+esac;
+
+---------
+
+MODULE Proc__n_vote1__2(alive__2, vote_no__2, decide_commit__2, decide_abort__2, vote_yes__2)
+ASSIGN
+next(vote_yes__2) := case
+(alive__2 = TRUE & vote_no__2 = FALSE & decide_commit__2 = FALSE & decide_abort__2 = FALSE) : TRUE;
+TRUE : vote_yes__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_vote2__1(alive__1, vote_yes__1, decide_commit__1, decide_abort__1, vote_no__1, abort_flag)
+ASSIGN
+next(vote_no__1) := case
+(alive__1 = TRUE & vote_yes__1 = FALSE & decide_commit__1 = FALSE & decide_abort__1 = FALSE) : TRUE;
+TRUE : vote_no__1;
+esac;
+next(abort_flag) := case
+(alive__1 = TRUE & vote_yes__1 = FALSE & decide_commit__1 = FALSE & decide_abort__1 = FALSE) : TRUE;
+TRUE : abort_flag;
+esac;
+next(decide_abort__1) := case
+(alive__1 = TRUE & vote_yes__1 = FALSE & decide_commit__1 = FALSE & decide_abort__1 = FALSE) : TRUE;
+TRUE : decide_abort__1;
+esac;
+
+---------
+
+MODULE Proc__n_vote2__2(alive__2, vote_yes__2, decide_commit__2, decide_abort__2, vote_no__2, abort_flag)
+ASSIGN
+next(vote_no__2) := case
+(alive__2 = TRUE & vote_yes__2 = FALSE & decide_commit__2 = FALSE & decide_abort__2 = FALSE) : TRUE;
+TRUE : vote_no__2;
+esac;
+next(abort_flag) := case
+(alive__2 = TRUE & vote_yes__2 = FALSE & decide_commit__2 = FALSE & decide_abort__2 = FALSE) : TRUE;
+TRUE : abort_flag;
+esac;
+next(decide_abort__2) := case
+(alive__2 = TRUE & vote_yes__2 = FALSE & decide_commit__2 = FALSE & decide_abort__2 = FALSE) : TRUE;
+TRUE : decide_abort__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_fail__1(alive__1, abort_flag)
+ASSIGN
+next(alive__1) := case
+(alive__1 = TRUE) : FALSE;
+TRUE : alive__1;
+esac;
+next(abort_flag) := case
+(alive__1 = TRUE) : TRUE;
+TRUE : abort_flag;
+esac;
+
+---------
+
+MODULE Proc__n_fail__2(alive__2, abort_flag)
+ASSIGN
+next(alive__2) := case
+(alive__2 = TRUE) : FALSE;
+TRUE : alive__2;
+esac;
+next(abort_flag) := case
+(alive__2 = TRUE) : TRUE;
+TRUE : abort_flag;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_go1(go_commit__1, go_abort__1, vote_yes__1, go_commit__2, go_abort__2, vote_yes__2)
+ASSIGN
+next(go_commit__1) := case
+(go_commit__1 = FALSE & go_abort__1 = FALSE & vote_yes__1 = TRUE & go_commit__2 = FALSE & go_abort__2 = FALSE & vote_yes__2 = TRUE) : TRUE;
+TRUE : go_commit__1;
+esac;
+next(go_commit__2) := case
+(go_commit__1 = FALSE & go_abort__1 = FALSE & vote_yes__1 = TRUE & go_commit__2 = FALSE & go_abort__2 = FALSE & vote_yes__2 = TRUE) : TRUE;
+TRUE : go_commit__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_go2(go_commit__1, go_abort__1, go_commit__2, go_abort__2, vote_no__1, alive__1, vote_no__2, alive__2)
+ASSIGN
+next(go_abort__1) := case
+(((go_commit__2 = FALSE & go_abort__2 = FALSE) & go_commit__1 = FALSE & go_abort__1 = FALSE) & !((vote_no__2 = FALSE & alive__2 = TRUE) & vote_no__1 = FALSE & alive__1 = TRUE)) : TRUE;
+TRUE : go_abort__1;
+esac;
+next(go_abort__2) := case
+(((go_commit__2 = FALSE & go_abort__2 = FALSE) & go_commit__1 = FALSE & go_abort__1 = FALSE) & !((vote_no__2 = FALSE & alive__2 = TRUE) & vote_no__1 = FALSE & alive__1 = TRUE)) : TRUE;
+TRUE : go_abort__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_commit__1(alive__1, go_commit__1, decide_commit__1)
+ASSIGN
+next(decide_commit__1) := case
+(alive__1 = TRUE & go_commit__1 = TRUE) : TRUE;
+TRUE : decide_commit__1;
+esac;
+
+---------
+
+MODULE Proc__n_commit__2(alive__2, go_commit__2, decide_commit__2)
+ASSIGN
+next(decide_commit__2) := case
+(alive__2 = TRUE & go_commit__2 = TRUE) : TRUE;
+TRUE : decide_commit__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_abort__1(alive__1, go_abort__1, decide_abort__1)
+ASSIGN
+next(decide_abort__1) := case
+(alive__1 = TRUE & go_abort__1 = TRUE) : TRUE;
+TRUE : decide_abort__1;
+esac;
+
+---------
+
+MODULE Proc__n_abort__2(alive__2, go_abort__2, decide_abort__2)
+ASSIGN
+next(decide_abort__2) := case
+(alive__2 = TRUE & go_abort__2 = TRUE) : TRUE;
+TRUE : decide_abort__2;
+esac;
+
+---------
+
+
+---------
+

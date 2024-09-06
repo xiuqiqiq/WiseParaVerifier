@@ -1,0 +1,790 @@
+MODULE main
+VAR
+cache[1].State : {i_em, s_em, e_em};
+cache[1].Data : {1, 2};
+cache[2].State : {i_em, s_em, e_em};
+cache[2].Data : {1, 2};
+chan1[1].Cmd : {empty1_em, reqs_em, reqe_em};
+chan1[1].Data : {1, 2};
+chan1[2].Cmd : {empty1_em, reqs_em, reqe_em};
+chan1[2].Data : {1, 2};
+chan2[1].Cmd : {empty2_em, inv_em, gnts_em, gnte_em};
+chan2[1].Data : {1, 2};
+chan2[2].Cmd : {empty2_em, inv_em, gnts_em, gnte_em};
+chan2[2].Data : {1, 2};
+chan3[1].Cmd : {empty3_em, invack_em};
+chan3[1].Data : {1, 2};
+chan3[2].Cmd : {empty3_em, invack_em};
+chan3[2].Data : {1, 2};
+invSet[1] : boolean;
+invSet[2] : boolean;
+shrSet[1] : boolean;
+shrSet[2] : boolean;
+exGntd : boolean;
+curCmd : {empty1_em, reqs_em, reqe_em};
+curPtr : {1, 2};
+memData : {1, 2};
+auxData : {1, 2};
+
+--------------------
+
+n_RecvGntE__1 : process Proc__n_RecvGntE__1(chan2[1].Cmd, cache[1].State, chan2[1].Data, cache[1].Data);
+
+n_RecvGntE__2 : process Proc__n_RecvGntE__2(chan2[2].Cmd, cache[2].State, chan2[2].Data, cache[2].Data);
+
+n_RecvGntS__1 : process Proc__n_RecvGntS__1(chan2[1].Cmd, cache[1].State, chan2[1].Data, cache[1].Data);
+
+n_RecvGntS__2 : process Proc__n_RecvGntS__2(chan2[2].Cmd, cache[2].State, chan2[2].Data, cache[2].Data);
+
+n_SendGntE__1 : process Proc__n_SendGntE__1(chan2[1].Cmd, shrSet[1], shrSet[2], chan2[1].Data, curCmd, curPtr, exGntd, memData);
+
+n_SendGntE__2 : process Proc__n_SendGntE__2(chan2[2].Cmd, shrSet[1], shrSet[2], chan2[2].Data, curCmd, curPtr, exGntd, memData);
+
+n_SendGntS__1 : process Proc__n_SendGntS__1(chan2[1].Cmd, chan2[1].Data, shrSet[1], curCmd, curPtr, exGntd, memData);
+
+n_SendGntS__2 : process Proc__n_SendGntS__2(chan2[2].Cmd, chan2[2].Data, shrSet[2], curCmd, curPtr, exGntd, memData);
+
+n_RecvInvAck1__1 : process Proc__n_RecvInvAck1__1(chan3[1].Cmd, shrSet[1], chan3[1].Data, curCmd, exGntd, memData);
+
+n_RecvInvAck1__2 : process Proc__n_RecvInvAck1__2(chan3[2].Cmd, shrSet[2], chan3[2].Data, curCmd, exGntd, memData);
+
+n_RecvInvAck2__1 : process Proc__n_RecvInvAck2__1(chan3[1].Cmd, shrSet[1], curCmd, exGntd);
+
+n_RecvInvAck2__2 : process Proc__n_RecvInvAck2__2(chan3[2].Cmd, shrSet[2], curCmd, exGntd);
+
+n_SendInvAck1__1 : process Proc__n_SendInvAck1__1(chan2[1].Cmd, chan3[1].Cmd, cache[1].State, cache[1].Data, chan3[1].Data);
+
+n_SendInvAck1__2 : process Proc__n_SendInvAck1__2(chan2[2].Cmd, chan3[2].Cmd, cache[2].State, cache[2].Data, chan3[2].Data);
+
+n_SendInvAck2__1 : process Proc__n_SendInvAck2__1(chan2[1].Cmd, chan3[1].Cmd, cache[1].State);
+
+n_SendInvAck2__2 : process Proc__n_SendInvAck2__2(chan2[2].Cmd, chan3[2].Cmd, cache[2].State);
+
+n_SendInv1__1 : process Proc__n_SendInv1__1(chan2[1].Cmd, invSet[1], curCmd);
+
+n_SendInv1__2 : process Proc__n_SendInv1__2(chan2[2].Cmd, invSet[2], curCmd);
+
+n_SendInv2__1 : process Proc__n_SendInv2__1(chan2[1].Cmd, invSet[1], curCmd, exGntd);
+
+n_SendInv2__2 : process Proc__n_SendInv2__2(chan2[2].Cmd, invSet[2], curCmd, exGntd);
+
+n_RecvReqE__1 : process Proc__n_RecvReqE__1(chan1[1].Cmd, shrSet[1], invSet[1], shrSet[2], invSet[2], curCmd, curPtr);
+
+n_RecvReqE__2 : process Proc__n_RecvReqE__2(chan1[2].Cmd, shrSet[1], invSet[1], shrSet[2], invSet[2], curCmd, curPtr);
+
+n_RecvReqS__1 : process Proc__n_RecvReqS__1(chan1[1].Cmd, shrSet[1], invSet[1], shrSet[2], invSet[2], curCmd, curPtr);
+
+n_RecvReqS__2 : process Proc__n_RecvReqS__2(chan1[2].Cmd, shrSet[1], invSet[1], shrSet[2], invSet[2], curCmd, curPtr);
+
+n_SendReqE1__1 : process Proc__n_SendReqE1__1(chan1[1].Cmd, cache[1].State);
+
+n_SendReqE1__2 : process Proc__n_SendReqE1__2(chan1[2].Cmd, cache[2].State);
+
+n_SendReqE2__1 : process Proc__n_SendReqE2__1(chan1[1].Cmd, cache[1].State);
+
+n_SendReqE2__2 : process Proc__n_SendReqE2__2(chan1[2].Cmd, cache[2].State);
+
+n_SendReqS__1 : process Proc__n_SendReqS__1(chan1[1].Cmd, cache[1].State);
+
+n_SendReqS__2 : process Proc__n_SendReqS__2(chan1[2].Cmd, cache[2].State);
+
+n_Store__1__1 : process Proc__n_Store__1__1(cache[1].State, cache[1].Data, auxData);
+
+n_Store__1__2 : process Proc__n_Store__1__2(cache[2].State, cache[2].Data, auxData);
+
+n_Store__2__1 : process Proc__n_Store__2__1(cache[1].State, cache[1].Data, auxData);
+
+n_Store__2__2 : process Proc__n_Store__2__2(cache[2].State, cache[2].Data, auxData);
+
+--------------------
+
+ASSIGN
+init(chan1[1].Cmd) := case
+TRUE : empty1_em;
+esac;
+init(chan1[2].Cmd) := case
+TRUE : empty1_em;
+esac;
+init(chan2[1].Cmd) := case
+TRUE : empty2_em;
+esac;
+init(chan2[2].Cmd) := case
+TRUE : empty2_em;
+esac;
+init(chan3[1].Cmd) := case
+TRUE : empty3_em;
+esac;
+init(chan3[2].Cmd) := case
+TRUE : empty3_em;
+esac;
+init(chan1[1].Data) := case
+TRUE : 1;
+esac;
+init(chan1[2].Data) := case
+TRUE : 1;
+esac;
+init(chan2[1].Data) := case
+TRUE : 1;
+esac;
+init(chan2[2].Data) := case
+TRUE : 1;
+esac;
+init(chan3[1].Data) := case
+TRUE : 1;
+esac;
+init(chan3[2].Data) := case
+TRUE : 1;
+esac;
+init(cache[1].State) := case
+TRUE : i_em;
+esac;
+init(cache[2].State) := case
+TRUE : i_em;
+esac;
+init(cache[1].Data) := case
+TRUE : 1;
+esac;
+init(cache[2].Data) := case
+TRUE : 1;
+esac;
+init(invSet[1]) := case
+TRUE : FALSE;
+esac;
+init(invSet[2]) := case
+TRUE : FALSE;
+esac;
+init(shrSet[1]) := case
+TRUE : FALSE;
+esac;
+init(shrSet[2]) := case
+TRUE : FALSE;
+esac;
+init(memData) := case
+TRUE : 1;
+esac;
+init(auxData) := case
+TRUE : 1;
+esac;
+init(exGntd) := case
+TRUE : FALSE;
+esac;
+init(curCmd) := case
+TRUE : empty1_em;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_RecvGntE__1(chan2__1__Cmd, cache__1__State, chan2__1__Data, cache__1__Data)
+ASSIGN
+next(cache__1__State) := case
+(chan2__1__Cmd = gnte_em) : e_em;
+TRUE : cache__1__State;
+esac;
+next(cache__1__Data) := case
+(chan2__1__Cmd = gnte_em) : chan2__1__Data;
+TRUE : cache__1__Data;
+esac;
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = gnte_em) : empty2_em;
+TRUE : chan2__1__Cmd;
+esac;
+
+---------
+
+MODULE Proc__n_RecvGntE__2(chan2__2__Cmd, cache__2__State, chan2__2__Data, cache__2__Data)
+ASSIGN
+next(cache__2__State) := case
+(chan2__2__Cmd = gnte_em) : e_em;
+TRUE : cache__2__State;
+esac;
+next(cache__2__Data) := case
+(chan2__2__Cmd = gnte_em) : chan2__2__Data;
+TRUE : cache__2__Data;
+esac;
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = gnte_em) : empty2_em;
+TRUE : chan2__2__Cmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_RecvGntS__1(chan2__1__Cmd, cache__1__State, chan2__1__Data, cache__1__Data)
+ASSIGN
+next(cache__1__State) := case
+(chan2__1__Cmd = gnts_em) : s_em;
+TRUE : cache__1__State;
+esac;
+next(cache__1__Data) := case
+(chan2__1__Cmd = gnts_em) : chan2__1__Data;
+TRUE : cache__1__Data;
+esac;
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = gnts_em) : empty2_em;
+TRUE : chan2__1__Cmd;
+esac;
+
+---------
+
+MODULE Proc__n_RecvGntS__2(chan2__2__Cmd, cache__2__State, chan2__2__Data, cache__2__Data)
+ASSIGN
+next(cache__2__State) := case
+(chan2__2__Cmd = gnts_em) : s_em;
+TRUE : cache__2__State;
+esac;
+next(cache__2__Data) := case
+(chan2__2__Cmd = gnts_em) : chan2__2__Data;
+TRUE : cache__2__Data;
+esac;
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = gnts_em) : empty2_em;
+TRUE : chan2__2__Cmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendGntE__1(chan2__1__Cmd, shrSet__1, shrSet__2, chan2__1__Data, curCmd, curPtr, exGntd, memData)
+ASSIGN
+next(chan2__1__Cmd) := case
+(curCmd = reqe_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : gnte_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(chan2__1__Data) := case
+(curCmd = reqe_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : memData;
+TRUE : chan2__1__Data;
+esac;
+next(shrSet__1) := case
+(curCmd = reqe_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : TRUE;
+TRUE : shrSet__1;
+esac;
+next(exGntd) := case
+(curCmd = reqe_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : TRUE;
+TRUE : exGntd;
+esac;
+next(curCmd) := case
+(curCmd = reqe_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : empty1_em;
+TRUE : curCmd;
+esac;
+
+---------
+
+MODULE Proc__n_SendGntE__2(chan2__2__Cmd, shrSet__1, shrSet__2, chan2__2__Data, curCmd, curPtr, exGntd, memData)
+ASSIGN
+next(chan2__2__Cmd) := case
+(curCmd = reqe_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : gnte_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(chan2__2__Data) := case
+(curCmd = reqe_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : memData;
+TRUE : chan2__2__Data;
+esac;
+next(shrSet__2) := case
+(curCmd = reqe_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : TRUE;
+TRUE : shrSet__2;
+esac;
+next(exGntd) := case
+(curCmd = reqe_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : TRUE;
+TRUE : exGntd;
+esac;
+next(curCmd) := case
+(curCmd = reqe_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE & shrSet__2 = FALSE & shrSet__1 = FALSE) : empty1_em;
+TRUE : curCmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendGntS__1(chan2__1__Cmd, chan2__1__Data, shrSet__1, curCmd, curPtr, exGntd, memData)
+ASSIGN
+next(chan2__1__Cmd) := case
+(curCmd = reqs_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE) : gnts_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(chan2__1__Data) := case
+(curCmd = reqs_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE) : memData;
+TRUE : chan2__1__Data;
+esac;
+next(shrSet__1) := case
+(curCmd = reqs_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE) : TRUE;
+TRUE : shrSet__1;
+esac;
+next(curCmd) := case
+(curCmd = reqs_em & curPtr = 1 & chan2__1__Cmd = empty2_em & exGntd = FALSE) : empty1_em;
+TRUE : curCmd;
+esac;
+
+---------
+
+MODULE Proc__n_SendGntS__2(chan2__2__Cmd, chan2__2__Data, shrSet__2, curCmd, curPtr, exGntd, memData)
+ASSIGN
+next(chan2__2__Cmd) := case
+(curCmd = reqs_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE) : gnts_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(chan2__2__Data) := case
+(curCmd = reqs_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE) : memData;
+TRUE : chan2__2__Data;
+esac;
+next(shrSet__2) := case
+(curCmd = reqs_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE) : TRUE;
+TRUE : shrSet__2;
+esac;
+next(curCmd) := case
+(curCmd = reqs_em & curPtr = 2 & chan2__2__Cmd = empty2_em & exGntd = FALSE) : empty1_em;
+TRUE : curCmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_RecvInvAck1__1(chan3__1__Cmd, shrSet__1, chan3__1__Data, curCmd, exGntd, memData)
+ASSIGN
+next(chan3__1__Cmd) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : empty3_em;
+TRUE : chan3__1__Cmd;
+esac;
+next(shrSet__1) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : FALSE;
+TRUE : shrSet__1;
+esac;
+next(exGntd) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : FALSE;
+TRUE : exGntd;
+esac;
+next(memData) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : chan3__1__Data;
+TRUE : memData;
+esac;
+
+---------
+
+MODULE Proc__n_RecvInvAck1__2(chan3__2__Cmd, shrSet__2, chan3__2__Data, curCmd, exGntd, memData)
+ASSIGN
+next(chan3__2__Cmd) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : empty3_em;
+TRUE : chan3__2__Cmd;
+esac;
+next(shrSet__2) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : FALSE;
+TRUE : shrSet__2;
+esac;
+next(exGntd) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : FALSE;
+TRUE : exGntd;
+esac;
+next(memData) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd = TRUE) : chan3__2__Data;
+TRUE : memData;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_RecvInvAck2__1(chan3__1__Cmd, shrSet__1, curCmd, exGntd)
+ASSIGN
+next(chan3__1__Cmd) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd != TRUE) : empty3_em;
+TRUE : chan3__1__Cmd;
+esac;
+next(shrSet__1) := case
+(chan3__1__Cmd = invack_em & curCmd != empty1_em & exGntd != TRUE) : FALSE;
+TRUE : shrSet__1;
+esac;
+
+---------
+
+MODULE Proc__n_RecvInvAck2__2(chan3__2__Cmd, shrSet__2, curCmd, exGntd)
+ASSIGN
+next(chan3__2__Cmd) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd != TRUE) : empty3_em;
+TRUE : chan3__2__Cmd;
+esac;
+next(shrSet__2) := case
+(chan3__2__Cmd = invack_em & curCmd != empty1_em & exGntd != TRUE) : FALSE;
+TRUE : shrSet__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendInvAck1__1(chan2__1__Cmd, chan3__1__Cmd, cache__1__State, cache__1__Data, chan3__1__Data)
+ASSIGN
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State = e_em) : empty2_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(chan3__1__Cmd) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State = e_em) : invack_em;
+TRUE : chan3__1__Cmd;
+esac;
+next(chan3__1__Data) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State = e_em) : cache__1__Data;
+TRUE : chan3__1__Data;
+esac;
+next(cache__1__State) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State = e_em) : i_em;
+TRUE : cache__1__State;
+esac;
+
+---------
+
+MODULE Proc__n_SendInvAck1__2(chan2__2__Cmd, chan3__2__Cmd, cache__2__State, cache__2__Data, chan3__2__Data)
+ASSIGN
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State = e_em) : empty2_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(chan3__2__Cmd) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State = e_em) : invack_em;
+TRUE : chan3__2__Cmd;
+esac;
+next(chan3__2__Data) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State = e_em) : cache__2__Data;
+TRUE : chan3__2__Data;
+esac;
+next(cache__2__State) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State = e_em) : i_em;
+TRUE : cache__2__State;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendInvAck2__1(chan2__1__Cmd, chan3__1__Cmd, cache__1__State)
+ASSIGN
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State != e_em) : empty2_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(chan3__1__Cmd) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State != e_em) : invack_em;
+TRUE : chan3__1__Cmd;
+esac;
+next(cache__1__State) := case
+(chan2__1__Cmd = inv_em & chan3__1__Cmd = empty3_em & cache__1__State != e_em) : i_em;
+TRUE : cache__1__State;
+esac;
+
+---------
+
+MODULE Proc__n_SendInvAck2__2(chan2__2__Cmd, chan3__2__Cmd, cache__2__State)
+ASSIGN
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State != e_em) : empty2_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(chan3__2__Cmd) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State != e_em) : invack_em;
+TRUE : chan3__2__Cmd;
+esac;
+next(cache__2__State) := case
+(chan2__2__Cmd = inv_em & chan3__2__Cmd = empty3_em & cache__2__State != e_em) : i_em;
+TRUE : cache__2__State;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendInv1__1(chan2__1__Cmd, invSet__1, curCmd)
+ASSIGN
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = empty2_em & invSet__1 = TRUE & curCmd = reqe_em) : inv_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(invSet__1) := case
+(chan2__1__Cmd = empty2_em & invSet__1 = TRUE & curCmd = reqe_em) : FALSE;
+TRUE : invSet__1;
+esac;
+
+---------
+
+MODULE Proc__n_SendInv1__2(chan2__2__Cmd, invSet__2, curCmd)
+ASSIGN
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = empty2_em & invSet__2 = TRUE & curCmd = reqe_em) : inv_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(invSet__2) := case
+(chan2__2__Cmd = empty2_em & invSet__2 = TRUE & curCmd = reqe_em) : FALSE;
+TRUE : invSet__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendInv2__1(chan2__1__Cmd, invSet__1, curCmd, exGntd)
+ASSIGN
+next(chan2__1__Cmd) := case
+(chan2__1__Cmd = empty2_em & invSet__1 = TRUE & curCmd = reqs_em & exGntd = TRUE) : inv_em;
+TRUE : chan2__1__Cmd;
+esac;
+next(invSet__1) := case
+(chan2__1__Cmd = empty2_em & invSet__1 = TRUE & curCmd = reqs_em & exGntd = TRUE) : FALSE;
+TRUE : invSet__1;
+esac;
+
+---------
+
+MODULE Proc__n_SendInv2__2(chan2__2__Cmd, invSet__2, curCmd, exGntd)
+ASSIGN
+next(chan2__2__Cmd) := case
+(chan2__2__Cmd = empty2_em & invSet__2 = TRUE & curCmd = reqs_em & exGntd = TRUE) : inv_em;
+TRUE : chan2__2__Cmd;
+esac;
+next(invSet__2) := case
+(chan2__2__Cmd = empty2_em & invSet__2 = TRUE & curCmd = reqs_em & exGntd = TRUE) : FALSE;
+TRUE : invSet__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_RecvReqE__1(chan1__1__Cmd, shrSet__1, invSet__1, shrSet__2, invSet__2, curCmd, curPtr)
+ASSIGN
+next(curCmd) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqe_em) : reqe_em;
+TRUE : curCmd;
+esac;
+next(curPtr) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqe_em) : 1;
+TRUE : curPtr;
+esac;
+next(chan1__1__Cmd) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqe_em) : empty1_em;
+TRUE : chan1__1__Cmd;
+esac;
+next(invSet__1) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqe_em) : shrSet__1;
+TRUE : invSet__1;
+esac;
+next(invSet__2) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqe_em) : shrSet__2;
+TRUE : invSet__2;
+esac;
+
+---------
+
+MODULE Proc__n_RecvReqE__2(chan1__2__Cmd, shrSet__1, invSet__1, shrSet__2, invSet__2, curCmd, curPtr)
+ASSIGN
+next(curCmd) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqe_em) : reqe_em;
+TRUE : curCmd;
+esac;
+next(curPtr) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqe_em) : 2;
+TRUE : curPtr;
+esac;
+next(chan1__2__Cmd) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqe_em) : empty1_em;
+TRUE : chan1__2__Cmd;
+esac;
+next(invSet__1) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqe_em) : shrSet__1;
+TRUE : invSet__1;
+esac;
+next(invSet__2) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqe_em) : shrSet__2;
+TRUE : invSet__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_RecvReqS__1(chan1__1__Cmd, shrSet__1, invSet__1, shrSet__2, invSet__2, curCmd, curPtr)
+ASSIGN
+next(curCmd) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqs_em) : reqs_em;
+TRUE : curCmd;
+esac;
+next(curPtr) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqs_em) : 1;
+TRUE : curPtr;
+esac;
+next(chan1__1__Cmd) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqs_em) : empty1_em;
+TRUE : chan1__1__Cmd;
+esac;
+next(invSet__1) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqs_em) : shrSet__1;
+TRUE : invSet__1;
+esac;
+next(invSet__2) := case
+(curCmd = empty1_em & chan1__1__Cmd = reqs_em) : shrSet__2;
+TRUE : invSet__2;
+esac;
+
+---------
+
+MODULE Proc__n_RecvReqS__2(chan1__2__Cmd, shrSet__1, invSet__1, shrSet__2, invSet__2, curCmd, curPtr)
+ASSIGN
+next(curCmd) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqs_em) : reqs_em;
+TRUE : curCmd;
+esac;
+next(curPtr) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqs_em) : 2;
+TRUE : curPtr;
+esac;
+next(chan1__2__Cmd) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqs_em) : empty1_em;
+TRUE : chan1__2__Cmd;
+esac;
+next(invSet__1) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqs_em) : shrSet__1;
+TRUE : invSet__1;
+esac;
+next(invSet__2) := case
+(curCmd = empty1_em & chan1__2__Cmd = reqs_em) : shrSet__2;
+TRUE : invSet__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendReqE1__1(chan1__1__Cmd, cache__1__State)
+ASSIGN
+next(chan1__1__Cmd) := case
+(chan1__1__Cmd = empty1_em & cache__1__State = i_em) : reqe_em;
+TRUE : chan1__1__Cmd;
+esac;
+
+---------
+
+MODULE Proc__n_SendReqE1__2(chan1__2__Cmd, cache__2__State)
+ASSIGN
+next(chan1__2__Cmd) := case
+(chan1__2__Cmd = empty1_em & cache__2__State = i_em) : reqe_em;
+TRUE : chan1__2__Cmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendReqE2__1(chan1__1__Cmd, cache__1__State)
+ASSIGN
+next(chan1__1__Cmd) := case
+(chan1__1__Cmd = empty1_em & cache__1__State = s_em) : reqe_em;
+TRUE : chan1__1__Cmd;
+esac;
+
+---------
+
+MODULE Proc__n_SendReqE2__2(chan1__2__Cmd, cache__2__State)
+ASSIGN
+next(chan1__2__Cmd) := case
+(chan1__2__Cmd = empty1_em & cache__2__State = s_em) : reqe_em;
+TRUE : chan1__2__Cmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_SendReqS__1(chan1__1__Cmd, cache__1__State)
+ASSIGN
+next(chan1__1__Cmd) := case
+(chan1__1__Cmd = empty1_em & cache__1__State = i_em) : reqs_em;
+TRUE : chan1__1__Cmd;
+esac;
+
+---------
+
+MODULE Proc__n_SendReqS__2(chan1__2__Cmd, cache__2__State)
+ASSIGN
+next(chan1__2__Cmd) := case
+(chan1__2__Cmd = empty1_em & cache__2__State = i_em) : reqs_em;
+TRUE : chan1__2__Cmd;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Store__1__1(cache__1__State, cache__1__Data, auxData)
+ASSIGN
+next(cache__1__Data) := case
+(cache__1__State = e_em) : 1;
+TRUE : cache__1__Data;
+esac;
+next(auxData) := case
+(cache__1__State = e_em) : 1;
+TRUE : auxData;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2(cache__2__State, cache__2__Data, auxData)
+ASSIGN
+next(cache__2__Data) := case
+(cache__2__State = e_em) : 1;
+TRUE : cache__2__Data;
+esac;
+next(auxData) := case
+(cache__2__State = e_em) : 1;
+TRUE : auxData;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1(cache__1__State, cache__1__Data, auxData)
+ASSIGN
+next(cache__1__Data) := case
+(cache__1__State = e_em) : 2;
+TRUE : cache__1__Data;
+esac;
+next(auxData) := case
+(cache__1__State = e_em) : 2;
+TRUE : auxData;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2(cache__2__State, cache__2__Data, auxData)
+ASSIGN
+next(cache__2__Data) := case
+(cache__2__State = e_em) : 2;
+TRUE : cache__2__Data;
+esac;
+next(auxData) := case
+(cache__2__State = e_em) : 2;
+TRUE : auxData;
+esac;
+
+---------
+
+
+---------
+

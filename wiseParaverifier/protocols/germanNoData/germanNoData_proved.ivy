@@ -1,0 +1,204 @@
+#lang ivy1.7
+
+type node_t
+
+type other_t = {other_em}
+
+type cache_state_t = {i_em, s_em, e_em}
+
+type msg_cmd_t = {empty_em, reqs_em, reqe_em, inv_em, invack_em, gnts_em, gnte_em}
+
+individual cache_State(G:node_t) : cache_state_t
+
+individual chan1_Cmd(V:node_t) : msg_cmd_t
+
+individual chan2_Cmd(F:node_t) : msg_cmd_t
+
+individual chan3_Cmd(S:node_t) : msg_cmd_t
+
+individual invSet(F:node_t) : bool
+individual shrSet(K:node_t) : bool
+individual exGntd : bool
+individual curCmd : msg_cmd_t
+
+
+after init{
+    chan1_Cmd(A) := empty_em;
+    
+    chan2_Cmd(A) := empty_em;
+    
+    chan3_Cmd(A) := empty_em;
+    
+    cache_State(A) := i_em;
+    
+    invSet(A) := false;
+    
+    shrSet(A) := false;
+    
+    exGntd := false;
+
+    curCmd := empty_em;
+
+}
+
+
+action recvgnte(i: node_t) = {
+    require chan2_Cmd(i) = gnte_em;
+    cache_State(i) := e_em;
+    chan2_Cmd(i) := empty_em;
+}
+
+
+
+action recvgnts(i: node_t) = {
+    require chan2_Cmd(i) = gnts_em;
+    cache_State(i) := s_em;
+    chan2_Cmd(i) := empty_em;
+}
+
+
+
+action sendgnte(i: node_t) = {
+    require curCmd = reqe_em & chan2_Cmd(i) = empty_em & exGntd = false & shrSet(A) = false;
+    chan2_Cmd(i) := gnte_em;
+    shrSet(i) := true;
+    exGntd := true;
+    curCmd := empty_em;
+}
+
+
+
+action sendgnts(i: node_t) = {
+    require curCmd = reqs_em & chan2_Cmd(i) = empty_em & exGntd = false;
+    chan2_Cmd(i) := gnts_em;
+    shrSet(i) := true;
+    curCmd := empty_em;
+}
+
+
+
+action recvinvack1(i: node_t) = {
+    require chan3_Cmd(i) = invack_em & curCmd ~= empty_em & exGntd = true;
+    chan3_Cmd(i) := empty_em;
+    shrSet(i) := false;
+    exGntd := false;
+}
+
+
+
+action recvinvack2(i: node_t) = {
+    require chan3_Cmd(i) = invack_em & curCmd ~= empty_em & exGntd = false;
+    chan3_Cmd(i) := empty_em;
+    shrSet(i) := false;
+}
+
+
+
+action sendinvack(i: node_t) = {
+    require chan2_Cmd(i) = inv_em & chan3_Cmd(i) = empty_em;
+    chan2_Cmd(i) := empty_em;
+    chan3_Cmd(i) := invack_em;
+    cache_State(i) := i_em;
+}
+
+
+
+action sendinv(i: node_t) = {
+    require chan2_Cmd(i) = empty_em & invSet(i) = true & (curCmd = reqe_em | curCmd = reqs_em & exGntd = true);
+    chan2_Cmd(i) := inv_em;
+    invSet(i) := false;
+}
+
+
+
+action recvreqe(i: node_t) = {
+    require curCmd = empty_em & chan1_Cmd(i) = reqe_em;
+    curCmd := reqe_em;
+    chan1_Cmd(i) := empty_em;
+    invSet(A) := shrSet(A);
+}
+
+
+
+action recvreqs(i: node_t) = {
+    require curCmd = empty_em & chan1_Cmd(i) = reqs_em;
+    curCmd := reqs_em;
+    chan1_Cmd(i) := empty_em;
+    invSet(A) := shrSet(A);
+}
+
+
+
+action sendreqe(i: node_t) = {
+    require chan1_Cmd(i) = empty_em & (cache_State(i) = i_em | cache_State(i) = s_em);
+    chan1_Cmd(i) := reqe_em;
+}
+
+
+
+action sendreqs(i: node_t) = {
+    require chan1_Cmd(i) = empty_em & cache_State(i) = i_em;
+    chan1_Cmd(i) := reqs_em;
+}
+
+
+
+export recvgnte
+export recvgnts
+export sendgnte
+export sendgnts
+export recvinvack1
+export recvinvack2
+export sendinvack
+export sendinv
+export recvreqe
+export recvreqs
+export sendreqe
+export sendreqs
+
+
+
+invariant forall A,B. A ~= B -> (cache_State(A) = e_em -> cache_State(B) = i_em) & (cache_State(A) = s_em -> cache_State(B) = i_em | cache_State(B) = s_em)
+
+
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = s_em & chan2_Cmd(A1) = gnte_em)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & chan2_Cmd(A1) = gnte_em)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & chan2_Cmd(A1) = gnts_em)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & chan2_Cmd(A2) = gnts_em)
+conjecture forall A2. ~(cache_State(A2) = s_em & shrSet(A2) = false)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & chan2_Cmd(A2) = gnte_em)
+conjecture forall A2. ~(cache_State(A2) = e_em & exGntd = false)
+conjecture forall A2. ~(chan2_Cmd(A2) = gnts_em & shrSet(A2) = false)
+conjecture forall A1. ~(chan2_Cmd(A1) = gnte_em & exGntd = false)
+conjecture forall A2. ~(cache_State(A2) = s_em & chan3_Cmd(A2) = invack_em)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & chan3_Cmd(A1) = invack_em)
+conjecture forall A2. ~(cache_State(A2) = e_em & chan3_Cmd(A2) = invack_em)
+conjecture forall A2. ~(chan2_Cmd(A2) = gnts_em & chan3_Cmd(A2) = invack_em)
+conjecture forall A1. ~(chan2_Cmd(A1) = gnte_em & chan3_Cmd(A1) = invack_em)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & chan3_Cmd(A2) = invack_em)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & chan2_Cmd(A1) = inv_em)
+conjecture forall A2. ~(chan3_Cmd(A2) = invack_em & exGntd = false & curCmd = reqs_em)
+conjecture forall A1. ~(chan3_Cmd(A1) = invack_em & shrSet(A1) = false)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & chan2_Cmd(A2) = inv_em)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & invSet(A1) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(curCmd = reqs_em & chan3_Cmd(A2) = invack_em & chan3_Cmd(A1) = invack_em)
+conjecture forall A2. ~(curCmd = reqs_em & exGntd = false & chan2_Cmd(A2) = inv_em)
+conjecture forall A2. ~(chan3_Cmd(A2) = invack_em & curCmd = empty_em)
+conjecture forall A1. ~(shrSet(A1) = false & chan2_Cmd(A1) = inv_em)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & invSet(A2) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(cache_State(A2) = e_em & shrSet(A1) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(chan3_Cmd(A2) = invack_em & curCmd = reqs_em & chan2_Cmd(A1) = inv_em)
+conjecture forall A2. ~(chan2_Cmd(A2) = inv_em & chan3_Cmd(A2) = invack_em)
+conjecture forall A2. ~(chan2_Cmd(A2) = inv_em & curCmd = empty_em)
+conjecture forall A1. ~(shrSet(A1) = false & invSet(A1) = true)
+conjecture forall A1. ~(chan2_Cmd(A1) = gnte_em & shrSet(A1) = false)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = gnte_em & shrSet(A2) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(chan2_Cmd(A1) = inv_em & curCmd = reqs_em & chan2_Cmd(A2) = inv_em)
+conjecture forall A2,A1.A2~=A1 -> ~(curCmd = reqs_em & chan3_Cmd(A2) = invack_em & invSet(A1) = true)
+conjecture forall A2. ~(chan3_Cmd(A2) = invack_em & invSet(A2) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(chan2_Cmd(A2) = inv_em & curCmd = reqs_em & invSet(A1) = true)
+conjecture forall A2. ~(invSet(A2) = true & chan2_Cmd(A2) = inv_em)
+conjecture forall A1,A2.A1~=A2 -> ~(invSet(A1) = true & exGntd = true & invSet(A2) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(exGntd = true & shrSet(A2) = true & shrSet(A1) = true)
+
+

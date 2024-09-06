@@ -1,0 +1,88 @@
+#lang ivy1.7
+
+type nodeType
+type dataType
+type addrType
+type stateType = {i_em, t_em, c_em, e_em}
+type cacheType
+
+individual n_state(N:nodeType, C:cacheType): stateType
+individual n_mark(N:nodeType, C:cacheType): addrType
+individual n_data(N:nodeType, C:cacheType): dataType
+
+individual x(A:addrType): bool
+individual memData(A:addrType): dataType
+individual auxData(A:addrType): dataType
+
+
+after init{
+    require n_state(N,C) = i_em;
+    require n_mark(N,C) = A;
+    require memData(A) = D;
+    require auxData(A) =D;
+    require x(A) =true; 
+}
+
+
+action store(i : nodeType, c: cacheType, d: dataType, a : addrType) = {
+    require n_state(i,c) = c_em & n_mark(i,c) = a;
+    n_data(i,c) := d;
+    auxData(a) := d;
+}
+
+action try(i : nodeType, c: cacheType) = {
+    require n_state(i,c) = i_em;
+    n_state(i,c) := t_em;
+}
+
+action crit(i : nodeType, c: cacheType, a : addrType) = {
+    require n_state(i,c) = t_em & x(a) = true;
+    n_state(i,c) := c_em;
+    n_mark(i,c) := a;
+    n_data(i,c) := memData(a);
+    x(a) := false;
+}
+
+
+action exit(i : nodeType, c: cacheType) = {
+    require n_state(i,c) = c_em;
+    n_state(i,c) := e_em;
+}
+
+
+action idle(i : nodeType, c: cacheType, a : addrType) = {
+    require n_state(i,c) = e_em & n_mark(i,c) = a;
+    n_state(i,c) := i_em;
+    x(a) := true;
+    memData(a) := n_data(i,c);
+}
+
+export store
+export try
+export crit
+export exit
+export idle
+
+
+
+invariant forall N1,N2.N1 ~= N2 ->forall C1.n_state(N1,C1) = c_em -> forall C2. (~(n_state(N2,C2) = c_em & n_mark(N2,C2) = n_mark(N1,C1)))
+
+invariant forall N1.forall C1.(n_state(N1,C1) = c_em -> n_data(N1,C1) = auxData(n_mark(N1,C1)))
+
+
+
+conjecture forall A2.forall K2.forall I1. ~(n_state(A2,K2) = c_em & n_mark(A2,K2) = I1 & x(I1) = true)
+conjecture forall A2,A1.forall K2.A2~=A1 -> ~(n_mark(A2,K2) = n_mark(A1,K2) & n_state(A1,K2) = c_em & n_state(A2,K2) = c_em)
+conjecture forall A2,A1.forall K1,K2.A2~=A1 & K1~=K2 -> ~(n_mark(A2,K1) = n_mark(A1,K2) & n_state(A1,K2) = c_em & n_state(A2,K1) = c_em)
+conjecture forall A1.forall K2,K1.K2~=K1 -> ~(n_mark(A1,K2) = n_mark(A1,K1) & n_state(A1,K2) = c_em & n_state(A1,K1) = c_em)
+conjecture forall I1. ~(memData(I1) ~= auxData(I1) & x(I1) = true)
+conjecture forall A1,A2.forall K1,K2.A1~=A2 & K1~=K2 -> ~(n_mark(A1,K1) = n_mark(A2,K2) & n_state(A1,K1) = e_em & n_state(A2,K2) = c_em)
+conjecture forall A1,A2.forall K2.A1~=A2 -> ~(n_mark(A1,K2) = n_mark(A2,K2) & n_state(A1,K2) = e_em & n_state(A2,K2) = c_em)
+conjecture forall A2.forall K1,K2.K1~=K2 -> ~(n_mark(A2,K1) = n_mark(A2,K2) & n_state(A2,K1) = e_em & n_state(A2,K2) = c_em)
+conjecture forall A1.forall K1.forall I1. ~(n_data(A1,K1) ~= auxData(I1) & n_state(A1,K1) = e_em & n_mark(A1,K1) = I1)
+conjecture forall A1.forall K1.forall I1. ~(n_state(A1,K1) = e_em & n_mark(A1,K1) = I1 & x(I1) = true)
+conjecture forall A1.forall K2,K1.K2~=K1 -> ~(n_mark(A1,K2) = n_mark(A1,K1) & n_state(A1,K2) = e_em & n_state(A1,K1) = e_em)
+conjecture forall A2,A1.forall K1.A2~=A1 -> ~(n_mark(A2,K1) = n_mark(A1,K1) & n_state(A2,K1) = e_em & n_state(A1,K1) = e_em)
+conjecture forall A2,A1.forall K2,K1.A2~=A1 & K2~=K1 -> ~(n_mark(A2,K2) = n_mark(A1,K1) & n_state(A2,K2) = e_em & n_state(A1,K1) = e_em)
+
+

@@ -1,0 +1,10 @@
+invariant "clientServerAE_new_request1_1"
+  !(response_received[1][1] = true & request_sent[1][2] = false & match[1][1] = false);
+invariant "clientServerAE_new_request1_2"
+  !(response_received[1][1] = true & match[2][1] = false & match[1][1] = false);
+invariant "clientServerAE_receive_response1_1"
+  !(request_sent[1][2] = false & request_sent[1][1] = false & response_sent[1][1] = true);
+invariant "clientServerAE_receive_response1_2"
+  !(request_sent[1][2] = false & match[1][1] = false & response_sent[1][1] = true);
+invariant "clientServerAE_receive_response1_3"
+  !(match[2][1] = false & match[1][1] = false & response_sent[1][1] = true);

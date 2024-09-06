@@ -1,0 +1,30 @@
+invariant "Onelock_recv1_1"
+  !(has_lock[2] = true & message[1][1] = true);
+invariant "Onelock_recv2_1"
+  !(has_lock[1] = true & message[1][2] = true);
+invariant "Onelock_recv9_1"
+  !(has_lock[2] = true & message[3][1] = true);
+invariant "Onelock_recv1_1_recv2_1"
+  !(message[1][1] = true & message[1][2] = true);
+invariant "Onelock_recv1_1_recv6_1"
+  !(message[1][1] = true & message[2][2] = true);
+invariant "Onelock_recv1_1_recv10_1"
+  !(message[1][1] = true & message[3][2] = true);
+invariant "Onelock_recv2_1_recv5_1"
+  !(message[1][2] = true & message[2][1] = true);
+invariant "Onelock_recv2_1_recv9_1"
+  !(message[1][2] = true & message[3][1] = true);
+invariant "Onelock_recv9_1_send9_1"
+  !(has_lock[2] = true & has_lock[3] = true);
+invariant "Onelock_recv9_1_recv10_1"
+  !(message[3][1] = true & message[3][2] = true);
+invariant "Onelock_recv9_1_recv14_1"
+  !(message[3][1] = true & message[4][2] = true);
+invariant "Onelock_recv1_1_recv2_1_send2_1"
+  !(message[1][1] = true & has_lock[1] = true);
+invariant "Onelock_recv2_1_recv5_1_send2_1"
+  !(message[2][1] = true & has_lock[1] = true);
+invariant "Onelock_recv1_1_recv2_1_send2_1_recv5_1"
+  !(message[1][1] = true & message[2][1] = true);
+invariant "Onelock_recv2_1_recv5_1_send2_1_recv9_1"
+  !(message[2][1] = true & message[3][1] = true);

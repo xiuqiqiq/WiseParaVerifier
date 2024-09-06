@@ -1,0 +1,110 @@
+invariant "CntrlProp_RecvGntE1_1"
+  !(cache[2].State = s_em & chan2[1].Cmd = gnte_em);
+invariant "CntrlProp_RecvGntE1_2"
+  !(cache[2].State = e_em & chan2[1].Cmd = gnte_em);
+invariant "CntrlProp_RecvGntS1_1"
+  !(cache[2].State = e_em & chan2[1].Cmd = gnts_em);
+invariant "DataProp_RecvGntE1_1"
+  !(exGntd = false & chan2[1].Cmd = gnte_em);
+invariant "DataProp_RecvGntE1_2"
+  !(chan2[1].Data != memData & chan2[1].Cmd = gnte_em);
+invariant "DataProp_RecvGntE1_3"
+  !(chan2[1].Data != auxData & chan2[1].Cmd = gnte_em);
+invariant "DataProp_RecvGntS1_1"
+  !(chan2[1].Data != memData & chan2[1].Cmd = gnts_em);
+invariant "DataProp_RecvGntS1_2"
+  !(memData != auxData & exGntd = false);
+invariant "DataProp_RecvGntS1_3"
+  !(exGntd = true & chan2[1].Cmd = gnts_em);
+invariant "DataProp_RecvInvAck11_1"
+  !(chan3[1].Data != auxData & chan3[1].Cmd = invack_em & curCmd = reqs_em);
+invariant "DataProp_RecvInvAck11_2"
+  !(auxData != cache[1].Data & chan3[1].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_3"
+  !(chan3[1].Data != auxData & chan3[1].Cmd = invack_em & exGntd = true);
+invariant "DataProp_RecvInvAck12_1"
+  !(cache[1].State = s_em & exGntd = true);
+invariant "DataProp_RecvInvAck12_2"
+  !(cache[1].State = e_em & chan3[2].Cmd = invack_em);
+invariant "DataProp_Store1_1"
+  !(exGntd = false & cache[1].State = e_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1"
+  !(chan2[1].Cmd = gnte_em & chan2[2].Cmd = gnts_em);
+invariant "CntrlProp_RecvGntE1_1_SendGntE1_1"
+  !(cache[2].State = s_em & shrSet[2] = false);
+invariant "CntrlProp_RecvGntE1_2_RecvGntE2_1"
+  !(chan2[1].Cmd = gnte_em & chan2[2].Cmd = gnte_em);
+invariant "DataProp_RecvGntE1_1_RecvInvAck11_1"
+  !(chan2[1].Cmd = gnte_em & chan3[1].Cmd = invack_em);
+invariant "DataProp_RecvGntE1_1_RecvInvAck12_1"
+  !(chan2[1].Cmd = gnte_em & chan3[2].Cmd = invack_em);
+invariant "DataProp_RecvGntE1_3_Store1_1"
+  !(chan2[1].Cmd = gnte_em & cache[1].State = e_em);
+invariant "DataProp_RecvGntS1_3_SendGntE2_1"
+  !(chan2[1].Cmd = gnts_em & shrSet[1] = false);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1"
+  !(cache[1].Data != auxData & chan2[1].Cmd = inv_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1"
+  !(cache[1].State = i_em & chan2[1].Cmd = inv_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_2"
+  !(curCmd = reqs_em & cache[1].State = s_em & chan2[1].Cmd = inv_em);
+invariant "DataProp_RecvInvAck11_1_RecvReqS1_1"
+  !(chan3[1].Cmd = invack_em & curCmd = empty1_em);
+invariant "DataProp_RecvInvAck11_1_Store1_1"
+  !(chan3[1].Cmd = invack_em & cache[1].State = e_em);
+invariant "DataProp_RecvInvAck11_2_RecvGntS1_1"
+  !(chan3[1].Cmd = invack_em & chan2[1].Cmd = gnts_em);
+invariant "DataProp_RecvInvAck11_3_SendGntE1_1"
+  !(chan3[1].Cmd = invack_em & shrSet[1] = false);
+invariant "CntrlProp_RecvGntE1_1_SendGntE1_1_RecvInvAck22_1"
+  !(cache[2].State = s_em & chan3[2].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1"
+  !(cache[1].Data != auxData & chan2[1].Cmd = empty2_em & invSet[1] = true);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_Store2_1"
+  !(chan2[1].Cmd = inv_em & cache[2].State = e_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1_SendInv11_1"
+  !(cache[1].State = i_em & invSet[1] = true & chan2[1].Cmd = empty2_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_2_RecvReqS1_1"
+  !(chan2[1].Cmd = inv_em & curCmd = empty1_em);
+invariant "DataProp_RecvInvAck11_1_RecvReqS1_1_SendGntS1_1"
+  !(chan3[1].Cmd = invack_em & exGntd = false & curCmd = reqs_em);
+invariant "DataProp_RecvInvAck11_3_SendGntE1_1_SendInvAck11_1"
+  !(shrSet[1] = false & chan2[1].Cmd = inv_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_RecvGntS1_1"
+  !(chan2[1].Data != auxData & chan2[1].Cmd = gnts_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_RecvReqE1_1"
+  !(cache[1].Data != auxData & shrSet[1] = true & chan2[1].Cmd = empty2_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_Store2_1"
+  !(invSet[1] = true & cache[2].State = e_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_Store2_1_RecvGntE2_1"
+  !(chan2[1].Cmd = inv_em & chan2[2].Cmd = gnte_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1_SendInv11_1_SendInvAck11_1"
+  !(invSet[1] = true & chan2[1].Cmd = inv_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1_SendInv11_1_RecvReqE1_1"
+  !(chan2[1].Cmd = empty2_em & cache[1].State = i_em & shrSet[1] = true & curCmd = empty1_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_2_RecvReqS1_1_SendGntS2_1"
+  !(chan2[1].Cmd = inv_em & exGntd = false & curCmd = reqs_em);
+invariant "DataProp_RecvInvAck11_1_RecvReqS1_1_SendGntS1_1_RecvInvAck12_1"
+  !(curCmd = reqs_em & chan3[1].Cmd = invack_em & chan3[2].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_3_SendGntE1_1_SendInvAck11_1_RecvInvAck11_1"
+  !(chan2[1].Cmd = inv_em & chan3[1].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_3_SendGntE1_1_SendInvAck11_1_SendInv11_1"
+  !(shrSet[1] = false & invSet[1] = true);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_RecvGntS1_1_Store1_1"
+  !(chan2[1].Cmd = gnts_em & cache[1].State = e_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_RecvReqE1_1_Store2_1"
+  !(shrSet[1] = true & cache[2].State = e_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_Store2_1_RecvGntE2_1"
+  !(invSet[1] = true & chan2[2].Cmd = gnte_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1_SendInv11_1_RecvReqE1_1_SendGntS2_1"
+  !(shrSet[1] = true & cache[1].State = i_em & chan2[1].Cmd = empty2_em & exGntd = false & curCmd = reqs_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_2_RecvReqS1_1_SendGntS2_1_RecvInvAck12_1"
+  !(curCmd = reqs_em & chan2[1].Cmd = inv_em & chan3[2].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_3_SendGntE1_1_SendInvAck11_1_RecvInvAck11_1_SendInv11_1"
+  !(chan3[1].Cmd = invack_em & invSet[1] = true);
+invariant "DataProp_RecvInvAck11_1_SendInvAck11_1_SendInv11_1_RecvReqE1_1_Store2_1_RecvGntE2_1"
+  !(shrSet[1] = true & chan2[2].Cmd = gnte_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_1_SendInv11_1_RecvReqE1_1_SendGntS2_1_RecvInvAck12_1"
+  !(curCmd = reqs_em & shrSet[1] = true & chan3[2].Cmd = invack_em);
+invariant "DataProp_RecvInvAck11_1_SendInvAck21_2_RecvReqS1_1_SendGntS2_1_RecvInvAck12_1_SendInv21_1"
+  !(chan3[2].Cmd = invack_em & curCmd = reqs_em & invSet[1] = true);

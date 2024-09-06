@@ -1,0 +1,18 @@
+invariant "toyConsensusEpr_decide1_1"
+  !(member[1][1] = false & member[2][1] = false);
+invariant "toyConsensusEpr_decide1_2"
+  !(decided[2] = true & member[1][1] = false & vote[2][1] = true);
+invariant "toyConsensusEpr_decide1_3"
+  !(decided[2] = true & vote[1][1] = true & vote[2][1] = true);
+invariant "toyConsensusEpr_decide1_2_cast_vote3_1"
+  !(member[1][1] = false & decided[2] = true & voted[2] = false);
+invariant "toyConsensusEpr_decide1_2_decide3_1"
+  !(vote[2][1] = true & vote[2][2] = true);
+invariant "toyConsensusEpr_decide1_2_decide4_1"
+  !(member[1][1] = false & member[2][2] = false);
+invariant "toyConsensusEpr_decide1_3_cast_vote1_1"
+  !(vote[2][1] = true & decided[2] = true & voted[1] = false);
+invariant "toyConsensusEpr_decide1_2_cast_vote3_1_decide3_1"
+  !(voted[2] = false & vote[2][2] = true);
+invariant "toyConsensusEpr_decide1_3_cast_vote1_1_cast_vote3_1"
+  !(voted[1] = false & decided[2] = true & voted[2] = false);

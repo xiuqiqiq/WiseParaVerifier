@@ -1,0 +1,238 @@
+MODULE main
+VAR
+n[1].st : {i_em, t_em, c_em, e_em};
+n[1].data : {1, 2};
+n[2].st : {i_em, t_em, c_em, e_em};
+n[2].data : {1, 2};
+x : boolean;
+auxDATA : {1, 2};
+memDATA : {1, 2};
+
+--------------------
+
+n_Try__1 : process Proc__n_Try__1(n[1].st);
+
+n_Try__2 : process Proc__n_Try__2(n[2].st);
+
+n_Crit__1 : process Proc__n_Crit__1(n[1].st, n[1].data, x, memDATA);
+
+n_Crit__2 : process Proc__n_Crit__2(n[2].st, n[2].data, x, memDATA);
+
+n_Exit__1 : process Proc__n_Exit__1(n[1].st);
+
+n_Exit__2 : process Proc__n_Exit__2(n[2].st);
+
+n_Idle__1 : process Proc__n_Idle__1(n[1].st, n[1].data, x, memDATA);
+
+n_Idle__2 : process Proc__n_Idle__2(n[2].st, n[2].data, x, memDATA);
+
+n_Store__1__1 : process Proc__n_Store__1__1(n[1].st, n[1].data, auxDATA);
+
+n_Store__1__2 : process Proc__n_Store__1__2(n[1].st, n[1].data, auxDATA);
+
+n_Store__2__1 : process Proc__n_Store__2__1(n[2].st, n[2].data, auxDATA);
+
+n_Store__2__2 : process Proc__n_Store__2__2(n[2].st, n[2].data, auxDATA);
+
+--------------------
+
+ASSIGN
+init(n[1].st) := case
+TRUE : i_em;
+esac;
+init(n[2].st) := case
+TRUE : i_em;
+esac;
+init(n[1].data) := case
+TRUE : 1;
+esac;
+init(n[2].data) := case
+TRUE : 1;
+esac;
+init(x) := case
+TRUE : TRUE;
+esac;
+init(auxDATA) := case
+TRUE : 1;
+esac;
+init(memDATA) := case
+TRUE : 1;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_Try__1(n__1__st)
+ASSIGN
+next(n__1__st) := case
+(n__1__st = i_em) : t_em;
+TRUE : n__1__st;
+esac;
+
+---------
+
+MODULE Proc__n_Try__2(n__2__st)
+ASSIGN
+next(n__2__st) := case
+(n__2__st = i_em) : t_em;
+TRUE : n__2__st;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Crit__1(n__1__st, n__1__data, x, memDATA)
+ASSIGN
+next(n__1__st) := case
+(n__1__st = t_em & x = TRUE) : c_em;
+TRUE : n__1__st;
+esac;
+next(x) := case
+(n__1__st = t_em & x = TRUE) : FALSE;
+TRUE : x;
+esac;
+next(n__1__data) := case
+(n__1__st = t_em & x = TRUE) : memDATA;
+TRUE : n__1__data;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2(n__2__st, n__2__data, x, memDATA)
+ASSIGN
+next(n__2__st) := case
+(n__2__st = t_em & x = TRUE) : c_em;
+TRUE : n__2__st;
+esac;
+next(x) := case
+(n__2__st = t_em & x = TRUE) : FALSE;
+TRUE : x;
+esac;
+next(n__2__data) := case
+(n__2__st = t_em & x = TRUE) : memDATA;
+TRUE : n__2__data;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Exit__1(n__1__st)
+ASSIGN
+next(n__1__st) := case
+(n__1__st = c_em) : e_em;
+TRUE : n__1__st;
+esac;
+
+---------
+
+MODULE Proc__n_Exit__2(n__2__st)
+ASSIGN
+next(n__2__st) := case
+(n__2__st = c_em) : e_em;
+TRUE : n__2__st;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Idle__1(n__1__st, n__1__data, x, memDATA)
+ASSIGN
+next(n__1__st) := case
+(n__1__st = e_em) : i_em;
+TRUE : n__1__st;
+esac;
+next(x) := case
+(n__1__st = e_em) : TRUE;
+TRUE : x;
+esac;
+next(memDATA) := case
+(n__1__st = e_em) : n__1__data;
+TRUE : memDATA;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2(n__2__st, n__2__data, x, memDATA)
+ASSIGN
+next(n__2__st) := case
+(n__2__st = e_em) : i_em;
+TRUE : n__2__st;
+esac;
+next(x) := case
+(n__2__st = e_em) : TRUE;
+TRUE : x;
+esac;
+next(memDATA) := case
+(n__2__st = e_em) : n__2__data;
+TRUE : memDATA;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Store__1__1(n__1__st, n__1__data, auxDATA)
+ASSIGN
+next(auxDATA) := case
+(n__1__st = c_em) : 1;
+TRUE : auxDATA;
+esac;
+next(n__1__data) := case
+(n__1__st = c_em) : 1;
+TRUE : n__1__data;
+esac;
+
+---------
+
+MODULE Proc__n_Store__1__2(n__1__st, n__1__data, auxDATA)
+ASSIGN
+next(auxDATA) := case
+(n__1__st = c_em) : 2;
+TRUE : auxDATA;
+esac;
+next(n__1__data) := case
+(n__1__st = c_em) : 2;
+TRUE : n__1__data;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__1(n__2__st, n__2__data, auxDATA)
+ASSIGN
+next(auxDATA) := case
+(n__2__st = c_em) : 1;
+TRUE : auxDATA;
+esac;
+next(n__2__data) := case
+(n__2__st = c_em) : 1;
+TRUE : n__2__data;
+esac;
+
+---------
+
+MODULE Proc__n_Store__2__2(n__2__st, n__2__data, auxDATA)
+ASSIGN
+next(auxDATA) := case
+(n__2__st = c_em) : 2;
+TRUE : auxDATA;
+esac;
+next(n__2__data) := case
+(n__2__st = c_em) : 2;
+TRUE : n__2__data;
+esac;
+
+---------
+
+
+---------
+

@@ -1,0 +1,8 @@
+invariant "mutualEx_Crit1_1"
+  !(n[2] = c_em & x = true);
+invariant "mutualEx_Crit1_1_Idle1_1"
+  !(n[2] = c_em & n[1] = e_em);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit2_1"
+  !(n[1] = e_em & x = true);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit2_1_Idle2_1"
+  !(n[1] = e_em & n[2] = e_em);

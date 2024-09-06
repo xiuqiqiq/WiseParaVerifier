@@ -1,0 +1,12 @@
+invariant "coherence_Crit1_1"
+  !(n[2].st = c_em & x = true);
+invariant "c51_Crit1_1"
+  !(memDATA != auxDATA & x = true);
+invariant "coherence_Crit1_1_Idle1_1"
+  !(n[2].st = c_em & n[1].st = e_em);
+invariant "c51_Crit1_1_Idle1_1"
+  !(n[1].data != auxDATA & n[1].st = e_em);
+invariant "coherence_Crit1_1_Idle1_1_Crit2_1"
+  !(n[1].st = e_em & x = true);
+invariant "coherence_Crit1_1_Idle1_1_Crit2_1_Idle2_1"
+  !(n[1].st = e_em & n[2].st = e_em);

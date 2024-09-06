@@ -1,0 +1,93 @@
+MODULE main
+VAR
+link[1][1] : boolean;
+link[2][1] : boolean;
+semaphore[1] : boolean;
+
+--------------------
+
+n_connect__1__1 : process Proc__n_connect__1__1(semaphore[1], link[1][1]);
+
+n_connect__2__1 : process Proc__n_connect__2__1(semaphore[1], link[2][1]);
+
+n_disconnect__1__1 : process Proc__n_disconnect__1__1(link[1][1], semaphore[1]);
+
+n_disconnect__2__1 : process Proc__n_disconnect__2__1(link[2][1], semaphore[1]);
+
+--------------------
+
+ASSIGN
+init(semaphore[1]) := case
+TRUE : TRUE;
+esac;
+init(link[1][1]) := case
+TRUE : FALSE;
+esac;
+init(link[2][1]) := case
+TRUE : FALSE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_connect__1__1(semaphore__1, link__1__1)
+ASSIGN
+next(link__1__1) := case
+(semaphore__1 = TRUE) : TRUE;
+TRUE : link__1__1;
+esac;
+next(semaphore__1) := case
+(semaphore__1 = TRUE) : FALSE;
+TRUE : semaphore__1;
+esac;
+
+---------
+
+MODULE Proc__n_connect__2__1(semaphore__1, link__2__1)
+ASSIGN
+next(link__2__1) := case
+(semaphore__1 = TRUE) : TRUE;
+TRUE : link__2__1;
+esac;
+next(semaphore__1) := case
+(semaphore__1 = TRUE) : FALSE;
+TRUE : semaphore__1;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_disconnect__1__1(link__1__1, semaphore__1)
+ASSIGN
+next(link__1__1) := case
+(link__1__1 = TRUE) : FALSE;
+TRUE : link__1__1;
+esac;
+next(semaphore__1) := case
+(link__1__1 = TRUE) : TRUE;
+TRUE : semaphore__1;
+esac;
+
+---------
+
+MODULE Proc__n_disconnect__2__1(link__2__1, semaphore__1)
+ASSIGN
+next(link__2__1) := case
+(link__2__1 = TRUE) : FALSE;
+TRUE : link__2__1;
+esac;
+next(semaphore__1) := case
+(link__2__1 = TRUE) : TRUE;
+TRUE : semaphore__1;
+esac;
+
+---------
+
+
+---------
+

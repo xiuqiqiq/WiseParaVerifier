@@ -1,0 +1,91 @@
+#lang ivy1.7
+
+type state_t = {i_em, t_em, c_em, e_em}
+
+type data_t
+
+type node_t
+
+individual n_st(Y:node_t) : state_t
+individual n_data(I:node_t) : data_t
+
+individual x : bool
+individual auxDATA : data_t
+individual memDATA : data_t
+
+
+after init{
+    require n_st(B) = i_em;
+    
+    require n_data(B) = A;
+    
+    require x = true;
+    
+    require auxDATA = A;
+    
+    require memDATA = A;
+    
+    }
+
+
+action try(i: node_t) = {
+    require n_st(i) = i_em;
+    n_st(i) := t_em;
+}
+
+
+
+action crit(i: node_t) = {
+    require n_st(i) = t_em & x = true;
+    n_st(i) := c_em;
+    x := false;
+    n_data(i) := memDATA;
+}
+
+
+
+action exit(i: node_t) = {
+    require n_st(i) = c_em;
+    n_st(i) := e_em;
+}
+
+
+
+action idle(i: node_t) = {
+    require n_st(i) = e_em;
+    n_st(i) := i_em;
+    x := true;
+    memDATA := n_data(i);
+}
+
+
+
+action store(i: node_t, d: data_t) = {
+    require n_st(i) = c_em;
+    auxDATA := d;
+    n_data(i) := d;
+}
+
+
+
+export try
+export crit
+export exit
+export idle
+export store
+
+
+invariant forall A,B.A ~= B -> (n_st(A) = c_em -> n_st(B) ~= c_em)
+
+invariant forall A. n_st(A) = c_em -> n_data(A) = auxDATA
+
+
+
+conjecture forall A2. ~(n_st(A2) = c_em & x = true)
+conjecture  ~(memDATA ~= auxDATA & x = true)
+conjecture forall A2,A1.A2~=A1 -> ~(n_st(A2) = c_em & n_st(A1) = e_em)
+conjecture forall A1. ~(n_data(A1) ~= auxDATA & n_st(A1) = e_em)
+conjecture forall A1. ~(n_st(A1) = e_em & x = true)
+conjecture forall A1,A2.A1~=A2 -> ~(n_st(A1) = e_em & n_st(A2) = e_em)
+
+

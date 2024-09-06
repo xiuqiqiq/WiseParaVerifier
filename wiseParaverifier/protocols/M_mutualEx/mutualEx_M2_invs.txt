@@ -1,0 +1,26 @@
+invariant "mutualEx_Crit1_1"
+  !(n[2][2].state = c_em & n[2][2].mark = 1 & x[1] = true);
+invariant "mutualEx_Crit1_2"
+  !(n[2][2].mark = n[1][2].mark & n[1][2].state = c_em & n[2][2].state = c_em);
+invariant "mutualEx_Crit1_3"
+  !(n[2][1].mark = n[1][2].mark & n[1][2].state = c_em & n[2][1].state = c_em);
+invariant "coherence_Store9_1"
+  !(n[1][2].mark = n[1][1].mark & n[1][2].state = c_em & n[1][1].state = c_em);
+invariant "coherence_Crit1_1"
+  !(memData[1] != auxData[1] & x[1] = true);
+invariant "mutualEx_Crit1_1_Idle1_1"
+  !(n[1][1].mark = n[2][2].mark & n[1][1].state = e_em & n[2][2].state = c_em);
+invariant "mutualEx_Crit1_1_Idle5_1"
+  !(n[1][2].mark = n[2][2].mark & n[1][2].state = e_em & n[2][2].state = c_em);
+invariant "mutualEx_Crit1_1_Idle9_1"
+  !(n[2][1].mark = n[2][2].mark & n[2][1].state = e_em & n[2][2].state = c_em);
+invariant "coherence_Crit1_1_Idle1_1"
+  !(n[1][1].data != auxData[1] & n[1][1].state = e_em & n[1][1].mark = 1);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit13_1"
+  !(n[1][1].state = e_em & n[1][1].mark = 1 & x[1] = true);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit13_1_Idle5_1"
+  !(n[1][2].mark = n[1][1].mark & n[1][2].state = e_em & n[1][1].state = e_em);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit13_1_Idle9_1"
+  !(n[2][1].mark = n[1][1].mark & n[2][1].state = e_em & n[1][1].state = e_em);
+invariant "mutualEx_Crit1_1_Idle1_1_Crit13_1_Idle13_1"
+  !(n[2][2].mark = n[1][1].mark & n[2][2].state = e_em & n[1][1].state = e_em);

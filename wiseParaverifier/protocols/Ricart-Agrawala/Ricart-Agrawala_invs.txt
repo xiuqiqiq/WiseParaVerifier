@@ -1,0 +1,4 @@
+invariant "Oneholds_enter1_1"
+  !(holds[2] = true & replied[1][2] = true);
+invariant "Oneholds_enter1_1_enter2_1"
+  !(replied[1][2] = true & replied[2][1] = true);

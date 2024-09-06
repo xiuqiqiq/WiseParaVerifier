@@ -1,0 +1,78 @@
+invariant "CntrlProp_RecvGntE1_1"
+  !(cache[2].State = s_em & chan2[1].Cmd = gnte_em);
+invariant "CntrlProp_RecvGntE1_2"
+  !(cache[2].State = e_em & chan2[1].Cmd = gnte_em);
+invariant "CntrlProp_RecvGntS1_1"
+  !(cache[2].State = e_em & chan2[1].Cmd = gnts_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1"
+  !(chan2[1].Cmd = gnte_em & chan2[2].Cmd = gnts_em);
+invariant "CntrlProp_RecvGntE1_1_SendGntE1_1"
+  !(cache[2].State = s_em & shrSet[2] = false);
+invariant "CntrlProp_RecvGntE1_2_RecvGntE2_1"
+  !(chan2[1].Cmd = gnte_em & chan2[2].Cmd = gnte_em);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1"
+  !(cache[2].State = e_em & exGntd = false);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1"
+  !(chan2[2].Cmd = gnts_em & shrSet[2] = false);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1"
+  !(chan2[1].Cmd = gnte_em & exGntd = false);
+invariant "CntrlProp_RecvGntE1_1_SendGntE1_1_RecvInvAck12_1"
+  !(cache[2].State = s_em & chan3[2].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1_RecvInvAck11_1"
+  !(cache[2].State = e_em & chan3[1].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1_RecvInvAck12_1"
+  !(cache[2].State = e_em & chan3[2].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1"
+  !(chan2[2].Cmd = gnts_em & chan3[2].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck11_1"
+  !(chan2[1].Cmd = gnte_em & chan3[1].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck12_1"
+  !(chan2[1].Cmd = gnte_em & chan3[2].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1_RecvInvAck11_1_SendInvAck1_1"
+  !(cache[2].State = e_em & chan2[1].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1"
+  !(chan3[2].Cmd = invack_em & exGntd = false & curCmd = reqs_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck11_1_SendGntE1_1"
+  !(chan3[1].Cmd = invack_em & shrSet[1] = false);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck12_1_SendInvAck2_1"
+  !(chan2[1].Cmd = gnte_em & chan2[2].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1_RecvInvAck11_1_SendInvAck1_1_SendInv1_1"
+  !(cache[2].State = e_em & invSet[1] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1"
+  !(curCmd = reqs_em & chan3[2].Cmd = invack_em & chan3[1].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_SendInvAck2_1"
+  !(curCmd = reqs_em & exGntd = false & chan2[2].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvReqS1_1"
+  !(chan3[2].Cmd = invack_em & curCmd = empty_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck11_1_SendGntE1_1_SendInvAck1_1"
+  !(shrSet[1] = false & chan2[1].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck12_1_SendInvAck2_1_SendInv2_1"
+  !(chan2[1].Cmd = gnte_em & invSet[2] = true);
+invariant "CntrlProp_RecvGntE1_2_SendGntE1_1_RecvInvAck11_1_SendInvAck1_1_SendInv1_1_RecvReqE1_1"
+  !(cache[2].State = e_em & shrSet[1] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1"
+  !(chan3[2].Cmd = invack_em & curCmd = reqs_em & chan2[1].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_SendInvAck2_1_RecvInvAck12_1"
+  !(chan2[2].Cmd = inv_em & chan3[2].Cmd = invack_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_SendInvAck2_1_RecvReqS1_1"
+  !(chan2[2].Cmd = inv_em & curCmd = empty_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck11_1_SendGntE1_1_SendInvAck1_1_SendInv1_1"
+  !(shrSet[1] = false & invSet[1] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck12_1_SendInvAck2_1_SendInv2_1_RecvReqE1_1"
+  !(chan2[1].Cmd = gnte_em & shrSet[1] = false);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntS2_1_RecvInvAck12_1_SendInvAck2_1_SendInv2_1_RecvReqE1_2"
+  !(chan2[1].Cmd = gnte_em & shrSet[2] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1_SendInvAck2_1"
+  !(chan2[1].Cmd = inv_em & curCmd = reqs_em & chan2[2].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1_SendInv1_1"
+  !(curCmd = reqs_em & chan3[2].Cmd = invack_em & invSet[1] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_SendInvAck2_1_RecvInvAck12_1_SendInv2_1"
+  !(chan3[2].Cmd = invack_em & invSet[2] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1_SendInvAck2_1_SendInv1_1"
+  !(chan2[2].Cmd = inv_em & curCmd = reqs_em & invSet[1] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_SendInvAck2_1_RecvInvAck12_1_SendInv2_1_SendInvAck2_1"
+  !(invSet[2] = true & chan2[2].Cmd = inv_em);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1_SendInvAck2_1_SendInv1_1_SendInv2_1"
+  !(invSet[1] = true & exGntd = true & invSet[2] = true);
+invariant "CntrlProp_RecvGntE1_1_RecvGntS2_1_SendGntE1_1_RecvInvAck12_1_SendGntS2_1_RecvInvAck11_1_SendInvAck1_1_SendInvAck2_1_SendInv1_1_SendInv2_1_RecvReqE1_1"
+  !(exGntd = true & shrSet[2] = true & shrSet[1] = true);

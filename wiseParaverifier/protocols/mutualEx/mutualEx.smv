@@ -1,0 +1,143 @@
+MODULE main
+VAR
+n[1] : {i_em, t_em, c_em, e_em};
+n[2] : {i_em, t_em, c_em, e_em};
+x : boolean;
+
+--------------------
+
+n_Try__1 : process Proc__n_Try__1(n[1]);
+
+n_Try__2 : process Proc__n_Try__2(n[2]);
+
+n_Crit__1 : process Proc__n_Crit__1(n[1], x);
+
+n_Crit__2 : process Proc__n_Crit__2(n[2], x);
+
+n_Exit__1 : process Proc__n_Exit__1(n[1]);
+
+n_Exit__2 : process Proc__n_Exit__2(n[2]);
+
+n_Idle__1 : process Proc__n_Idle__1(n[1], x);
+
+n_Idle__2 : process Proc__n_Idle__2(n[2], x);
+
+--------------------
+
+ASSIGN
+init(n[1]) := case
+TRUE : i_em;
+esac;
+init(n[2]) := case
+TRUE : i_em;
+esac;
+init(x) := case
+TRUE : TRUE;
+esac;
+
+--------------------
+
+
+
+--------------------
+
+MODULE Proc__n_Try__1(n__1)
+ASSIGN
+next(n__1) := case
+(n__1 = i_em) : t_em;
+TRUE : n__1;
+esac;
+
+---------
+
+MODULE Proc__n_Try__2(n__2)
+ASSIGN
+next(n__2) := case
+(n__2 = i_em) : t_em;
+TRUE : n__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Crit__1(n__1, x)
+ASSIGN
+next(n__1) := case
+(n__1 = t_em & x = TRUE) : c_em;
+TRUE : n__1;
+esac;
+next(x) := case
+(n__1 = t_em & x = TRUE) : FALSE;
+TRUE : x;
+esac;
+
+---------
+
+MODULE Proc__n_Crit__2(n__2, x)
+ASSIGN
+next(n__2) := case
+(n__2 = t_em & x = TRUE) : c_em;
+TRUE : n__2;
+esac;
+next(x) := case
+(n__2 = t_em & x = TRUE) : FALSE;
+TRUE : x;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Exit__1(n__1)
+ASSIGN
+next(n__1) := case
+(n__1 = c_em) : e_em;
+TRUE : n__1;
+esac;
+
+---------
+
+MODULE Proc__n_Exit__2(n__2)
+ASSIGN
+next(n__2) := case
+(n__2 = c_em) : e_em;
+TRUE : n__2;
+esac;
+
+---------
+
+
+---------
+
+MODULE Proc__n_Idle__1(n__1, x)
+ASSIGN
+next(n__1) := case
+(n__1 = e_em) : i_em;
+TRUE : n__1;
+esac;
+next(x) := case
+(n__1 = e_em) : TRUE;
+TRUE : x;
+esac;
+
+---------
+
+MODULE Proc__n_Idle__2(n__2, x)
+ASSIGN
+next(n__2) := case
+(n__2 = e_em) : i_em;
+TRUE : n__2;
+esac;
+next(x) := case
+(n__2 = e_em) : TRUE;
+TRUE : x;
+esac;
+
+---------
+
+
+---------
+

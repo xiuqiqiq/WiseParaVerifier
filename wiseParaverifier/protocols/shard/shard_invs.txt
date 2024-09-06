@@ -1,0 +1,26 @@
+invariant "OnenodeValue_recv_transfer_msg1_1"
+  !(table[2][1][2] = true & transfer_msg[1][1][1] = true);
+invariant "OnenodeValue_put1_1"
+  !(table[2][1][2] = true & owner[1][1] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_reshard3_1"
+  !(table[2][1][2] = true & table[2][1][1] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_recv_transfer_msg4_1"
+  !(transfer_msg[1][1][1] = true & transfer_msg[2][1][2] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_put4_1"
+  !(transfer_msg[1][1][1] = true & owner[2][1] = true);
+invariant "OnenodeValue_put1_1_recv_transfer_msg2_1"
+  !(table[2][1][2] = true & transfer_msg[1][1][2] = true);
+invariant "OnenodeValue_put1_1_put4_1"
+  !(owner[1][1] = true & owner[2][1] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_reshard3_1_recv_transfer_msg3_1"
+  !(table[2][1][2] = true & transfer_msg[2][1][1] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_put4_1_recv_transfer_msg3_1"
+  !(transfer_msg[1][1][1] = true & transfer_msg[2][1][1] = true);
+invariant "OnenodeValue_put1_1_recv_transfer_msg2_1_reshard5_1"
+  !(table[2][1][2] = true & table[1][1][2] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_reshard3_1_recv_transfer_msg3_1_recv_transfer_msg4_1"
+  !(transfer_msg[2][1][1] = true & transfer_msg[2][1][2] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_reshard3_1_recv_transfer_msg3_1_put4_1"
+  !(transfer_msg[2][1][1] = true & owner[2][1] = true);
+invariant "OnenodeValue_recv_transfer_msg1_1_put4_1_recv_transfer_msg3_1_reshard2_1"
+  !(transfer_msg[1][1][1] = true & table[1][1][1] = true);

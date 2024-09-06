@@ -1,0 +1,50 @@
+#lang ivy1.7
+
+# Source: https://github.com/sat-group/cfg-enum/blob/permissive/benchmarks/simple-de-lock.ivy
+
+type node
+
+relation message(Src: node, Dst: node)
+relation has_lock(N: node)
+
+individual start_node: node
+
+after init {
+	message(Src, Dst) := false;
+	has_lock(X) := X = start_node;
+}
+
+action send(src: node, dst: node) = {
+    require has_lock(src);
+    message(src, dst) := true;
+    has_lock(src) := false;
+}
+
+action recv(src: node, dst: node) = {
+    require message(src, dst);
+    message(src, dst) := false;
+    has_lock(dst) := true;
+}
+
+export send
+export recv
+
+invariant X ~= Y -> ~(has_lock(X) & has_lock(Y))
+
+conjecture forall A2,A1.A2~=A1 -> ~(has_lock(A2) = true & message(A1,A1) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(has_lock(A1) = true & message(A1,A2) = true)
+conjecture forall A2,A3,A1.A2~=A3 & A2~=A1 & A3~=A1 -> ~(has_lock(A2) = true & message(A3,A1) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(message(A1,A1) = true & message(A1,A2) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(message(A1,A1) = true & message(A2,A2) = true)
+conjecture forall A1,A3,A2.A1~=A3 & A1~=A2 & A3~=A2 -> ~(message(A1,A1) = true & message(A3,A2) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(message(A1,A2) = true & message(A2,A1) = true)
+conjecture forall A1,A2,A3.A1~=A2 & A1~=A3 & A2~=A3 -> ~(message(A1,A2) = true & message(A3,A1) = true)
+conjecture forall A2,A3.A2~=A3 -> ~(has_lock(A2) = true & has_lock(A3) = true)
+conjecture forall A3,A1,A2.A3~=A1 & A3~=A2 & A1~=A2 -> ~(message(A3,A1) = true & message(A3,A2) = true)
+conjecture forall A3,A1,A4,A2.A3~=A1 & A3~=A4 & A3~=A2 & A1~=A4 & A1~=A2 & A4~=A2 -> ~(message(A3,A1) = true & message(A4,A2) = true)
+conjecture forall A1. ~(message(A1,A1) = true & has_lock(A1) = true)
+conjecture forall A2,A1.A2~=A1 -> ~(message(A2,A1) = true & has_lock(A1) = true)
+conjecture forall A1,A2.A1~=A2 -> ~(message(A1,A1) = true & message(A2,A1) = true)
+conjecture forall A2,A1,A3.A2~=A1 & A2~=A3 & A1~=A3 -> ~(message(A2,A1) = true & message(A3,A1) = true)
+
+

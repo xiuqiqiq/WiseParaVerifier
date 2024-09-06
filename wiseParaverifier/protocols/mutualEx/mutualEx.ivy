@@ -1,0 +1,56 @@
+#lang ivy1.7
+
+type state_t = {i_em, t_em, c_em, e_em}
+
+type node_t
+
+individual n(B:node_t) : state_t
+individual x : bool
+
+
+after init{
+  n(A) := i_em;
+
+  x := true;
+}
+
+
+action try(i: node_t) = {
+    require n(i) = i_em;
+    n(i) := t_em;
+}
+
+
+
+action crit(i: node_t) = {
+    require n(i) = t_em & x = true;
+    n(i) := c_em;
+    x := false;
+}
+
+
+
+action exit(i: node_t) = {
+    require n(i) = c_em;
+    n(i) := e_em;
+}
+
+
+
+action idle(i: node_t) = {
+    require n(i) = e_em;
+    n(i) := i_em;
+    x := true;
+}
+
+
+
+export try
+export crit
+export exit
+export idle
+
+
+invariant forall A1,A2. A1 ~= A2 -> ~(n(A1) = c_em & n(A2) = c_em)
+
+

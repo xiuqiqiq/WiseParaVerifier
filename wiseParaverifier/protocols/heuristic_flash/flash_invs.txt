@@ -1,0 +1,262 @@
+invariant "CacheStateProp_NI_Remote_PutX1_1"
+  !(sta.Proc[2].CacheState = cache_e_em & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.Dir.Dirty = false);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.HomeUniMsg.Cmd = uni_putx_em);
+invariant "CacheStatePropHome_NI_Remote_PutX1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "DataProp_Store5_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.Proc[2].CacheState = cache_e_em);
+invariant "DataProp_NI_Remote_PutX1_1"
+  !(sta.UniMsg[1].Data != sta.CurrData & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "MemDataProp_Store_Home1_1"
+  !(sta.Dir.Dirty = false & sta.HomeProc.CacheState = cache_e_em);
+invariant "MemDataProp_PI_Local_PutX1_1"
+  !(sta.HomeProc.CacheData != sta.CurrData & sta.HomeProc.CacheState = cache_e_em);
+invariant "MemDataProp_NI_Local_Put1_1"
+  !(sta.HomeProc.InvMarked = true);
+invariant "MemDataProp_NI_Local_Put1_2"
+  !(sta.HomeUniMsg.Data != sta.CurrData & sta.HomeUniMsg.Cmd = uni_put_em);
+invariant "MemDataProp_NI_Wb1_1"
+  !(sta.WbMsg.Data != sta.CurrData & sta.WbMsg.Cmd = wb_wb_em);
+invariant "MemDataProp_NI_ShWb1_1"
+  !(sta.ShWbMsg.HomeProc = true & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "MemDataProp_NI_ShWb1_2"
+  !(sta.ShWbMsg.Data != sta.CurrData & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "CacheStateProp_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1"
+  !(sta.Proc[2].CacheState = cache_e_em & sta.Dir.Local = true);
+invariant "CacheStateProp_NI_Remote_PutX1_1_NI_Remote_PutX2_1"
+  !(sta.UniMsg[1].Cmd = uni_putx_em & sta.UniMsg[2].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.HomeUniMsg.Cmd = uni_put_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_PutX1_1"
+  !(sta.Dir.Dirty = false & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Wb1_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.WbMsg.Cmd = wb_wb_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_ShWb1_1"
+  !(sta.Proc[1].CacheState = cache_e_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_NI_Remote_PutX1_1_NI_Remote_GetX_PutX2_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.Proc[2].CacheState = cache_e_em);
+invariant "DataProp_NI_Remote_PutX1_1_Store1_1"
+  !(sta.UniMsg[1].Cmd = uni_putx_em & sta.Proc[1].CacheState = cache_e_em);
+invariant "DataProp_NI_Remote_PutX1_1_NI_Remote_GetX_PutX2_1"
+  !(sta.Proc[2].CacheData != sta.CurrData & sta.Proc[2].CacheState = cache_e_em);
+invariant "MemDataProp_Store_Home1_1_NI_Local_PutXAcksDone1_1"
+  !(sta.Dir.Dirty = false & sta.HomeUniMsg.Cmd = uni_putx_em);
+invariant "MemDataProp_Store_Home1_1_NI_Wb1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.WbMsg.Cmd = wb_wb_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "MemDataProp_PI_Local_PutX1_1_NI_Local_PutXAcksDone1_1"
+  !(sta.HomeUniMsg.Data != sta.CurrData & sta.HomeUniMsg.Cmd = uni_putx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1"
+  !(sta.HomeProc.ProcCmd = node_get_em & sta.Dir.Local = true);
+invariant "MemDataProp_NI_Local_Put1_2_Store_Home1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.HomeProc.CacheState = cache_e_em);
+invariant "CacheStateProp_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_PutX2_1"
+  !(sta.Dir.Local = true & sta.UniMsg[2].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.UniMsg[1].Cmd = uni_putx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_PutX1_1_NI_Wb1_1"
+  !(sta.UniMsg[1].Cmd = uni_putx_em & sta.WbMsg.Cmd = wb_wb_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_PutX1_1_NI_ShWb1_1"
+  !(sta.UniMsg[1].Cmd = uni_putx_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.Dir.Pending = false);
+invariant "MemDataProp_Store_Home1_1_NI_Local_PutXAcksDone1_1_PI_Local_PutX1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.HomeProc.ProcCmd = node_none_em);
+invariant "MemDataProp_Store_Home1_1_NI_Local_PutXAcksDone1_1_NI_Wb1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.WbMsg.Cmd = wb_wb_em);
+invariant "MemDataProp_Store_Home1_1_NI_Local_PutXAcksDone1_1_NI_ShWb1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "MemDataProp_Store_Home1_1_NI_Wb1_1_PI_Local_GetX_PutX_HeadVld1_1"
+  !(sta.WbMsg.Cmd = wb_wb_em & sta.Dir.Dirty = false);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.Dir.Pending = false);
+invariant "MemDataProp_PI_Local_PutX1_1_NI_Local_PutXAcksDone1_1_Store_Home1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.HomeProc.CacheState = cache_e_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1"
+  !(sta.Dir.Local = true & sta.Dir.Pending = false & sta.HomeProc.CacheState = cache_i_em);
+invariant "MemDataProp_NI_Local_Put1_2_Store_Home1_1_PI_Local_GetX_PutX_HeadVld1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.HomeProc.ProcCmd = node_none_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.Dir.Pending = false);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.NakcMsg.Cmd = nakc_nakc_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1"
+  !(sta.Dir.Pending = false & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_InvAck_21_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_FAck1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "MemDataProp_Store_Home1_1_NI_Local_PutXAcksDone1_1_PI_Local_PutX1_1_NI_Remote_GetX_PutX_Home1_1"
+  !(sta.HomeProc.ProcCmd = node_none_em & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "MemDataProp_Store_Home1_1_NI_Wb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1"
+  !(sta.WbMsg.Cmd = wb_wb_em & sta.HomeUniMsg.Cmd = uni_put_em);
+invariant "MemDataProp_Store_Home1_1_NI_Wb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_ShWb1_1"
+  !(sta.WbMsg.Cmd = wb_wb_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.NakcMsg.Cmd = nakc_nakc_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1"
+  !(sta.Dir.Pending = false & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.HomeUniMsg.Cmd = uni_put_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_InvAck_11_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1"
+  !(sta.Dir.Local = true & sta.NakcMsg.Cmd = nakc_nakc_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_InvAck_31_1"
+  !(sta.HomeProc.CacheState = cache_i_em & sta.Dir.Local = true & sta.Dir.Dirty = true);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_FAck1_1"
+  !(sta.Dir.Local = true & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_ShWb1_1"
+  !(sta.Dir.Local = true & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "MemDataProp_NI_Local_Put1_2_Store_Home1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put_Home1_1"
+  !(sta.HomeProc.ProcCmd = node_none_em & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Nak_Clear1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.NakcMsg.Cmd = nakc_nakc_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Remote_Get_Put_Home1_1"
+  !(sta.Dir.Pending = false & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_InvAck_11_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_FAck1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1_NI_Remote_GetX_PutX_Home1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1"
+  !(sta.HomeUniMsg.Cmd = uni_getx_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_FAck1_1"
+  !(sta.HomeUniMsg.Cmd = uni_getx_em & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_ShWb1_1"
+  !(sta.HomeUniMsg.Cmd = uni_getx_em & sta.ShWbMsg.Cmd = shwb_shwb_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_InvAck_21_1_NI_Inv1_1"
+  !(sta.HomeUniMsg.Cmd = uni_putx_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak_Home1_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Put2_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_Local_Put1_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.HomeUniMsg.Cmd = uni_put_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_InvAck_11_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_InvAck_12_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.InvMsg[2].Cmd = inv_invack_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_FAck1_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_InvAck_11_1_NI_Inv1_1"
+  !(sta.ShWbMsg.Cmd = shwb_shwb_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.Dir.Pending = false);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.HomeProc.CacheState = cache_e_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1"
+  !(sta.Dir.Local = true & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak_Home1_1"
+  !(sta.Dir.Local = true & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.Dir.Local = true & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak_Home1_1"
+  !(sta.Dir.Local = true & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_FAck1_1_PI_Local_Get_Put1_1"
+  !(sta.ShWbMsg.Cmd = shwb_fack_em & sta.Dir.Pending = false);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_FAck1_1_PI_Local_PutX1_1"
+  !(sta.ShWbMsg.Cmd = shwb_fack_em & sta.HomeProc.CacheState = cache_e_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Nak_Clear1_1_NI_Remote_Get_Put_Home1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Remote_Get_Put_Home1_1_NI_InvAck_21_1"
+  !(sta.HomeUniMsg.Cmd = uni_get_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Remote_Get_Put_Home1_1_NI_FAck1_1"
+  !(sta.HomeUniMsg.Cmd = uni_get_em & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_InvAck_11_1_NI_Inv1_1"
+  !(sta.HomeUniMsg.Cmd = uni_put_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1_NI_Remote_GetX_PutX_Home1_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak2_1_NI_Remote_GetX_PutX_Home1_1"
+  !(sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[1].HomeProc = false & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1"
+  !(sta.InvMsg[1].Cmd = inv_invack_em & sta.Dir.Pending = false);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_NI_Inv1_1"
+  !(sta.HomeUniMsg.Cmd = uni_getx_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1_NI_Remote_Get_Put5_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.Proc[1].CacheState = cache_e_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak2_1_NI_Remote_Get_Put7_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[2].HomeProc = false & sta.UniMsg[2].Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Nak_Home1_1_NI_Remote_Get_Put2_1"
+  !(sta.HomeUniMsg.Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Nak_Clear1_1_NI_Remote_Get_Put2_1_NI_Remote_GetX_Nak5_1"
+  !(sta.UniMsg[1].Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[2].HomeProc = false & sta.UniMsg[2].Cmd = uni_getx_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_InvAck_11_1_NI_Inv1_1"
+  !(sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_Store_Home1_1_NI_ShWb1_1_PI_Local_GetX_PutX_HeadVld1_1_NI_Remote_Get_Put2_1_NI_InvAck_12_1_NI_Inv2_1"
+  !(sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em & sta.InvMsg[2].Cmd = inv_inv_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.Dir.Pending = false & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_InvAck_21_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_FAck1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1_NI_Remote_Get_Nak2_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_get_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1_NI_Remote_Get_Nak_Home1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.HomeUniMsg.Cmd = uni_get_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1_NI_Remote_GetX_Nak_Home1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.HomeUniMsg.Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak_Home1_1_PI_Local_GetX_GetX1_1"
+  !(sta.Dir.Dirty = true & sta.HomeProc.CacheState = cache_s_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_FAck1_1_PI_Local_Get_Put1_1_NI_InvAck_21_1"
+  !(sta.ShWbMsg.Cmd = shwb_fack_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Nak_Clear1_1_NI_Remote_Get_Put_Home1_1_NI_Remote_GetX_Nak2_1"
+  !(sta.HomeUniMsg.Cmd = uni_get_em & sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em);
+invariant "CacheStatePropHome_PI_Local_GetX_PutX_HeadVld1_1_NI_Local_Put1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_21_1_NI_Remote_Get_Put_Home1_1_NI_InvAck_21_1_NI_Inv1_1"
+  !(sta.HomeUniMsg.Cmd = uni_get_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1_NI_Inv1_1"
+  !(sta.Dir.Pending = false & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1_NI_InvAck_12_1"
+  !(sta.InvMsg[1].Cmd = inv_invack_em & sta.Dir.InvSet[1] = false);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_Nak_Clear1_1"
+  !(sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[1].HomeProc = false & sta.NakcMsg.Cmd = nakc_nakc_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_InvAck_21_1"
+  !(sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[1].HomeProc = false & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_InvAck_22_1"
+  !(sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[1].HomeProc = false & sta.InvMsg[2].Cmd = inv_invack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_FAck1_1"
+  !(sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[1].HomeProc = false & sta.ShWbMsg.Cmd = shwb_fack_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_InvAck_21_1_NI_Inv1_1"
+  !(sta.NakcMsg.Cmd = nakc_nakc_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_PutX1_1_NI_Remote_Get_Nak2_1_NI_Local_Get_Get1_1"
+  !(sta.HomeProc.CacheState = cache_e_em & sta.Dir.Local = false);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak_Home1_1_PI_Local_GetX_GetX1_1_NI_Local_GetX_PutX_91_1"
+  !(sta.HomeProc.CacheState = cache_s_em & sta.Dir.Local = false);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_FAck1_1_PI_Local_Get_Put1_1_NI_InvAck_21_1_NI_Inv1_1"
+  !(sta.ShWbMsg.Cmd = shwb_fack_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1_NI_Inv1_1_NI_InvAck_12_1"
+  !(sta.InvMsg[1].Cmd = inv_inv_em & sta.Dir.InvSet[1] = false);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1_NI_InvAck_12_1_NI_Replace1_1"
+  !(sta.InvMsg[1].Cmd = inv_invack_em & sta.Dir.ShrVld = true);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak5_1"
+  !(sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em & sta.UniMsg[2].HomeProc = false & sta.UniMsg[2].Cmd = uni_getx_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_InvAck_21_1_NI_Inv1_1"
+  !(sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em & sta.InvMsg[1].Cmd = inv_inv_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_PI_Local_Get_Put1_1_NI_Remote_GetX_Nak2_1_NI_InvAck_22_1_NI_Inv2_1"
+  !(sta.UniMsg[1].HomeProc = false & sta.UniMsg[1].Cmd = uni_getx_em & sta.InvMsg[2].Cmd = inv_inv_em);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak_Home1_1_PI_Local_GetX_GetX1_1_NI_Local_GetX_PutX_91_1_NI_InvAck_11_1"
+  !(sta.HomeProc.CacheState = cache_s_em & sta.InvMsg[1].Cmd = inv_invack_em);
+invariant "CacheStatePropHome_NI_Local_PutXAcksDone1_1_NI_Remote_PutX1_1_NI_Local_GetX_PutX_111_1_NI_Remote_GetX_PutX_Home1_1_NI_InvAck_11_1_PI_Local_GetX_GetX1_1_NI_Inv1_1_NI_InvAck_12_1_NI_Replace1_1"
+  !(sta.InvMsg[1].Cmd = inv_inv_em & sta.Dir.ShrVld = true);
+invariant "MemDataProp_NI_Local_Put1_1_NI_Local_GetX_PutX_11_1_PI_Local_Get_Get1_1_NI_Nak_Clear1_1_NI_Remote_GetX_Nak_Home1_1_PI_Local_GetX_GetX1_1_NI_Local_GetX_PutX_91_1_NI_InvAck_11_1_NI_Inv1_1"
+  !(sta.HomeProc.CacheState = cache_s_em & sta.InvMsg[1].Cmd = inv_inv_em);
