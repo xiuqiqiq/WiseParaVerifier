@@ -19,8 +19,8 @@ $ conda activate py2
 $ pip install ms-ivy
 ```
 
-+ <font style="color:rgb(31, 35, 40);">Run</font><font style="color:rgb(31, 35, 40);"> </font>`<font style="color:rgb(31, 35, 40);">which ivy_check</font>`<font style="color:rgb(31, 35, 40);"> </font><font style="color:rgb(31, 35, 40);">to get the absolute path of the Ivy checker. We assume it is</font><font style="color:rgb(31, 35, 40);"> </font>`<font style="color:rgb(31, 35, 40);">ANACODNA_PATH/envs/py2/bin/ivy_check</font>`<font style="color:rgb(31, 35, 40);">.</font>
-+ <font style="color:rgb(31, 35, 40);">Append the following line to</font><font style="color:rgb(31, 35, 40);"> </font>`<font style="color:rgb(31, 35, 40);">~/.bashrc</font>`
++ <font style="color:rgb(31, 35, 40);">Run 'which ivy_check' to get the absolute path of the Ivy checker. We assume it is 'ANACODNA_PATH/envs/py2/bin/ivy_check'.</font>
++ <font style="color:rgb(31, 35, 40);">Append the following line to '~/.bashrc'</font>
 
 ```plain
 alias ivy_check="ANACODNA_PATH/envs/py2/bin/ivy_check"
@@ -36,16 +36,16 @@ cd ./src
 make
 ```
 
-    2. <font style="color:rgb(31, 35, 40);">install NuSMV-2.6.0 by</font>
+    2. <font style="color:rgb(31, 35, 40);">install NuSMV2.60 by:</font>
 
-<font style="color:rgb(31, 35, 40);">Download the binary version directly from: </font>[https://nusmv.fbk.eu/downloads.html](https://nusmv.fbk.eu/downloads.html)<font style="color:rgb(31, 35, 40);">, and extracting it to obtain four directories - </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">bin</font>`<font style="color:rgb(31, 35, 40);">, </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">include</font>`<font style="color:rgb(31, 35, 40);">, </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">lib</font>`<font style="color:rgb(31, 35, 40);">, and </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">share</font>`<font style="color:rgb(31, 35, 40);"> - allows for use without compilation.</font>
+<font style="color:rgb(31, 35, 40);">Download the binary version directly from: </font>[https://nusmv.fbk.eu/downloads.html](https://nusmv.fbk.eu/downloads.html)<font style="color:rgb(31, 35, 40);">, and extracting it to obtain four directories - bin, include, lib and share - allows for use without compilation.</font>
 
 <font style="color:rgb(31, 35, 40);">After installation, set the paths of SMV_PATH, MU_PATH, MU_INCLUDE in sever/settings.py.</font>
 
 ---
 
 ## <font style="color:rgb(31, 35, 40);">Usage</font>
-<font style="color:rgb(31, 35, 40);">Given a Murphi description of a protocol and its safety property, WiseParaVerifier automatically constructs several </font>$ F $<font style="color:rgb(31, 35, 40);">needed for verification. It then obtains a set of concrete auxiliary invariants through </font>_**<font style="color:rgb(31, 35, 40);">generalization</font>**_<font style="color:rgb(31, 35, 40);"> and </font>_**<font style="color:rgb(31, 35, 40);">symmetry</font>**_<font style="color:rgb(31, 35, 40);">. Finally, these invariants are promoted to </font>_**<font style="color:rgb(31, 35, 40);">parameterized</font>**_<font style="color:rgb(31, 35, 40);"> invariants, which supporting the alternating use of universal and existential quantifiers.</font>
+<font style="color:rgb(31, 35, 40);">Given a Murphi description of a protocol and its safety property, WiseParaVerifier automatically constructs several </font>![image](https://cdn.nlark.com/yuque/__latex/7aaf2781990aa336d909f7ebd32e2f69.svg)<font style="color:rgb(31, 35, 40);">needed for verification. It then obtains a set of concrete auxiliary invariants through </font>_**<font style="color:rgb(31, 35, 40);">generalization</font>**_<font style="color:rgb(31, 35, 40);"> and </font>_**<font style="color:rgb(31, 35, 40);">symmetry</font>**_<font style="color:rgb(31, 35, 40);">. Finally, these invariants are promoted to </font>_**<font style="color:rgb(31, 35, 40);">parameterized</font>**_<font style="color:rgb(31, 35, 40);"> invariants, which supporting the alternating use of universal and existential quantifiers.</font>
 
 <font style="color:rgb(31, 35, 40);">To automatically complete the verification process using WiseParaVerifier, </font>
 
@@ -58,14 +58,14 @@ python3 server/server.py
 
 <font style="color:rgb(31, 35, 40);">The server-side only needs to be started once, and it can continue to provide service until you manually shut it down or encounter an unexpected event. Additionally, NuSMV will remember the previously computed reachability, meaning that for every protocol, you only need to calculate the reachability once to perform unlimited verifications.</font>
 
-<font style="color:rgb(31, 35, 40);">Then, here is a sample configuration file </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">CONFIG</font>`<font style="color:rgb(31, 35, 40);"> where the first line specifies whether you want the invariants to be existentially quantified and the second line indicates whether you want to use the heuristic generalize:</font>
+<font style="color:rgb(31, 35, 40);">Then, here is a sample configuration file </font>**<font style="color:rgb(31, 35, 40);">config</font>**<font style="color:rgb(31, 35, 40);"> where the first line specifies whether you want the invariants to be existentially quantified and the second line indicates whether you want to use the heuristic generalize:</font>
 
 ```plain
 EXISTENTIAL_QUANTIFICATION = True
 USE_HEURISTIC_GENERALIZE = True
 ```
 
-<font style="color:rgb(31, 35, 40);">If the </font>`<font style="color:rgb(0, 0, 0);background-color:rgb(247, 247, 247);">CONFIG</font>`<font style="color:rgb(31, 35, 40);"> file is not set, the default behavior is as follows:</font>
+<font style="color:rgb(31, 35, 40);">If the </font>**<font style="color:rgb(31, 35, 40);">config</font>**<font style="color:rgb(31, 35, 40);"> file is not set, the default behavior is as follows:</font>
 
 + <font style="color:rgb(31, 35, 40);">Existential quantification is not used by default as it introduces higher computational overhead.</font>
 + <font style="color:rgb(31, 35, 40);">Heuristic generalize is used by default as it enhances the verification efficiency.</font>
