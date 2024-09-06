@@ -45,7 +45,7 @@ make
 ---
 
 ## <font style="color:rgb(31, 35, 40);">Usage</font>
-<font style="color:rgb(31, 35, 40);">Given a Murphi description of a protocol and its safety property, WiseParaVerifier automatically constructs several </font>![image](https://cdn.nlark.com/yuque/__latex/7aaf2781990aa336d909f7ebd32e2f69.svg)<font style="color:rgb(31, 35, 40);">needed for verification. It then obtains a set of concrete auxiliary invariants through </font>_**<font style="color:rgb(31, 35, 40);">generalization</font>**_<font style="color:rgb(31, 35, 40);"> and </font>_**<font style="color:rgb(31, 35, 40);">symmetry</font>**_<font style="color:rgb(31, 35, 40);">. Finally, these invariants are promoted to </font>_**<font style="color:rgb(31, 35, 40);">parameterized</font>**_<font style="color:rgb(31, 35, 40);"> invariants, which supporting the alternating use of universal and existential quantifiers.</font>
+<font style="color:rgb(31, 35, 40);">Given a Murphi description of a protocol and its safety property, WiseParaVerifier automatically constructs several </font>$ F $<font style="color:rgb(31, 35, 40);">needed for verification. It then obtains a set of concrete auxiliary invariants through </font>_**<font style="color:rgb(31, 35, 40);">generalization</font>**_<font style="color:rgb(31, 35, 40);"> and </font>_**<font style="color:rgb(31, 35, 40);">symmetry</font>**_<font style="color:rgb(31, 35, 40);">. Finally, these invariants are promoted to </font>_**<font style="color:rgb(31, 35, 40);">parameterized</font>**_<font style="color:rgb(31, 35, 40);"> invariants, which supporting the alternating use of universal and existential quantifiers.</font>
 
 <font style="color:rgb(31, 35, 40);">To automatically complete the verification process using WiseParaVerifier, </font>
 
