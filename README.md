@@ -101,8 +101,8 @@ python3 wiseParaVerifier/invFinder.py client_server_db_ae
 | <font style="color:#000000;">mutualEx_M2</font> | <font style="color:#000000;">2 </font> | <font style="color:#000000;">13</font> | <font style="color:#000000;">17.1</font> |
 | <font style="color:#000000;">germanNodata</font> | <font style="color:#000000;">1 </font> | <font style="color:#000000;">39</font> | <font style="color:#000000;">19.1</font> |
 | <font style="color:#000000;">german</font> | <font style="color:#000000;">2</font> | <font style="color:#000000;">55</font> | <font style="color:#000000;">49.2</font> |
-| <font style="color:#000000;">flashNodata</font> | <font style="color:#000000;">2 </font> | <font style="color:#000000;">97</font> | <font style="color:#000000;">329</font> |
-| <font style="color:#000000;">flash</font> | <font style="color:#000000;">4 </font> | <font style="color:#000000;">131</font> | <font style="color:#000000;">585</font> |
+| <font style="color:#000000;">flashNodata</font> | <font style="color:#000000;">2 </font> | <font style="color:#000000;">95</font> | <font style="color:#000000;">329</font> |
+| <font style="color:#000000;">flash</font> | <font style="color:#000000;">4 </font> | <font style="color:#000000;">135</font> | <font style="color:#000000;">585</font> |
 | <font style="color:#000000;">decentralized_lock</font> | <font style="color:#000000;">1 </font> | <font style="color:#000000;">15</font> | <font style="color:#000000;">4.6</font> |
 | <font style="color:#000000;">lock_server</font> | <font style="color:#000000;">1 </font> | <font style="color:#000000;">1</font> | <font style="color:#000000;">0.2</font> |
 | <font style="color:#000000;">multi_lock_server</font> | <font style="color:#000000;">1 </font> | <font style="color:#000000;">11</font> | <font style="color:#000000;">2.5</font> |
