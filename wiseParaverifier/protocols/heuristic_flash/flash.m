@@ -99,10 +99,8 @@ var
 
   sta : STATE;
 
-
+ruleset h : NODE; d : DATA do
 startstate "Init"
-for h : NODE do
-  for d : DATA do
   sta.MemData := d;
   sta.Dir.Pending := false;
   sta.Dir.Local := false;
@@ -147,8 +145,6 @@ for h : NODE do
   sta.HomeInvMsg.Cmd := inv_none_em;
   sta.HomeRpMsg.Cmd := rp_none_em;
   sta.CurrData := d;
-  end;
-end;
 endstartstate;
 
 
