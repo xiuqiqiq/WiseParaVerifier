@@ -1,3 +1,8 @@
+# 功能：
+# 1. 最小实例化协议的规则和不变式。
+# 2. 为规则与不变式实例构建反例公式indOblg
+# 3. 筛选无效indOblg
+
 import sys
 import murphi
 from murphiparser import *
@@ -28,9 +33,9 @@ class GetSMTformula:
         self.ins_var = None
         self.ins_var4rule = list()
         self.ins_var_dict = dict()
-        self.formula_instances = dict()
+        self.formula_instances = dict()   # 有效indOblg
 
-        self.deduction = dict()
+        self.deduction = dict()    # 无效indOblg
 
         self.arrayVar_insLength = dict()
 
@@ -115,6 +120,8 @@ class GetSMTformula:
 
 
     # Converting formulas from parameterized form to instantiated formulas
+    # 为传入的实例子句OpExpr（协议的guard、action，不变式描述）完成实例化
+    # 具体的实例化数值由inv_var_ins指定
     def para2ins(self, OpExpr, inv_var_ins, inv_var_map,ins_var_list2,inv_allVars_map, forinv=False):     
         if isinstance(OpExpr, murphi.ArrayIndex):
             # 多维数组
@@ -492,7 +499,11 @@ class GetSMTformula:
 
         return OpExpr
 
+    # 实例化的第二步：完成协议规则的实例化
+    # 规则实例化的原则：根据Murphi协议const/type指定的类型实例大小
+    # 即规则实例化后的数量根据实例大小和参数数量决定
 
+    # 实例化的第二步：构建并筛选indOblg
     def getRules(self):
 
         sub_rule_ins = dict()
@@ -504,9 +515,10 @@ class GetSMTformula:
             # print(name)
             sub_rule_dict = dict()
             # for var: name and type
+            # 记录规则的名称、参数、guard语句、action语句
             if isinstance(rule, murphi.MurphiRuleSet):
                 sub_rule_dict["var"] = rule.var_map
-                self.rule_var_map[name] = rule.var_map
+                self.rule_var_map[name] = rule.var_map    # 规则用到的参数
                 # for guard: OpExpr
                 sub_rule_dict["guard"] = rule.rule.cond
                 # for assignments
@@ -525,12 +537,10 @@ class GetSMTformula:
             # print("self.inv_var_map:",self.inv_var_map, self.inv_var_length)
             inv_name=""
 
+            # 记录下规则中的所有变量类型对应的实例，主要是scalarset类型和RngType类型
             sub_var_ins = dict()
             for inv in self.inv_var_length.keys():
                 inv_name = inv
-                # permutations = [(1,),(2,)]
-
-                # 实例化
 
                 for var,type in sub_rule_dict["var"].items():
                     assert isinstance(type, murphi.VarType)
@@ -556,6 +566,7 @@ class GetSMTformula:
             self.rule_var_ins[inv_name] = sub_rule_ins
 
         # for inv:all rules
+        # 
         for inv,rules in self.rule_var_ins.items():
 
             rule_vars_dict = dict()
@@ -566,16 +577,18 @@ class GetSMTformula:
                 # for each var
                 i = 1
 
+                # 不变式中的类型实例X规则中同类型的实例，得到这些实例的排列
                 ins_permutations = list(itertools.product(*rule_vars.values()))
                 ins_permutations = [{key: value for key, value in zip(rule_vars.keys(), combo)} for combo in ins_permutations]
 
+                # 对于所有的实例的排列，依次用来作为实例化规则的实参
                 for ins_permutation in ins_permutations:
                     sub_rule_instance_dict = dict()
                     ins_var4rule_list = list()
                     instance_name = inv + "_" + rule + str(i)
 
                     ins_dict = ins_permutation
-                    # for guard
+                    # for guard 根据一组实例对guard做实例化
                     guard_dp = copy.deepcopy(self.rule_para[rule]["guard"])
                     guard_var = []
                     sub_rule_instance_dict["guard"] = self.para2ins(guard_dp, ins_dict, self.rule_var_map[rule], guard_var, {})
@@ -583,7 +596,8 @@ class GetSMTformula:
                         if str(var) not in self.all_ins_vars:
                             self.all_ins_vars[str(var)] = var
 
-                    # for assignment
+                    # for assignment 根据一组实例对action做实例化
+                    # 需要记录action中，所有assignment语句中被赋值过的变量，也就是赋值语句左侧的变量
                     sub_assign_list = list()
                     for assignment in self.rule_para[rule]["assign"]:
 
@@ -608,12 +622,14 @@ class GetSMTformula:
 
                     # print("ins_var4rule_list:",ins_var4rule_list)
 
+                    # 记录构建indOblg公式需要的内容：guard语句 & action语句assignment & !inv & assumption
+                    # assumption: 出现在了inv中但没出现在assignment中的变量，这些变量在规则转换前后保持不变
                     sub_rule_instance_dict["assign"] = sub_assign_list
                     sub_rule_instance_dict["assumption"] = [elem for elem in self.ins_var_dict[inv] if
                                                             elem not in ins_var4rule_list]
                     
 
-
+                    
                     sub_rule_instance_dict["!inv"] = murphi.NegExpr(self.inv_instance[inv])
 
                     sub_rule_instance_dict["inv"] = self.inv_instance[inv]
@@ -625,6 +641,8 @@ class GetSMTformula:
 
                     # self.formula_instances[instance_name] = sub_rule_instance_dict
                     # using invHoldForRule2 from paraverifier
+                    # 剔除无效的indOblg公式
+                    # 如果不变式中的所有变量都未在赋值语句的左侧出现过，则该indOblg必定不可能成立，剔除
                     if self.invHoldForRule2(assign_vars, self.ins_var_dict[inv]):
                         self.formula_instances[instance_name] = sub_rule_instance_dict
                     else:
@@ -662,7 +680,7 @@ class GetSMTformula:
                     return True
         return False
 
-
+    # 获取不变式的所有变量
     def getInvVars(self, inv, inv_name, sub_var_dict, sub_inv_dict, sub_array_var):
         if isinstance(inv, murphi.ForallExpr):
             sub_var_dict[inv.var] = inv.typ
@@ -708,7 +726,9 @@ class GetSMTformula:
 
         return sub_var_dict, sub_inv_dict, sub_array_var
 
-
+    # 实例化的第一步，首先实例化不变式
+    # 不变式实例化的原则：一个类型声明了几个不同的变量，就从1开始声明多少个实例
+    # 即一条不变式只产生一个实例
     def getInvs(self):
         self.defscalars()
         inv_name = ""
@@ -717,7 +737,7 @@ class GetSMTformula:
             inv_name = inv.name
 
             assert isinstance(inv, MurphiInvariant)
-
+            #获取不变式变量
             # for var: name and type
             sub_var_dict, sub_inv_dict, sub_array_var = self.getInvVars(inv.inv, inv_name, {}, {}, {})
             sub_inv_dict["var"] = sub_var_dict
@@ -728,12 +748,11 @@ class GetSMTformula:
             self.inv_para[inv_name] = sub_inv_dict
 
 
-
+        实例化不变式参数
         # instances for parameters
             inv_insNum = {}
             # to fix: inv_insNum要改成一个dict，key是变量类型，存的是已经该变量类型已经实例化的最大值
             sub_insVar = dict()
-            # 带参形式的实例化
             for var in sub_array_var.keys():
                 if sub_array_var[var].name not in inv_insNum.keys():
                     # print("sub_array_var[var]:",sub_array_var[var],isinstance(self.typ_map[sub_array_var[var].name], murphi.ScalarSetType))
@@ -751,13 +770,14 @@ class GetSMTformula:
                 sub_insVar[var] = inv_insNum[sub_array_var[var].name]
             self.inv_var_ins[inv_name] = sub_insVar
 
+            # 实例化不变式语句
             dp = copy.deepcopy(self.inv_para[inv_name]["invs"])
             # print("dp:",dp)
             # print("self.inv_var_map[inv_name]:",self.inv_var_map[inv_name])
             self.ins_var = None
             self.inv_instance[inv_name] = self.para2ins(dp, self.inv_var_ins[inv_name],self.inv_array_var_map[inv_name],[],self.inv_var_map[inv_name],True)
 
-
+            # 记录下不变式对应的实例化变量
             if not self.ins_var==None:
                 ins_var = copy.deepcopy(self.ins_var)
                 if ins_var:
@@ -767,6 +787,7 @@ class GetSMTformula:
                 self.ins_var_dict[inv_name] = ins_var
 
             # print("self.inv_instance[inv_name]:",inv_name,self.inv_instance[inv_name])
+            # 每个不变式实例均与协议的所有规则实例分别构建反例公式indOblg
             self.getRules()
 
 if __name__ == "__main__":
