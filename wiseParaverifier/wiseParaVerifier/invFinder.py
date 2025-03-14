@@ -1,3 +1,23 @@
+# 本文件完成协议的验证主体功能
+
+# 1. 用Z3描述并求解indOblg
+
+# 2. 根据1的解集构建候选不变式
+
+# 3. 使用启发式generalize从候选不变式中剔除不相干的项，得到辅助不变式实例
+
+# 4. 使用对称算法加速1~3
+
+# 5. 新的辅助不变式和规则一起又生成新的indOblg
+
+# 上述步骤一直循环直至没有新的indOblg要求解
+
+# 5. 使用量词推导方法将不变式实例推广到带参形式，并给出正确的量词描述，包括 Forall 和 Exists
+
+# 6. 存在量词约束的不变式可能可以合并
+
+# 6. 所有不变式用ivy描述，提交ivy做归纳验证
+
 import sys
 # sys.path.append('./')
 import murphi
@@ -80,7 +100,7 @@ EXISTENTIAL_QUANTIFICATION = False
 USE_HEURISTIC_GENERALIZE = True
 
 
-
+# 用Z3描述变量
 def setKey(expr, replacement, isbool=False, isdigit=False, isenum=False):
     global EnumType_vars
     if isbool:
@@ -164,6 +184,8 @@ class ConstructF():
 
         self.negInveqs = list()	
 
+    ################## 以下几个都是辅助函数，为了将indOblg描述为Z3断言，记录Z3描述，看着多，不用太在意
+    
     def isdigit(self, fomula):
         assert isinstance(fomula, murphi.OpExpr)
         if isinstance(fomula.expr1, murphi.OpExpr):
@@ -349,13 +371,15 @@ class ConstructF():
 
         return vardict, statements
 
+    # 等式项&连接
     def join_statements(self, statement):
         if len(statement) == 1:
             return statement[0]
         else:
             # return (str(statement[-1]) + "& (" + self.join_statements(statement[:-1]) + ")")
             return murphi.OpExpr('&', statement[-1], self.join_statements(statement[:-1]))
-        
+
+    # 等式项|连接
     def disjoin_statements(self, statement):
         if len(statement) == 1:
             return statement[0]
@@ -363,6 +387,7 @@ class ConstructF():
             # return (str(statement[-1]) + "& (" + self.join_statements(statement[:-1]) + ")")
             return murphi.OpExpr('|', statement[-1], self.join_statements(statement[:-1]))
 
+    # Z3描述版
     def disjoin_z3_statements(self, statement):
         if len(statement) == 1:
             return statement[0]
@@ -370,7 +395,7 @@ class ConstructF():
             # return (str(statement[-1]) + "& (" + self.join_statements(statement[:-1]) + ")")
             return Or(statement[-1], self.disjoin_z3_statements(statement[:-1]))
 
-
+    # Z3描述版
     def join_z3_statements(self, statement):
         if len(statement) == 1:
             return statement[0]
@@ -384,16 +409,33 @@ class ConstructF():
                 return True
         return False
 
+    # 这个函数完成indOblg的求解，并构造辅助不变式
     def smtFormula(self):
         test_s = time.time()
 
-        # for guard's variables
+        # 首先，用Z3把indOblg描述一遍，
+        # 由于在验证最开始已经为所有的变量、类型取值等都用Z3描述过了，
+        # 所以这里主要就是为每一个indOblg分析具体的语句，用已经准备好的Z3变量和取值把谓词语句作为断言加入到Z3中
+
+        # for guard's variables 
         self.variables, self.boundStates = self.getVars(self.guard, self.variables, self.boundStates)
 
-
+        # assignment
         for assign in self.assign:
+            # 普通赋值语句
+             # 比guard多一个"'"，这是因为我们把规则转换前的变量记作var，转换后的变量记作var'，后同
             if isinstance(assign, murphi.AssignCmd):
                 self.variables, self.boundStates = self.getVars(assign, self.variables, self.boundStates, "'")
+            # if语句单独处理
+            # 处理原则，如，
+            # if a then 
+            #    b = b1
+            #    c = c1
+            # else 
+            #    b = b2
+            # 描述的时候：
+            # 1. else的具体条件要提供给Z3
+            # 2. 变量c仅在一个分支（if）出现了，要在别的分支补全它（else），因为在别的分支无变化，就是c = c'
             elif isinstance(assign, murphi.IfCmd):
 
 
@@ -448,6 +490,7 @@ class ConstructF():
                                                self.join_z3_statements(else_cond + else_variables_bounds)))
 
 
+        # assumption中的所有变量var，都有 var = var'
         for assumption in self.assumption:
 
             if str(assumption) not in self.variables.keys():
@@ -468,7 +511,8 @@ class ConstructF():
         self.negInveqs = self.parse_all_eqs(self.negInv, [])
 
 
-
+        # 在所有已知的辅助不变式及其对称形式中挑选出能增强indOblg约束的，加入Z3求解器，避免生成重复的解
+        # 原则：已知不变式的变量集是当前indOblg公式的变量集的子集
         # # current inv:
         # adding current invs:
         current_variables = list(self.variables.keys())
@@ -488,9 +532,11 @@ class ConstructF():
             elif len(equalStates) > 1:
                 self.boundStates.append(self.disjoin_z3_statements(equalStates))
 
-
+        # Z3求解之后既有var，也有var'
+        # cti只关注所有的var，这些var才会用于构造候选不变式
         self.cti = {k: v for k, v in self.variables.items() if not k.endswith("'")}
 
+        # 将所有断言加入Solver并求解
         for state in self.boundStates:
             self.solver.add(state)
 
@@ -506,8 +552,10 @@ class ConstructF():
         test_time += test_e - test_s
 
         while_time = 0
+        # 有解就说明这个归纳反例可能存在，即可以由此找到辅助不变式
         while checkSat:
-            
+
+            # 获取解集current_solutions，从Z3格式转换回统一语义(murphi.py描述)
             s_smt = time.time()
             while_time = while_time + 1
           
@@ -520,7 +568,7 @@ class ConstructF():
             current_solutions = self.construct_aux_lists(model)
 
             
-
+            # start_result就是为了看看原始的候选不变式是不是对的，极少数情况下可能一开始就不是协议的不变式，所以不可能找到辅助不变式，本项目没遇到过
             if self.protocol_name == "flash" or self.protocol_name == "flashNodata": start_result = True
             else: start_result, _ = self.call_NuSMV(current_solutions, self.protocol_name)
             # else: start_result, _ = self.call_BMC(current_solutions, self.protocol_name)
@@ -528,6 +576,7 @@ class ConstructF():
             if start_result:
 
                 if USE_HEURISTIC_GENERALIZE == True:
+                    # 启发式generalize：根据join信息构造辅助不变式，join中是当前解集和当前indOblg的!inv项里相同的等式项，diff就是没出现在!inv的
                     join_list = [elem for elem in self.negInveqs if elem  in current_solutions]
                     diff_list = [elem for elem in current_solutions if elem not in self.negInveqs]
 
@@ -537,8 +586,10 @@ class ConstructF():
 
                     if len(join_list) > 0 :
                         if current_solutions:
+                            # 启发式generalize得到最简洁的辅助不变式
                             join_current_inv, join_inv4smt = self.search_join_aux_invs(join_list, diff_list)
-                        
+
+                            # 构造辅助不变式的所有对称不变式，加入Solver，用于增强约束，避免重复/对称的辅助不变式产生
                         if join_current_inv:
                             symm_invs = self.getallSymmetryInvs_partition(copy.deepcopy(join_current_inv))
                             all_invs_list.extend(symm_invs)
@@ -563,7 +614,7 @@ class ConstructF():
                             # self.solver.add(join_current_inv_bound)
 
 
-
+                # 普通的generalize
                 if USE_HEURISTIC_GENERALIZE == False or (len(join_list) == 0 or (join_current_inv == None and join_inv4smt == None)):
                     current_inv = None
                     if current_solutions:
@@ -611,6 +662,7 @@ class ConstructF():
 
         return aux_inv_list, self.name, all_invs_list
 
+    # 前面记录的cti就是为了把Z3返回的解解析到内部统一语义
     def construct_aux_lists(self, model):
         s_constructlist = time.time()
 
@@ -666,7 +718,7 @@ class ConstructF():
                 subcon.append(str(statement.expr2))
         return subcon
 
-
+    # 启发式找辅助不变式
     def search_join_aux_invs(self, join_list, diff_list):
         s_smv = time.time()
         join_inv4smt = None
@@ -674,9 +726,10 @@ class ConstructF():
         global listnum_of_callSMV
         listnum_of_callSMV = listnum_of_callSMV + 1
 
-        findjoin_S, join_aux_inv = self.call_Check_join_increase(copy.deepcopy(join_list), copy.deepcopy(diff_list))
+        findjoin_S, join_aux_inv = self.call_Check_join_increase(copy.deepcopy(join_list), copy.deepcopy(diff_list)) #启发式找辅助不变式核心算法
         if findjoin_S:
             join_inv4smt = copy.deepcopy(join_aux_inv)
+            # 对找到的不变式做一个判定，如果用单独出现的类型实例，舍弃这条不变式
             if self.dataVars:
                 types_list = self.getAuxinvIdxtype(join_aux_inv, [])
                 genericList, ScalarVarsDict, ScalarVars_values = self.rematchScalarVars(join_aux_inv, [],
@@ -685,8 +738,9 @@ class ConstructF():
                     if self.cnt_listDictlength(ScalarVarsDict, types_list) == False:
                         join_aux_inv = None
                     else:
-                        genericList.extend(self.linkage4ScalarVars(ScalarVarsDict, ScalarVars_values))
+                        genericList.extend(self.linkage4ScalarVars(ScalarVarsDict, ScalarVars_values))  
                         join_aux_inv = murphi.NegExpr(self.join_statements(genericList))
+            # 记录一下所有找到的辅助不变式实例
             if join_aux_inv!=None:
                 global all_auxinv
                 all_auxinv = all_auxinv + 1
@@ -708,7 +762,7 @@ class ConstructF():
         return join_aux_inv, join_inv4smt
 
 
-
+    # 普通generalize找辅助不变式
     def search_aux_invs(self, solution):
         s_smv = time.time()
         inv4smt = None
@@ -716,9 +770,9 @@ class ConstructF():
         global listnum_of_callSMV
         listnum_of_callSMV = listnum_of_callSMV + 1
 
-        findS = self.call_Check_increase(solution)
+        findS = self.call_Check_increase(solution) # 普通generalize核心，逐渐递增不变式项数，也可以用call_Check，逐渐递减不变式项数
 
-
+        # 同上
         if findS:
             inv4smt = copy.deepcopy(self.aux_inv)
             if self.dataVars:
@@ -758,6 +812,7 @@ class ConstructF():
             inv4smt = None
         return self.aux_inv, inv4smt
 
+    # 类型实例替换
     def idx_replace(self, expr, symm_map, specificVars = []):
         if isinstance(expr, murphi.ArrayIndex):
             if isinstance(expr.v, murphi.FieldName):
@@ -785,7 +840,7 @@ class ConstructF():
             expr.name = expr.name.replace(expr.name, str(symm_map[expr.typ.const_name][expr.name]))
         return expr
 
-
+    # 统计类型实例
     def count_digits(self, expr, digitdict, paradict, vardict):
         if isinstance(expr, murphi.NegExpr):
             self.count_digits(expr.expr, digitdict, paradict, vardict)
@@ -828,7 +883,7 @@ class ConstructF():
             self.count_digits(expr.expr2, digitdict, paradict, vardict)
         return digitdict,paradict, vardict
 
-
+    # 根据给定对称实例得到对称描述
     def getsymmform(self, statement, symm_map, specificVars = []):
         if isinstance(statement, murphi.NegExpr):
             statement.expr = self.getsymmform(statement.expr, symm_map,specificVars)
@@ -867,6 +922,7 @@ class ConstructF():
                 cond.append(str(var.idx))
         return cond
 
+    # 对称算法，涉及量词判定
     def getallSymmetryInvs_partition(self, ori_inv, subsidiary = False):
         # for ori safety properties
         if self.current_inv not in flpartitionsRecord.keys():
@@ -912,13 +968,13 @@ class ConstructF():
         symmpartition = dict()
         specificVarPatterns = defaultdict(list)
 
-
+        # 先检查在N+1上不变式能不能成立，如果不能，那么就说明需要存在量词描述
         if EXISTENTIAL_QUANTIFICATION == True:
             for var,key in digitdict.items():
                 if len(key) == murphi.const_map[var]:
                     largerpn = "larger" + var + "_" + self.protocol_name
                     if not self.call_NuSMV(statements,largerpn)[0]:
-                    # if not self.call_BMC(statements,largerpn)[0]:
+                    # if not self.call_BMC(statements,largerpn)[0]:    # P(N+1)算不出可达集的时候
                         existsTypes.append(var)
         
 
@@ -933,7 +989,7 @@ class ConstructF():
             if diffpartitionFlag == False:
                 existsTypes.remove(existType)
 
-
+        # 对于需要存在量词描述的类型，依次检查涉及的变量（数组变量精细到某一维上）确定由exists描述的和由forall描述的
         if existsTypes:
             for existsType in existsTypes:
                 exdict = []
@@ -1000,7 +1056,7 @@ class ConstructF():
         exvars = defaultdict(list)
         exidxpattern = []
         
-        # permutation1
+        # permutation1：仅由forall描述的类型
         regularpermutations = []
         regulardict = dict()
         for type,digits in digitdict.items():
@@ -1010,7 +1066,7 @@ class ConstructF():
         regularpermutations = list(generate_combinations(regulardict))
         
 
-
+        # 同个类型，有exists描述的，同时也可能有forall描述，它们的实例要分别做排列
         for type,digits in digitdict.items():
             if type in ori_existsTypes:
                 subdictE = dict()
@@ -1071,7 +1127,7 @@ class ConstructF():
         if foralldict:
             forallpermutations = list(generate_combinations(foralldict))
 
-
+        # 根据分类好的实例的排列，组合得到所有对称不变式
         for regularp in regularpermutations:
 
             ori_statements = copy.deepcopy(statements)
@@ -1124,6 +1180,7 @@ class ConstructF():
                         self.getsymmform(statement4, paramapEF, [element for sublist in spvp for element in sublist])
 
 
+            # 记录下不变式使用的量词情况，用于后续带参合并
             parainvdict = dict()
             if ori_existsTypes:
                 exitems = []
@@ -1231,7 +1288,7 @@ class ConstructF():
                     invlist.append(OpExpr)
         return invlist, ScalarVarsDict, ScalarVars_values
 
-
+    # 取值类型相同的变量，可以构造为var1 = var2 或var1 ≠ var2
     def linkage4ScalarVars(self, ScalarVarsDict, ScalarVars_values):
         ScalarVarsLinkage = []
         Neglist = []
@@ -1309,10 +1366,20 @@ class ConstructF():
                 break
             n_length_sublists = self.generate_n_length_sublist(diff_list, n)
 
+            # 依次检查 ：
+            # join & diff^1 
+            # join & diff^1 & diff^2
+            # ...
+            # 直至找到通过验证的那条
             for sublist in n_length_sublists:
                 validFlag = True
                 joindigitlist = defaultdict(list)
                 ready_to_check = sublist + join_list
+
+                # flash要单独处理
+                # 由于flash协议Node4实例可达集求不出来，只有2实例的可达集
+                # 故对于实例超过3个的直接舍弃
+                # 对于实例小于3个的，若出现了Node的实例3和4，用对称算法得到只含有1和2的对称不变式
                 heuristicFlag = self.protocol_name == "flash" or self.protocol_name == "flashNodata"
                 if heuristicFlag:
                     for item in ready_to_check:
@@ -1324,12 +1391,15 @@ class ConstructF():
                         validFlag = False
                     else:
                         inv_to_symm = str(murphi.NegExpr(self.join_statements(sublist + join_list)))
+                        # 按对称算法的排列组合方式，第一条一定是只包含1和2的
                         if "[4]" in inv_to_symm or "= 4" in inv_to_symm or "[3]" in inv_to_symm or "= 3" in inv_to_symm:
                             ready_to_check = self.parse_statements(self.getallSymmetryInvs_partition(murphi.NegExpr(self.join_statements(sublist + join_list)),subsidiary=True)[0], [])
                 if validFlag:
                     pass_check, can_inv = self.call_NuSMV(ready_to_check, self.protocol_name)
                     # pass_check, can_inv = self.call_BMC(ready_to_check, self.protocol_name)
                 # pass_check, can_inv = self.call_cmurphi(ready_to_check)
+                # 找到通过验证的那条不变式之后，还要再做一次无关变量剔除
+                # 此时的无关变量通常由join引用，但通常很少或没有
                 if pass_check:
                     # fix : should check again
                     findjoinSnd = self.call_Check(ready_to_check)
@@ -1346,10 +1416,11 @@ class ConstructF():
 
 
 
-
+    
     def call_Check_increase(self, inv_list):
         findS = False
         inv_list_length = len(inv_list)
+        # 普通的generalize很直觉，就是从不变式项数为1的集合开始，不断增加，直至找到一个正确的
         for n in range(1, inv_list_length+1):
             if findS:
                 break
@@ -1358,6 +1429,7 @@ class ConstructF():
                 validFlag = True
                 digitlist = defaultdict(list)
                 ready_to_check = sublist
+                #FLASH的处理同上
                 heuristicFlag = self.protocol_name == "flash" or self.protocol_name == "flashNodata"
                 if heuristicFlag:
                     for statement in sublist:
@@ -1375,6 +1447,7 @@ class ConstructF():
                     pass_check, can_inv = self.call_NuSMV(ready_to_check, self.protocol_name)
                     # pass_check, can_inv = self.call_BMC(ready_to_check, self.protocol_name)
                 # pass_check, can_inv = self.call_cmurphi(ready_to_check)
+                # 无需2次剔除
                 if pass_check:
                     self.aux_inv = can_inv
                     findS = True
@@ -1420,7 +1493,7 @@ class ConstructF():
         elif isinstance(statement, murphi.OpExpr) and (statement.op == '=' or statement.op == '!='):
             subcon.append(statement)
         return subcon
-
+    # 以下是一些已经废弃的对称方法，不用管
     def OpExprEq(self, OpExpr, patternlist, pattern, patternDict, newPattern, symmnewPattern):
         # varitems = len(OpExpr)
         Oplist = []
@@ -1542,6 +1615,7 @@ class ConstructF():
                 return False
         return True
 
+    # 以下分别是调用NuSMV/BMC/Murphi
     def call_NuSMV(self, inv_list, protocol_name):
 
         
@@ -1773,10 +1847,11 @@ class ConstructF():
         return murphilines
 
 
-
+    # 带参不变式的合并
     def parainvsMerger(self):
         ivyINVs = ""
-        # 公共项相同 + exists类型相同的，合并
+        # 合并原则：
+        # 公共项相同（指只需要forall描述的部分相同） + exists类型相同的，合并
         classifiedMergers = dict()
         for exinv in exfolparainvs:
             exfolitem_value = str(exinv['folitem']) + str(exinv['existsvars'])
@@ -1805,6 +1880,7 @@ class ConstructF():
                         if idx not in folvardict[type]:
                             folvardict[type].append(idx)
             allparainvs.append({'folstatements' : folstatements, 'exstatements' : exstatements, 'folvars' : folvardict, 'exvars' : existsvardict})
+        # 用ivy描述带参不变式
         for allparainv in allparainvs:
             # print("allparainv:",allparainv)
             ivyINV = "conjecture "
@@ -1875,7 +1951,7 @@ class ConstructF():
 
 
 
-
+# Z3描述协议中的枚举类型
 def defEnum(c):
     for enum_typ, enum_value in c.enum_typ_map.items():
         if enum_typ in enum_value_map.keys():
@@ -1962,9 +2038,9 @@ def Verification(protocol_path):
                     var_value_str = parts[1].strip()
 
                     if var_name == "EXISTENTIAL_QUANTIFICATION":
-                        EXISTENTIAL_QUANTIFICATION = var_value_str.lower() == 'true'
+                        EXISTENTIAL_QUANTIFICATION = var_value_str.lower() == 'true'    # 是否做存在量词检查
                     elif var_name == "USE_HEURISTIC_GENERALIZE":
-                        USE_HEURISTIC_GENERALIZE = var_value_str.lower() == 'true'
+                        USE_HEURISTIC_GENERALIZE = var_value_str.lower() == 'true'        # 是否用启发式generalize
     except FileNotFoundError:
         print(f"File '{os.path.dirname(protocol_path)}' not found.")
 
@@ -1973,13 +2049,13 @@ def Verification(protocol_path):
 
     protocol_name = protocol_path.split("/")[-1]
 
-
+    
     # using smv as checker
     smv_content = ""
     with open(protocol_path + ".smv", "r") as file:
         smv_content = file.read()
 
-
+    # NuSMV为协议求解可达集
     try:
         s_calRchset = time.time()
         client.calculate_protocol_reachability(protocol_name, smv_content)
@@ -1988,7 +2064,7 @@ def Verification(protocol_path):
     except ValueError:
         print("calculate_protocol_reachability failed. Please check if the Server is ready for communication.")
 
-
+    # 主要是有存在量词时，要在N+1实例上再次check不变式，所以要计算它们的可达集//或初始化BMC设置（也可自己在client.py中做）
     try:
         for root, dirs, files in os.walk(os.path.dirname(protocol_path)):
             for file in files:
@@ -2003,6 +2079,7 @@ def Verification(protocol_path):
 
     open(protocol_path + "_invs.txt", 'w').close()
 
+    # 调用concretedF.py获取indOblg信息
     s_constructF = time.time()
     c = concretedF.GetSMTformula(parse_name=protocol_path)
     c.getInvs()
@@ -2017,6 +2094,9 @@ def Verification(protocol_path):
         all_ori_invs.append(value)
         ori_inv[key.split("_")[0]].append(value)
 
+    # 可以理解为创造一个公共的Z3环境
+    # 虽然每个indOblg对应了不同的变量实例，但协议总共只有那么多变量实例，变量总共只有那么多取值（主要就是枚举、数值、bool
+    # 因此，可以统一将所有变量都初始化一次，并且提供解的范围，比如枚举类型变量的取值是什么，让他们有Z3描述，在求解的时候可以直接用
     defEnum(c)
 
     specific_var = murphi.specific_var
@@ -2099,6 +2179,8 @@ def Verification(protocol_path):
 
     firstCheck = True
     s_constructF = time.time()
+
+    # 一直循环求解indOblg->得到辅助不变式->构造新的indOblg->...
     while (True):
         for name, instance in c.formula_instances.items():
             current_inv = instance["inv_name"]
@@ -2136,7 +2218,7 @@ def Verification(protocol_path):
         else:
             break
 
-    
+    # 所有不变式实例求解完了推广到带参，并作合并（存在量词描述的不变式）
     constructF.parainvsMerger()
     run_ivy(protocol_path + "_proved" + ".ivy")
     end_time = time.time()
